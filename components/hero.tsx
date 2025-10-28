@@ -18,7 +18,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-80 md:h-[500px] bg-cover bg-center flex items-center justify-center"
+      className="relative h-120 md:h-[500px] bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
           'url("https://static.rdc.moveaws.com/images/hero/default/2021-11/jpg/hp-hero-desktop.jpg")',
