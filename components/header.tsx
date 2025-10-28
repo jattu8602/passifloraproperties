@@ -174,9 +174,13 @@ export default function Header() {
                 document.body.style.overflow = 'hidden'
                 setMobileMenuOpen(true)
               }}
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 text-gray-700 font-bold"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? (
+                <X size={24} strokeWidth={2.5} />
+              ) : (
+                <Menu size={24} strokeWidth={2.5} />
+              )}
             </button>
           </div>
         </div>
