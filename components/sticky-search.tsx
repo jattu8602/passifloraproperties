@@ -1,68 +1,137 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, X } from 'lucide-react'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 export default function StickySearch() {
+  // Start hidden; we'll decide visibility once the hero bar is found/observed
   const [isVisible, setIsVisible] = useState(false)
   const [location, setLocation] = useState('Maharashtra, India')
   const isMobile = useIsMobile()
+  const debounceRef = useRef<number | null>(null)
+  const lastRatioRef = useRef(1)
+  const mountedRef = useRef(false)
+  const retryTimeoutRef = useRef<number | null>(null)
+  const hasAttachedRef = useRef(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // Prefer IntersectionObserver to follow the hero search bar visibility precisely
-    if (isMobile) {
+    const clearRetry = () => {
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current)
+        retryTimeoutRef.current = null
+      }
+    }
+
+    const tryAttachMobile = () => {
       const el = document.getElementById('hero-search-bar')
       if (el && 'IntersectionObserver' in window) {
-        const OBS_THRESHOLD = 0 // change to 0.2 if you want to trigger earlier, when partially hidden
-        const OBS_ROOT_MARGIN = '0px 0px 0px 0px' // use '-48px 0px 0px 0px' to trigger earlier
-
+        // Hysteresis: show when ratio <= 0.02, hide when >= 0.12
+        const SHOW_THRESHOLD = 0.02
+        const HIDE_THRESHOLD = 0.12
         const observer = new IntersectionObserver(
           (entries) => {
             const entry = entries[0]
-            setIsVisible(!entry.isIntersecting)
-            // or: setIsVisible(entry.intersectionRatio < OBS_THRESHOLD)
+            const ratio = entry.intersectionRatio
+            lastRatioRef.current = ratio
+            if (debounceRef.current) cancelAnimationFrame(debounceRef.current)
+            debounceRef.current = requestAnimationFrame(() => {
+              setIsVisible((prev) => {
+                if (!entry.isIntersecting || ratio <= SHOW_THRESHOLD)
+                  return true
+                if (ratio >= HIDE_THRESHOLD) return false
+                return prev
+              })
+            })
           },
-          { root: null, threshold: OBS_THRESHOLD, rootMargin: OBS_ROOT_MARGIN }
+          {
+            root: null,
+            threshold: [0, SHOW_THRESHOLD, HIDE_THRESHOLD, 1],
+            rootMargin: '0px 0px 0px 0px',
+          }
         )
         observer.observe(el)
+        hasAttachedRef.current = true
         return () => observer.disconnect()
+      } else {
+        // Element not present yet; ensure hidden and retry shortly
+        setIsVisible(false)
+        retryTimeoutRef.current = window.setTimeout(tryAttachMobile, 120)
       }
+      return () => {}
     }
 
     // Desktop: show when hero search is in its ending phase (mostly gone)
-    const desktopEl = document.getElementById('hero-search-bar')
-    if (!isMobile && desktopEl && 'IntersectionObserver' in window) {
-      // Trigger when <= 10% of the bar remains visible
-      const DESKTOP_THRESHOLD = 0.1
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0]
-          setIsVisible(entry.intersectionRatio <= DESKTOP_THRESHOLD)
-        },
-        { root: null, threshold: [DESKTOP_THRESHOLD, 0] }
-      )
-      observer.observe(desktopEl)
-      return () => observer.disconnect()
+    const tryAttachDesktop = () => {
+      const desktopEl = document.getElementById('hero-search-bar')
+      if (!isMobile && desktopEl && 'IntersectionObserver' in window) {
+        // Hysteresis for desktop: show <= 0.08, hide >= 0.18
+        const SHOW_THRESHOLD = 0.08
+        const HIDE_THRESHOLD = 0.18
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0]
+            const ratio = entry.intersectionRatio
+            lastRatioRef.current = ratio
+            if (debounceRef.current) cancelAnimationFrame(debounceRef.current)
+            debounceRef.current = requestAnimationFrame(() => {
+              setIsVisible((prev) => {
+                if (ratio <= SHOW_THRESHOLD) return true
+                if (ratio >= HIDE_THRESHOLD) return false
+                return prev
+              })
+            })
+          },
+          {
+            root: null,
+            threshold: [0, SHOW_THRESHOLD, HIDE_THRESHOLD, 1],
+            rootMargin: '-4px 0px 0px 0px',
+          }
+        )
+        observer.observe(desktopEl)
+        hasAttachedRef.current = true
+        return () => observer.disconnect()
+      } else if (!isMobile) {
+        setIsVisible(false)
+        retryTimeoutRef.current = window.setTimeout(tryAttachDesktop, 120)
+      }
+      return () => {}
     }
 
-    // Fallback: scroll threshold based on element position
+    // Prefer IntersectionObserver to follow the hero search bar visibility precisely
+    let cleanup: (() => void) | undefined
+    if (isMobile) {
+      cleanup = tryAttachMobile()
+    } else {
+      cleanup = tryAttachDesktop()
+    }
+
+    // Fallback: scroll threshold based on element position if we never attach
     const handleScroll = () => {
       const target = document.getElementById('hero-search-bar')
-      if (!target) {
-        setIsVisible(window.scrollY > 300)
-        return
-      }
+      if (!target) return // keep current state until element exists
       const rect = target.getBoundingClientRect()
       // When the bottom of the bar is near the top (ending phase)
       setIsVisible(rect.bottom <= 16)
     }
     window.addEventListener('scroll', handleScroll)
     handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      clearRetry()
+      if (cleanup) cleanup()
+    }
   }, [isMobile])
+
+  // Avoid initial flash on mount
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
 
   return (
     <div

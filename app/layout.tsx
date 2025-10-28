@@ -2,6 +2,8 @@ import type React from 'react'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Poppins, Dancing_Script } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { SessionProvider } from 'next-auth/react'
+import AuthHandler from '@/components/auth-handler'
 import './globals.css'
 
 const _geist = Geist({ subsets: ['latin'] })
@@ -30,7 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        {children}
+        <SessionProvider>
+          {children}
+          <AuthHandler />
+        </SessionProvider>
         <Analytics />
       </body>
     </html>

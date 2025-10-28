@@ -3,8 +3,10 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import gsap from 'gsap'
 import AuthModal from '@/components/auth-modal'
+import UserDropdown from '@/components/user-dropdown'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -15,6 +17,7 @@ export default function Header() {
   const signupBtnRef = useRef<HTMLButtonElement | null>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
+  const { data: session } = useSession()
 
   const navLinks = [
     { label: 'Buy', href: '#' },
@@ -132,24 +135,30 @@ export default function Header() {
               </div>
               {/* Divider to separate stacks */}
               <div className="hidden lg:block h-6 w-px bg-gray-200" />
-              {/* Group 2: Log in / Sign up (tighter) */}
+              {/* Group 2: Auth section */}
               <div className="flex items-center gap-2">
-                <Link
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setAuthOpen(true)
-                  }}
-                  className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-                >
-                  Log in
-                </Link>
-                <button
-                  onClick={() => setAuthOpen(true)}
-                  className="px-5 py-2 bg-black text-white rounded-full font-bold text-sm transition-all duration-200 hover:bg-gray-900 hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
-                >
-                  Sign up
-                </button>
+                {session ? (
+                  <UserDropdown />
+                ) : (
+                  <>
+                    <Link
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setAuthOpen(true)
+                      }}
+                      className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                    >
+                      Log in
+                    </Link>
+                    <button
+                      onClick={() => setAuthOpen(true)}
+                      className="px-5 py-2 bg-black text-white rounded-full font-bold text-sm transition-all duration-200 hover:bg-gray-900 hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+                    >
+                      Sign up
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
@@ -247,7 +256,7 @@ export default function Header() {
                 </Link>
               ))}
               <hr className="my-4" />
-              {['Manage rentals', 'Advertise', 'Log in'].map((label, i) => (
+              {['Manage rentals', 'Advertise'].map((label, i) => (
                 <Link
                   key={label}
                   href="#"
@@ -255,9 +264,7 @@ export default function Header() {
                   ref={(el) => {
                     itemRefs.current[navLinks.length + i] = el
                   }}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (label === 'Log in') setAuthOpen(true)
+                  onClick={() => {
                     if (tlRef.current) {
                       tlRef.current.reverse()
                       tlRef.current.eventCallback('onReverseComplete', () => {
@@ -273,25 +280,129 @@ export default function Header() {
                   {label}
                 </Link>
               ))}
-              <button
-                ref={signupBtnRef}
-                className="mt-4 w-full px-6 py-3 bg-black text-white rounded-lg font-bold text-base hover:bg-gray-800 transition-colors duration-200"
-                onClick={() => {
-                  setAuthOpen(true)
-                  if (tlRef.current) {
-                    tlRef.current.reverse()
-                    tlRef.current.eventCallback('onReverseComplete', () => {
-                      setMobileMenuOpen(false)
-                      document.body.style.overflow = ''
-                    })
-                  } else {
-                    setMobileMenuOpen(false)
-                    document.body.style.overflow = ''
-                  }
-                }}
-              >
-                Sign up
-              </button>
+
+              {session ? (
+                <div className="mt-4 space-y-3">
+                  <div className="px-4 py-3 bg-gray-50 rounded-lg">
+                    <p className="font-semibold text-gray-900">
+                      {session.user?.name}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {session.user?.email}
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Link
+                      href="#"
+                      className="block font-bold text-gray-800 text-lg py-2"
+                      onClick={() => {
+                        if (tlRef.current) {
+                          tlRef.current.reverse()
+                          tlRef.current.eventCallback(
+                            'onReverseComplete',
+                            () => {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          )
+                        } else {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                        }
+                      }}
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      href="#"
+                      className="block font-bold text-gray-800 text-lg py-2"
+                      onClick={() => {
+                        if (tlRef.current) {
+                          tlRef.current.reverse()
+                          tlRef.current.eventCallback(
+                            'onReverseComplete',
+                            () => {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          )
+                        } else {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                        }
+                      }}
+                    >
+                      Saved Properties
+                    </Link>
+                    <Link
+                      href="#"
+                      className="block font-bold text-gray-800 text-lg py-2"
+                      onClick={() => {
+                        if (tlRef.current) {
+                          tlRef.current.reverse()
+                          tlRef.current.eventCallback(
+                            'onReverseComplete',
+                            () => {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          )
+                        } else {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                        }
+                      }}
+                    >
+                      Settings
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    href="#"
+                    className="font-bold text-gray-800 text-lg"
+                    ref={(el) => {
+                      itemRefs.current[navLinks.length + 2] = el
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setAuthOpen(true)
+                      if (tlRef.current) {
+                        tlRef.current.reverse()
+                        tlRef.current.eventCallback('onReverseComplete', () => {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                        })
+                      } else {
+                        setMobileMenuOpen(false)
+                        document.body.style.overflow = ''
+                      }
+                    }}
+                  >
+                    Log in
+                  </Link>
+                  <button
+                    ref={signupBtnRef}
+                    className="mt-4 w-full px-6 py-3 bg-black text-white rounded-lg font-bold text-base hover:bg-gray-800 transition-colors duration-200"
+                    onClick={() => {
+                      setAuthOpen(true)
+                      if (tlRef.current) {
+                        tlRef.current.reverse()
+                        tlRef.current.eventCallback('onReverseComplete', () => {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                        })
+                      } else {
+                        setMobileMenuOpen(false)
+                        document.body.style.overflow = ''
+                      }
+                    }}
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
             </nav>
           </div>
         </div>

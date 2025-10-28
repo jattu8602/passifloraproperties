@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { X, Apple, Facebook, Mail } from 'lucide-react'
+import { signIn } from 'next-auth/react'
 import gsap from 'gsap'
 
 type AuthModalProps = {
@@ -14,6 +15,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
   const panelRef = useRef<HTMLDivElement | null>(null)
   const emailRef = useRef<HTMLInputElement | null>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [emailSent, setEmailSent] = useState(false)
 
   useLayoutEffect(() => {
     if (!open) return
@@ -59,6 +63,30 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     }
   }
 
+  const handleEmailSignIn = async () => {
+    if (!email) return
+    setIsLoading(true)
+    try {
+      await signIn('resend', { email, redirect: false })
+      setEmailSent(true)
+    } catch (error) {
+      console.error('Email sign-in error:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true)
+    try {
+      await signIn('google')
+    } catch (error) {
+      console.error('Google sign-in error:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   if (!open) return null
 
   return (
@@ -91,18 +119,56 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
           </div>
 
           <div className="mt-6">
-            <label className="block text-sm font-medium mb-2">
-              Email address <span className="text-gray-400">required</span>
-            </label>
-            <input
-              ref={emailRef}
-              type="email"
-              placeholder="Enter your email"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-black"
-            />
-            <button className="mt-4 w-full bg-black text-white rounded-lg py-3 font-bold hover:bg-gray-900 transition">
-              Continue
-            </button>
+            {emailSent ? (
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                <p className="font-semibold text-gray-900">Check your email</p>
+                <p className="text-sm text-gray-600 mt-1">
+                  We sent a sign-in link to{' '}
+                  <span className="font-medium">{email}</span>. Open the email
+                  on this device and tap the link to continue.
+                </p>
+                <div className="flex items-center gap-3 mt-4">
+                  <button
+                    onClick={handleEmailSignIn}
+                    disabled={isLoading}
+                    className="px-4 py-2 rounded-md border border-gray-300 text-sm font-medium hover:bg-white disabled:opacity-50"
+                  >
+                    {isLoading ? 'Resending…' : 'Resend link'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEmail('')
+                      setEmailSent(false)
+                      setTimeout(() => emailRef.current?.focus(), 50)
+                    }}
+                    className="px-4 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-800"
+                  >
+                    Use a different email
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <label className="block text-sm font-medium mb-2">
+                  Email address <span className="text-gray-400">required</span>
+                </label>
+                <input
+                  ref={emailRef}
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-black"
+                />
+                <button
+                  onClick={handleEmailSignIn}
+                  disabled={isLoading || !email}
+                  className="mt-4 w-full bg-black text-white rounded-lg py-3 font-bold hover:bg-gray-900 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? 'Sending...' : 'Continue'}
+                </button>
+              </>
+            )}
           </div>
 
           <div className="flex items-center gap-3 my-6">
@@ -112,7 +178,11 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
           </div>
 
           <div className="space-y-3">
-            <button className="w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 py-3 font-semibold hover:bg-gray-50">
+            <button
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 py-3 font-semibold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden>
                 <path
                   fill="#FFC107"
@@ -131,15 +201,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.9-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 3l5.7-5.7C33.7 6.1 29.1 4 24 4c-7.9 0-14.7 4.6-17.7 10.7l6.6 4.8C14.7 16.6 19 14 24 14c3 0 5.7 1.1 7.8 3l5.7-5.7C33.7 6.1 29.1 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 18.4-7.3 19.8-16.8.1-.8.2-1.6.2-2.4 0-1.1-.1-2.1-.4-3.3z"
                 />
               </svg>
-              Continue with Google
-            </button>
-            <button className="w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 py-3 font-semibold hover:bg-gray-50">
-              <Facebook size={18} />
-              Continue with Facebook
-            </button>
-            <button className="w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 py-3 font-semibold hover:bg-gray-50">
-              <Apple size={18} />
-              Continue with Apple
+              {isLoading ? 'Signing in...' : 'Continue with Google'}
             </button>
           </div>
 
