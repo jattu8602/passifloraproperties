@@ -12,7 +12,7 @@ export default function StickySearch() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // Prefer IntersectionObserver on mobile to follow the hero search bar visibility precisely
+    // Prefer IntersectionObserver to follow the hero search bar visibility precisely
     if (isMobile) {
       const el = document.getElementById('hero-search-bar')
       if (el && 'IntersectionObserver' in window) {
@@ -32,11 +32,35 @@ export default function StickySearch() {
       }
     }
 
-    // Fallback and desktop behavior: scroll threshold
-    const DESKTOP_SCROLL_THRESHOLD = 300
-    const handleScroll = () =>
-      setIsVisible(window.scrollY > DESKTOP_SCROLL_THRESHOLD)
+    // Desktop: show when hero search is in its ending phase (mostly gone)
+    const desktopEl = document.getElementById('hero-search-bar')
+    if (!isMobile && desktopEl && 'IntersectionObserver' in window) {
+      // Trigger when <= 10% of the bar remains visible
+      const DESKTOP_THRESHOLD = 0.1
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0]
+          setIsVisible(entry.intersectionRatio <= DESKTOP_THRESHOLD)
+        },
+        { root: null, threshold: [DESKTOP_THRESHOLD, 0] }
+      )
+      observer.observe(desktopEl)
+      return () => observer.disconnect()
+    }
+
+    // Fallback: scroll threshold based on element position
+    const handleScroll = () => {
+      const target = document.getElementById('hero-search-bar')
+      if (!target) {
+        setIsVisible(window.scrollY > 300)
+        return
+      }
+      const rect = target.getBoundingClientRect()
+      // When the bottom of the bar is near the top (ending phase)
+      setIsVisible(rect.bottom <= 16)
+    }
     window.addEventListener('scroll', handleScroll)
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobile])
 
