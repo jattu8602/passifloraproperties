@@ -21,7 +21,7 @@ export default function Hero() {
       className="relative h-80 md:h-[500px] bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
-          'url(/placeholder.svg?height=500&width=1200&query=luxury-eco-resort-landscape-with-green-nature-and-modern-architecture)',
+          'url("https://static.rdc.moveaws.com/images/hero/default/2021-11/jpg/hp-hero-desktop.jpg")',
       }}
     >
       {/* Dark overlay */}

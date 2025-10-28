@@ -31,7 +31,10 @@ export default function Header() {
               />
               <span
                 className="text-xl text-amber-700 "
-                style={{ fontFamily: '"Dancing Script", cursive', fontWeight: 400 }}
+                style={{
+                  fontFamily: '"Dancing Script", cursive',
+                  fontWeight: 400,
+                }}
               >
                 Passiflora Properties
               </span>
