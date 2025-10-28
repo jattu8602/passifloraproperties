@@ -39,21 +39,23 @@ export default function RecommendedNeighborhoods() {
   ]
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <h2 className="text-4xl font-bold mb-2">Recommended neighborhoods</h2>
-      <p className="text-gray-600 mb-12 text-lg">
+    <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <h2 className="text-2xl md:text-4xl font-bold mb-2">
+        Recommended neighborhoods
+      </h2>
+      <p className="text-gray-600 mb-8 md:mb-12 text-base md:text-lg">
         Based on your previous search
       </p>
 
       {/* Neighborhoods Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {neighborhoods.map((neighborhood, index) => (
           <div
             key={index}
             className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200"
           >
             {/* Map Image */}
-            <div className="w-full h-48 bg-gray-200 relative overflow-hidden">
+            <div className="w-full h-40 md:h-48 bg-gray-200 relative overflow-hidden">
               <Image
                 src={neighborhood.image}
                 alt={`${neighborhood.name} map`}
@@ -66,7 +68,9 @@ export default function RecommendedNeighborhoods() {
 
             {/* Info */}
             <div className="p-4">
-              <h3 className="text-xl font-bold mb-2">{neighborhood.name}</h3>
+              <h3 className="text-lg md:text-xl font-bold mb-2">
+                {neighborhood.name}
+              </h3>
               <p className="text-gray-600 mb-1">
                 <span className="font-bold">{neighborhood.listings}</span>{' '}
                 Listings for sale

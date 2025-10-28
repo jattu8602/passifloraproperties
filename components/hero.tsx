@@ -1,19 +1,19 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Search } from "lucide-react"
+import { useState } from 'react'
+import { Search } from 'lucide-react'
 
 export default function Hero() {
-  const [activeTab, setActiveTab] = useState("buy")
-  const [location, setLocation] = useState("Maharashtra, India")
+  const [activeTab, setActiveTab] = useState('buy')
+  const [location, setLocation] = useState('Maharashtra, India')
 
   const tabs = [
-    { id: "buy", label: "Buy" },
-    { id: "rent", label: "Rent" },
-    { id: "sell", label: "Sell" },
-    { id: "preapproval", label: "Pre-approval" },
-    { id: "justsold", label: "Just sold" },
-    { id: "homevalue", label: "Home value" },
+    { id: 'buy', label: 'Buy' },
+    { id: 'rent', label: 'Rent' },
+    { id: 'sell', label: 'Sell' },
+    { id: 'preapproval', label: 'Pre-approval' },
+    { id: 'justsold', label: 'Just sold' },
+    { id: 'homevalue', label: 'Home value' },
   ]
 
   return (
@@ -21,7 +21,7 @@ export default function Hero() {
       className="relative h-80 md:h-[500px] bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
-          "url(/placeholder.svg?height=500&width=1200&query=luxury-eco-resort-landscape-with-green-nature-and-modern-architecture)",
+          'url(/placeholder.svg?height=500&width=1200&query=luxury-eco-resort-landscape-with-green-nature-and-modern-architecture)',
       }}
     >
       {/* Dark overlay */}
@@ -31,7 +31,8 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6 md:mb-8">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 text-balance leading-tight">
-            The #1 site real estate professionals trust<span className="text-amber-400">*</span>
+            The #1 site real estate professionals trust
+            <span className="text-amber-400">*</span>
           </h1>
         </div>
 
@@ -42,7 +43,9 @@ export default function Hero() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`font-bold text-xs md:text-sm transition whitespace-nowrap ${
-                activeTab === tab.id ? "text-white border-b-2 border-white pb-2" : "text-white/70 hover:text-white"
+                activeTab === tab.id
+                  ? 'text-white border-b-2 border-white pb-2'
+                  : 'text-white/70 hover:text-white'
               }`}
             >
               {tab.label}
@@ -72,6 +75,13 @@ export default function Hero() {
           </p>
         </div>
       </div>
+
+      {/* Invisible sentinel for mobile sticky search trigger */}
+      <div
+        id="hero-sentinel"
+        aria-hidden
+        className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
+      />
     </section>
   )
 }

@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
 export default function UniqueHomes() {
   return (
-    <section className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
+    <section className="relative h-80 md:h-[500px] lg:h-[600px] overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -17,11 +17,11 @@ export default function UniqueHomes() {
       {/* Content */}
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
         <p className="text-white text-lg mb-4 font-semibold">Unique Homes</p>
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 max-w-3xl leading-tight text-balance">
-          Former President FDR's 'Favored' Hunting Retreat Hits the Market in Hudson Valley for $1.6 Million: 'A
-          Masterwork of Craft'
+        <h2 className="text-2xl md:text-5xl font-bold text-white mb-6 md:mb-8 max-w-3xl leading-tight text-balance">
+          Former President FDR's 'Favored' Hunting Retreat Hits the Market in
+          Hudson Valley for $1.6 Million: 'A Masterwork of Craft'
         </h2>
-        <button className="px-8 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all duration-200">
+        <button className="px-6 md:px-8 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all duration-200">
           Read Article
         </button>
       </div>
