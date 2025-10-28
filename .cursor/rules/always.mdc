@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+
+- always use pnpm for this project
+- use gsap for animations
+- follow the consistent design for this website
+
+---

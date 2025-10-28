@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import gsap from 'gsap'
+import AuthModal from '@/components/auth-modal'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -13,11 +14,12 @@ export default function Header() {
   const itemRefs = useRef<Array<HTMLAnchorElement | null>>([])
   const signupBtnRef = useRef<HTMLButtonElement | null>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
+  const [authOpen, setAuthOpen] = useState(false)
 
   const navLinks = [
     { label: 'Buy', href: '#' },
     // { label: 'Sell', href: '#' },
-    { label: 'Rent', href: '#' },
+    // { label: 'Rent', href: '#' },
     { label: 'Mortgage', href: '#' },
     { label: 'Find an Agent', href: '#' },
     { label: 'My Home', href: '#' },
@@ -79,13 +81,13 @@ export default function Header() {
     <>
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-16 lg:h-14">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <img
                 src="/passiflora.svg"
                 alt="Passiflora Properties Logo"
-                className="h-10 w-auto"
+                className="h-10 lg:h-8 w-auto"
               />
               <span
                 className="text-xl text-amber-700 "
@@ -104,7 +106,7 @@ export default function Header() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm"
+                  className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
                 >
                   {link.label}
                 </Link>
@@ -115,23 +117,30 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-6">
               <Link
                 href="#"
-                className="font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm"
+                className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
               >
                 Manage rentals
               </Link>
               <Link
                 href="#"
-                className="font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm"
+                className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
               >
                 Advertise
               </Link>
               <Link
                 href="#"
-                className="font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm"
+                onClick={(e) => {
+                  e.preventDefault()
+                  setAuthOpen(true)
+                }}
+                className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
               >
                 Log in
               </Link>
-              <button className="px-6 py-2 bg-black text-white rounded-full font-bold text-sm hover:bg-gray-800 transition-colors duration-200">
+              <button
+                onClick={() => setAuthOpen(true)}
+                className="px-6 py-2 bg-black text-white rounded-full font-bold text-sm transition-all duration-200 hover:bg-gray-900 hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+              >
                 Sign up
               </button>
             </div>
@@ -238,7 +247,9 @@ export default function Header() {
                   ref={(el) => {
                     itemRefs.current[navLinks.length + i] = el
                   }}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (label === 'Log in') setAuthOpen(true)
                     if (tlRef.current) {
                       tlRef.current.reverse()
                       tlRef.current.eventCallback('onReverseComplete', () => {
@@ -258,6 +269,7 @@ export default function Header() {
                 ref={signupBtnRef}
                 className="mt-4 w-full px-6 py-3 bg-black text-white rounded-lg font-bold text-base hover:bg-gray-800 transition-colors duration-200"
                 onClick={() => {
+                  setAuthOpen(true)
                   if (tlRef.current) {
                     tlRef.current.reverse()
                     tlRef.current.eventCallback('onReverseComplete', () => {
@@ -276,6 +288,7 @@ export default function Header() {
           </div>
         </div>
       )}
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   )
 
