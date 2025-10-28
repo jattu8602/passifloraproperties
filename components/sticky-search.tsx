@@ -12,43 +12,32 @@ export default function StickySearch() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // Desktop: keep existing scrollY threshold behavior
-    if (!isMobile) {
-      const handleScroll = () => {
-        setIsVisible(window.scrollY > 300)
+    // Prefer IntersectionObserver on mobile to follow the hero search bar visibility precisely
+    if (isMobile) {
+      const el = document.getElementById('hero-search-bar')
+      if (el && 'IntersectionObserver' in window) {
+        const OBS_THRESHOLD = 0 // change to 0.2 if you want to trigger earlier, when partially hidden
+        const OBS_ROOT_MARGIN = '0px 0px 0px 0px' // use '-48px 0px 0px 0px' to trigger earlier
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0]
+            setIsVisible(!entry.isIntersecting)
+            // or: setIsVisible(entry.intersectionRatio < OBS_THRESHOLD)
+          },
+          { root: null, threshold: OBS_THRESHOLD, rootMargin: OBS_ROOT_MARGIN }
+        )
+        observer.observe(el)
+        return () => observer.disconnect()
       }
-      window.addEventListener('scroll', handleScroll)
-      return () => window.removeEventListener('scroll', handleScroll)
     }
 
-    // Mobile: use IntersectionObserver with hero sentinel
-    const sentinel = document.getElementById('hero-sentinel')
-    if (!sentinel) {
-      // Fallback to threshold if sentinel missing
-      const handleScroll = () => setIsVisible(window.scrollY > 300)
-      window.addEventListener('scroll', handleScroll)
-      return () => window.removeEventListener('scroll', handleScroll)
-    }
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0]
-          // When sentinel is NOT intersecting, hero is out of view → show sticky
-          setIsVisible(!entry.isIntersecting)
-        },
-        {
-          root: null,
-          threshold: 0,
-        }
-      )
-      observer.observe(sentinel)
-      return () => observer.disconnect()
-    } else {
-      const handleScroll = () => setIsVisible(window.scrollY > 300)
-      window.addEventListener('scroll', handleScroll)
-      return () => window.removeEventListener('scroll', handleScroll)
-    }
+    // Fallback and desktop behavior: scroll threshold
+    const DESKTOP_SCROLL_THRESHOLD = 300
+    const handleScroll = () =>
+      setIsVisible(window.scrollY > DESKTOP_SCROLL_THRESHOLD)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobile])
 
   return (

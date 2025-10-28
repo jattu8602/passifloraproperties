@@ -54,7 +54,10 @@ export default function Hero() {
         </div>
 
         {/* Search Bar */}
-        <div className="bg-white rounded-full p-2 flex items-center gap-2 shadow-lg max-w-2xl mx-auto">
+        <div
+          id="hero-search-bar"
+          className="bg-white rounded-full p-2 flex items-center gap-2 shadow-lg max-w-2xl mx-auto"
+        >
           <input
             type="text"
             value={location}
