@@ -101,7 +101,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-5">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -115,34 +115,42 @@ export default function Header() {
 
             {/* Right side links - Desktop */}
             <div className="hidden lg:flex items-center gap-6">
-              <Link
-                href="#"
-                className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-              >
-                Manage rentals
-              </Link>
-              <Link
-                href="#"
-                className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-              >
-                Advertise
-              </Link>
-              <Link
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  setAuthOpen(true)
-                }}
-                className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-              >
-                Log in
-              </Link>
-              <button
-                onClick={() => setAuthOpen(true)}
-                className="px-6 py-2 bg-black text-white rounded-full font-bold text-sm transition-all duration-200 hover:bg-gray-900 hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
-              >
-                Sign up
-              </button>
+              {/* Group 1: Manage / Advertise (kept slightly apart) */}
+              <div className="flex items-center gap-4">
+                <Link
+                  href="#"
+                  className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                >
+                  Manage rentals
+                </Link>
+                <Link
+                  href="#"
+                  className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                >
+                  Advertise
+                </Link>
+              </div>
+              {/* Divider to separate stacks */}
+              <div className="hidden lg:block h-6 w-px bg-gray-200" />
+              {/* Group 2: Log in / Sign up (tighter) */}
+              <div className="flex items-center gap-2">
+                <Link
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setAuthOpen(true)
+                  }}
+                  className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                >
+                  Log in
+                </Link>
+                <button
+                  onClick={() => setAuthOpen(true)}
+                  className="px-5 py-2 bg-black text-white rounded-full font-bold text-sm transition-all duration-200 hover:bg-gray-900 hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+                >
+                  Sign up
+                </button>
+              </div>
             </div>
 
             {/* Mobile menu button */}
