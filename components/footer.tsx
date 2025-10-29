@@ -11,6 +11,9 @@ import {
   Youtube,
   Download,
   Check,
+  Phone,
+  Mail,
+  MapPin,
 } from 'lucide-react'
 import { usePWAInstall } from '@/hooks/use-pwa-install'
 
@@ -67,24 +70,54 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="hidden sm:flex items-center gap-4 opacity-90">
-            <div className="rounded-xl bg-white p-2 shadow-md">
-              <Image
-                src="/logo.svg"
-                alt="Partner badge"
-                width={112}
-                height={40}
-                className="h-8 w-auto"
-              />
+          <div className="flex items-center justify-center hidden md:block">
+            <Image
+              src="/logo.png"
+              alt="Passiflora Properties"
+              width={260}
+              height={90}
+              className="h-16 w-auto sm:h-20 rounded-2xl shadow-xl"
+            />
+          </div>
+        </div>
+
+        {/* Contact Information */}
+        <div className="py-8 border-b border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex items-start gap-3">
+              <Phone className="text-yellow-400 mt-1" size={20} />
+              <div>
+                <p className="text-white font-semibold mb-1">Phone</p>
+                <a
+                  href="tel:+919607210333"
+                  className="text-gray-300 hover:text-white transition"
+                >
+                  +91 9607210333
+                </a>
+              </div>
             </div>
-            <div className="rounded-xl bg-white p-2 shadow-md">
-              <Image
-                src="/passiflora.svg"
-                alt="Partner badge"
-                width={112}
-                height={40}
-                className="h-8 w-auto"
-              />
+            <div className="flex items-start gap-3">
+              <Mail className="text-yellow-400 mt-1" size={20} />
+              <div>
+                <p className="text-white font-semibold mb-1">Email</p>
+                <a
+                  href="mailto:passiflorapune@gmail.com"
+                  className="text-gray-300 hover:text-white transition"
+                >
+                  passiflorapune@gmail.com
+                </a>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <MapPin className="text-yellow-400 mt-1" size={20} />
+              <div>
+                <p className="text-white font-semibold mb-1">Address</p>
+                <p className="text-gray-300 text-sm">
+                  202, Nawu Imperio, Adjacent to Lodha Belmondo,
+                  <br />
+                  Gahunje, Pimpri-Chinchwad, Pune, Maharashtra, 412101
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -95,94 +128,136 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-3 sm:mb-4">Company</h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
-                <Link href="#" className="hover:text-white transition">
-                  About us
+                <Link href="/about" className="hover:text-white transition">
+                  About Us
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
+                <Link href="/projects" className="hover:text-white transition">
+                  Our Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/directors" className="hover:text-white transition">
+                  Directors
+                </Link>
+              </li>
+              <li>
+                <Link href="/careers" className="hover:text-white transition">
                   Careers
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Media room
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Contact
-                </Link>
-              </li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-semibold mb-3 sm:mb-4">Resources</h4>
-            <ul className="space-y-2 sm:space-y-3 text-sm">
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Accessibility
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Feedback
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Tech blog
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Sitemap
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-3 sm:mb-4">Support</h4>
-            <ul className="space-y-2 sm:space-y-3 text-sm">
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Agent support
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Advertise with us
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition">
-                  Ad choices
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-3 sm:mb-4">Legal</h4>
+            <h4 className="text-white font-semibold mb-3 sm:mb-4">
+              Properties
+            </h4>
             <ul className="space-y-2 sm:space-y-3 text-sm">
               <li>
                 <Link
-                  href="#"
-                  className="text-yellow-400 hover:text-yellow-300 transition"
+                  href="/projects?state=maharashtra"
+                  className="hover:text-white transition"
                 >
-                  Do Not Sell or Share My Personal Information
+                  Maharashtra
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
-                  Privacy
+                <Link
+                  href="/projects?state=bihar"
+                  className="hover:text-white transition"
+                >
+                  Bihar
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition">
-                  Terms
+                <Link
+                  href="/projects?state=jharkhand"
+                  className="hover:text-white transition"
+                >
+                  Jharkhand
+                </Link>
+              </li>
+              <li>
+                <Link href="/projects" className="hover:text-white transition">
+                  All Projects
                 </Link>
               </li>
             </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-3 sm:mb-4">Services</h4>
+            <ul className="space-y-2 sm:space-y-3 text-sm">
+              <li>
+                <Link
+                  href="/services#farm-plots"
+                  className="hover:text-white transition"
+                >
+                  Farm Plot Development
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services#farmhouse"
+                  className="hover:text-white transition"
+                >
+                  Farmhouse Construction
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services#buy-sell"
+                  className="hover:text-white transition"
+                >
+                  Buy/Sell/Rent Land
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services#resort"
+                  className="hover:text-white transition"
+                >
+                  Resort Development
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-3 sm:mb-4">
+              Legal & Support
+            </h4>
+            <ul className="space-y-2 sm:space-y-3 text-sm">
+              <li>
+                <Link href="/privacy" className="hover:text-white transition">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/advisory" className="hover:text-white transition">
+                  Investment Advisory
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition">
+                  Contact Support
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Presence Strip */}
+        <div className="py-4 border-t border-white/10">
+          <div className="text-center">
+            <p className="text-gray-300 text-sm">
+              <span className="text-yellow-400 font-semibold">Presence:</span>{' '}
+              Maharashtra • Bihar • Jharkhand
+            </p>
           </div>
         </div>
 
@@ -227,15 +302,16 @@ export default function Footer() {
         {/* Bottom legal strip */}
         <div className="py-6 sm:py-8 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
           <div className="flex items-center gap-4 sm:gap-6">
-            <Link href="#" className="hover:text-white transition">
-              Privacy
+            <Link href="/privacy" className="hover:text-white transition">
+              Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-white transition">
-              Terms
+            <Link href="/terms" className="hover:text-white transition">
+              Terms & Conditions
             </Link>
           </div>
           <p className="text-center md:text-right">
-            © 2025 Passiflora Properties. All rights reserved.
+            © 2025 Passiflora Properties. Building Nature-Connected Living
+            Spaces Across India.
           </p>
         </div>
       </div>
