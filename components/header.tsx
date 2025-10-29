@@ -2,11 +2,13 @@
 
 import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { useSession, signOut } from 'next-auth/react'
 import gsap from 'gsap'
 import AuthModal from '@/components/auth-modal'
 import UserDropdown from '@/components/user-dropdown'
+import { headerNav } from '@/lib/menu.config'
+import ProjectsMegaMenu from '@/components/projects-mega-menu'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -18,16 +20,10 @@ export default function Header() {
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
   const { data: session } = useSession()
+  const [projectsOpen, setProjectsOpen] = useState(false)
+  const projectsTimerRef = useRef<number | null>(null)
 
-  const navLinks = [
-    { label: 'Buy', href: '#' },
-    // { label: 'Sell', href: '#' },
-    // { label: 'Rent', href: '#' },
-    { label: 'Mortgage', href: '#' },
-    { label: 'Find an Agent', href: '#' },
-    { label: 'My Home', href: '#' },
-    { label: 'News & Insights', href: '#' },
-  ]
+  const navLinks = headerNav
 
   // Build GSAP timeline when menu opens
   useLayoutEffect(() => {
@@ -104,16 +100,52 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-5">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <nav className="hidden lg:flex items-center gap-5 relative">
+              {navLinks.map((link) => {
+                if (link.label === 'Properties') {
+                  return (
+                    <div
+                      key={link.label}
+                      className="relative"
+                      onMouseEnter={() => {
+                        if (projectsTimerRef.current)
+                          window.clearTimeout(projectsTimerRef.current)
+                        setProjectsOpen(true)
+                      }}
+                      onMouseLeave={() => {
+                        projectsTimerRef.current = window.setTimeout(
+                          () => setProjectsOpen(false),
+                          200
+                        )
+                      }}
+                    >
+                      <Link
+                        href={link.href}
+                        className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm flex items-center gap-1"
+                      >
+                        {link.label}
+                        <ChevronDown size={16} />
+                      </Link>
+                      {projectsOpen && (
+                        <div className="absolute top-full left-0 z-50">
+                          <ProjectsMegaMenu
+                            onNavigate={() => setProjectsOpen(false)}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
             </nav>
 
             {/* Right side links - Desktop */}
@@ -235,30 +267,100 @@ export default function Header() {
 
             {/* Content */}
             <nav className="flex flex-col gap-2 p-6 pt-20">
-              {navLinks.map((link, i) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="font-bold text-gray-800 text-lg"
-                  ref={(el) => {
-                    itemRefs.current[i] = el
-                  }}
-                  onClick={() => {
-                    if (tlRef.current) {
-                      tlRef.current.reverse()
-                      tlRef.current.eventCallback('onReverseComplete', () => {
-                        setMobileMenuOpen(false)
-                        document.body.style.overflow = ''
-                      })
-                    } else {
-                      setMobileMenuOpen(false)
-                      document.body.style.overflow = ''
-                    }
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {(() => {
+                let idx = 0
+                return navLinks.map((link) => {
+                  if (link.label === 'Properties') {
+                    return (
+                      <div key={link.label} className="w-full">
+                        <details className="group">
+                          <summary
+                            className="font-bold text-gray-800 text-lg flex items-center justify-between cursor-pointer list-none"
+                            ref={(el) => {
+                              itemRefs.current[idx] = el
+                              idx += 1
+                            }}
+                          >
+                            Properties
+                            <span className="transition-transform group-open:rotate-180">
+                              ⌄
+                            </span>
+                          </summary>
+                          <div className="mt-3 pl-2">
+                            {require('@/lib/menu.config').projectsByState.map(
+                              (group: any) => (
+                                <div key={group.state} className="mb-3">
+                                  <p className="text-sm font-semibold text-gray-700 mb-2">
+                                    {group.state}
+                                  </p>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    {group.cities.map((city: string) => (
+                                      <Link
+                                        key={`${group.state}-${city}`}
+                                        href={`/projects?state=${encodeURIComponent(
+                                          group.state
+                                        )}&city=${encodeURIComponent(city)}`}
+                                        className="text-sm text-gray-800"
+                                        onClick={() => {
+                                          if (tlRef.current) {
+                                            tlRef.current.reverse()
+                                            tlRef.current.eventCallback(
+                                              'onReverseComplete',
+                                              () => {
+                                                setMobileMenuOpen(false)
+                                                document.body.style.overflow =
+                                                  ''
+                                              }
+                                            )
+                                          } else {
+                                            setMobileMenuOpen(false)
+                                            document.body.style.overflow = ''
+                                          }
+                                        }}
+                                      >
+                                        {city}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        </details>
+                      </div>
+                    )
+                  }
+                  const currentIndex = idx
+                  idx += 1
+                  return (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="font-bold text-gray-800 text-lg"
+                      ref={(el) => {
+                        itemRefs.current[currentIndex] = el
+                      }}
+                      onClick={() => {
+                        if (tlRef.current) {
+                          tlRef.current.reverse()
+                          tlRef.current.eventCallback(
+                            'onReverseComplete',
+                            () => {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          )
+                        } else {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                        }
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                })
+              })()}
               <hr className="my-4" />
               {['Manage rentals', 'Advertise'].map((label, i) => (
                 <Link

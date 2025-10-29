@@ -7,6 +7,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 export default function StickySearch() {
   // Start hidden; we'll decide visibility once the hero bar is found/observed
   const [isVisible, setIsVisible] = useState(false)
+  const [canShow, setCanShow] = useState(false)
   const [location, setLocation] = useState('Maharashtra, India')
   const isMobile = useIsMobile()
   const debounceRef = useRef<number | null>(null)
@@ -14,6 +15,8 @@ export default function StickySearch() {
   const mountedRef = useRef(false)
   const retryTimeoutRef = useRef<number | null>(null)
   const hasAttachedRef = useRef(false)
+  const heroElementFoundRef = useRef(false)
+  const initialDelayRef = useRef(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -28,6 +31,7 @@ export default function StickySearch() {
     const tryAttachMobile = () => {
       const el = document.getElementById('hero-search-bar')
       if (el && 'IntersectionObserver' in window) {
+        heroElementFoundRef.current = true
         // Hysteresis: show when ratio <= 0.02, hide when >= 0.12
         const SHOW_THRESHOLD = 0.02
         const HIDE_THRESHOLD = 0.12
@@ -38,6 +42,14 @@ export default function StickySearch() {
             lastRatioRef.current = ratio
             if (debounceRef.current) cancelAnimationFrame(debounceRef.current)
             debounceRef.current = requestAnimationFrame(() => {
+              // Check if any modal is open before showing
+              const hasModal = document.querySelector(
+                '[role="dialog"][aria-modal]'
+              )
+              if (hasModal || !initialDelayRef.current) {
+                setIsVisible(false)
+                return
+              }
               setIsVisible((prev) => {
                 if (!entry.isIntersecting || ratio <= SHOW_THRESHOLD)
                   return true
@@ -67,6 +79,7 @@ export default function StickySearch() {
     const tryAttachDesktop = () => {
       const desktopEl = document.getElementById('hero-search-bar')
       if (!isMobile && desktopEl && 'IntersectionObserver' in window) {
+        heroElementFoundRef.current = true
         // Hysteresis for desktop: show <= 0.08, hide >= 0.18
         const SHOW_THRESHOLD = 0.08
         const HIDE_THRESHOLD = 0.18
@@ -77,6 +90,14 @@ export default function StickySearch() {
             lastRatioRef.current = ratio
             if (debounceRef.current) cancelAnimationFrame(debounceRef.current)
             debounceRef.current = requestAnimationFrame(() => {
+              // Check if any modal is open before showing
+              const hasModal = document.querySelector(
+                '[role="dialog"][aria-modal]'
+              )
+              if (hasModal || !initialDelayRef.current) {
+                setIsVisible(false)
+                return
+              }
               setIsVisible((prev) => {
                 if (ratio <= SHOW_THRESHOLD) return true
                 if (ratio >= HIDE_THRESHOLD) return false
@@ -112,6 +133,14 @@ export default function StickySearch() {
     const handleScroll = () => {
       const target = document.getElementById('hero-search-bar')
       if (!target) return // keep current state until element exists
+
+      // Check if any modal is open or initial delay hasn't passed
+      const hasModal = document.querySelector('[role="dialog"][aria-modal]')
+      if (hasModal || !initialDelayRef.current) {
+        setIsVisible(false)
+        return
+      }
+
       const rect = target.getBoundingClientRect()
       // When the bottom of the bar is near the top (ending phase)
       setIsVisible(rect.bottom <= 16)
@@ -124,6 +153,45 @@ export default function StickySearch() {
       if (cleanup) cleanup()
     }
   }, [isMobile])
+
+  // Initial delay - wait 800ms after mount before allowing sticky search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      initialDelayRef.current = true
+      setCanShow(true)
+    }, 800)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Watch for modal opening/closing to hide sticky search
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const checkModal = () => {
+      const hasModal = document.querySelector('[role="dialog"][aria-modal]')
+      if (hasModal) {
+        setIsVisible(false)
+        setCanShow(false)
+      } else if (initialDelayRef.current) {
+        // Allow showing again only after initial delay has passed
+        setCanShow(true)
+      }
+    }
+
+    // Check immediately
+    checkModal()
+
+    // Watch for modal additions/removals
+    const observer = new MutationObserver(checkModal)
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['role', 'aria-modal'],
+    })
+
+    return () => observer.disconnect()
+  }, [])
 
   // Avoid initial flash on mount
   useEffect(() => {
@@ -139,7 +207,7 @@ export default function StickySearch() {
         // Ensure overlay above header on mobile
         isMobile ? 'z-[60]' : 'z-40'
       } bg-white border-b border-gray-200 transition-all duration-300 motion-reduce:transition-none motion-reduce:transform-none ${
-        isVisible
+        isVisible && canShow
           ? 'opacity-100 translate-y-0 shadow-md'
           : 'opacity-0 -translate-y-full pointer-events-none'
       }`}

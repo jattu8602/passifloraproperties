@@ -1,19 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Search } from 'lucide-react'
 
 export default function Hero() {
-  const [activeTab, setActiveTab] = useState('buy')
-  const [location, setLocation] = useState('Maharashtra, India')
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState('home')
+  const [location, setLocation] = useState('')
 
   const tabs = [
-    { id: 'buy', label: 'Buy' },
-    { id: 'rent', label: 'Rent' },
-    { id: 'sell', label: 'Sell' },
-    { id: 'preapproval', label: 'Pre-approval' },
-    { id: 'justsold', label: 'Just sold' },
-    { id: 'homevalue', label: 'Home value' },
+    { id: 'home', label: 'Home' },
+    { id: 'maharashtra', label: 'Maharashtra' },
+    { id: 'bihar', label: 'Bihar' },
+    { id: 'jharkhand', label: 'Jharkhand' },
   ]
 
   return (
@@ -41,7 +41,18 @@ export default function Hero() {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                setActiveTab(tab.id)
+                if (tab.id === 'home') {
+                  router.push('/')
+                } else if (tab.id === 'maharashtra') {
+                  router.push('/projects?state=Maharashtra')
+                } else if (tab.id === 'bihar') {
+                  router.push('/projects?state=Bihar')
+                } else if (tab.id === 'jharkhand') {
+                  router.push('/projects?state=Jharkhand')
+                }
+              }}
               className={`font-bold text-xs md:text-sm transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'text-white border-b-2 border-white pb-2'
@@ -62,7 +73,7 @@ export default function Hero() {
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="City, address, or ZIP"
+            placeholder="Search projects or cities..."
             className="flex-1 px-3 md:px-4 py-2 md:py-3 outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base"
           />
           <button className="bg-black text-white p-2 md:p-3 rounded-full hover:bg-gray-800 transition">
