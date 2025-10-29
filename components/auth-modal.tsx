@@ -226,7 +226,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
               {isLoading ? 'Signing in...' : 'Continue with Google'}
             </button>
 
-            <button
+            {/* <button
               onClick={handleFacebookSignIn}
               disabled={isLoading}
               className="w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 py-3 font-semibold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -238,9 +238,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 />
               </svg>
               {isLoading ? 'Signing in...' : 'Continue with Facebook'}
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               onClick={handleGitHubSignIn}
               disabled={isLoading}
               className="w-full flex items-center justify-center gap-3 rounded-full border border-gray-300 py-3 font-semibold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -252,7 +252,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 />
               </svg>
               {isLoading ? 'Signing in...' : 'Continue with GitHub'}
-            </button>
+            </button> */}
           </div>
 
           <div className="text-center mt-6 space-y-2 text-sm">
