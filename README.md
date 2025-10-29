@@ -7,7 +7,7 @@ Modern, mobile-first real estate platform built with Next.js App Router, TypeScr
 - Responsive UI with App Router and Tailwind
 - Sticky search with IntersectionObserver hysteresis (no flicker)
 - Polished header with GSAP-animated mobile sidenav
-- Auth modal (Google OAuth + Email magic links via Resend)
+- Auth modal (Google OAuth, Facebook OAuth, GitHub OAuth + Email magic links via Resend)
 - Success modal animation (shows once on first login)
 - Profile dropdown with avatar and logout
 - Prisma + MongoDB user/session storage
@@ -15,16 +15,16 @@ Modern, mobile-first real estate platform built with Next.js App Router, TypeScr
 
 ## 🧱 Tech Stack
 
-| Layer      | Tech                                     |
-| ---------- | ---------------------------------------- |
-| Framework  | Next.js 16 (App Router), React 18        |
-| Language   | TypeScript                               |
-| Styling    | Tailwind CSS 4, Radix UI primitives      |
-| Auth       | NextAuth v5 (Google, Resend magic links) |
-| DB/ORM     | MongoDB + Prisma                         |
-| Email      | Resend                                   |
-| Animations | GSAP                                     |
-| Media      | Cloudinary                               |
+| Layer      | Tech                                                       |
+| ---------- | ---------------------------------------------------------- |
+| Framework  | Next.js 16 (App Router), React 18                          |
+| Language   | TypeScript                                                 |
+| Styling    | Tailwind CSS 4, Radix UI primitives                        |
+| Auth       | NextAuth v5 (Google, Facebook, GitHub, Resend magic links) |
+| DB/ORM     | MongoDB + Prisma                                           |
+| Email      | Resend                                                     |
+| Animations | GSAP                                                       |
+| Media      | Cloudinary                                                 |
 
 ## 🚀 Quick Start
 
@@ -42,6 +42,10 @@ NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="<long-random-string>"
 GOOGLE_CLIENT_ID="..."
 GOOGLE_CLIENT_SECRET="..."
+FACEBOOK_CLIENT_ID="..."
+FACEBOOK_CLIENT_SECRET="..."
+GITHUB_CLIENT_ID="..."
+GITHUB_CLIENT_SECRET="..."
 RESEND_API_KEY="..."
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="..."
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET="..."
@@ -67,6 +71,8 @@ Visit `http://localhost:3000`.
 ## 🔐 Authentication
 
 - Google OAuth: redirects to Google consent, returns a session (JWT strategy)
+- Facebook OAuth: redirects to Facebook consent, returns a session (JWT strategy)
+- GitHub OAuth: redirects to GitHub consent, returns a session (JWT strategy)
 - Email magic link: Resend delivers a one-time sign-in link
 - Sessions persist for 30 days by default (configurable in `lib/auth.ts`)
 
@@ -103,7 +109,7 @@ Docs/                # project documentation
 
 - Set all environment variables in your hosting provider (Vercel recommended)
 - Ensure `NEXTAUTH_URL` matches your deployed domain
-- Add Google OAuth redirect URIs for dev and prod
+- Add Google, Facebook, and GitHub OAuth redirect URIs for dev and prod
 - Consider verifying a Resend custom domain for better deliverability
 
 ## 📝 License

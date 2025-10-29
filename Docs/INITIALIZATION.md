@@ -14,7 +14,7 @@ This document explains the Passiflora Properties project from first principles: 
 - Next.js 16 (App Router), React 18
 - TypeScript
 - Tailwind CSS 4 + Radix UI primitives
-- NextAuth v5 (Google OAuth, Email magic links via Resend)
+- NextAuth v5 (Google OAuth, Facebook OAuth, GitHub OAuth, Email magic links via Resend)
 - Prisma (MongoDB)
 - GSAP (animations)
 - Cloudinary (media)
@@ -29,7 +29,7 @@ This document explains the Passiflora Properties project from first principles: 
 
 ### Key Paths
 
-- `lib/auth.ts` — NextAuth config (Google + Resend, JWT sessions)
+- `lib/auth.ts` — NextAuth config (Google + Facebook + GitHub + Resend, JWT sessions)
 - `lib/prisma.ts` — Prisma client singleton
 - `app/api/auth/[...nextauth]/route.ts` — Auth route handlers
 - `components/auth-modal.tsx` — Login/signup modal (GSAP)
@@ -43,13 +43,15 @@ This document explains the Passiflora Properties project from first principles: 
 Models: `User`, `Account`, `Session`, `VerificationToken` (Auth.js defaults)
 
 - `User`: id, name, email, emailVerified, image, timestamps
-- `Account`: OAuth provider linkage (Google)
+- `Account`: OAuth provider linkage (Google, Facebook, GitHub)
 - `Session`: not used with JWT strategy but kept for compatibility
 - `VerificationToken`: email sign-in tokens
 
 ## Authentication Flow
 
 - Google OAuth: user redirected to Google → returns with `id_token` → user upserted → JWT issued
+- Facebook OAuth: user redirected to Facebook → returns with `access_token` → user upserted → JWT issued
+- GitHub OAuth: user redirected to GitHub → returns with `access_token` → user upserted → JWT issued
 - Email magic link (Resend): user enters email → NextAuth generates token → email sent → click link → user upserted → JWT issued
 - Session strategy: JWT with 30‑day `maxAge` (configurable)
 
@@ -81,6 +83,10 @@ NEXTAUTH_URL=
 NEXTAUTH_SECRET=
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
 RESEND_API_KEY=
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=
@@ -100,7 +106,7 @@ pnpm dev
 ## Known Issues & Notes
 
 - Resend onboarding domain has throttling; use a verified domain in production
-- Apple/Facebook can be added later via NextAuth providers
+- Apple can be added later via NextAuth providers
 - Ensure `NEXTAUTH_URL` matches current origin (dev/prod)
 
 ## Roadmap
@@ -108,5 +114,5 @@ pnpm dev
 - Saved properties with persistence
 - Profile page and settings
 - Cloudinary image upload for avatars
-- More providers (Apple, Facebook)
+- More providers (Apple)
 - E2E testing (Playwright) and unit tests
