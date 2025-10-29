@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import gsap from 'gsap'
 import AuthModal from '@/components/auth-modal'
 import UserDropdown from '@/components/user-dropdown'
@@ -13,7 +13,7 @@ export default function Header() {
   const menuBtnRef = useRef<HTMLButtonElement | null>(null)
   const overlayRef = useRef<HTMLDivElement | null>(null)
   const backdropRef = useRef<HTMLDivElement | null>(null)
-  const itemRefs = useRef<Array<HTMLAnchorElement | null>>([])
+  const itemRefs = useRef<Array<HTMLElement | null>>([])
   const signupBtnRef = useRef<HTMLButtonElement | null>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const [authOpen, setAuthOpen] = useState(false)
@@ -287,7 +287,12 @@ export default function Header() {
 
               {session ? (
                 <div className="mt-4 space-y-3">
-                  <div className="px-4 py-3 bg-gray-50 rounded-lg">
+                  <div
+                    className="px-4 py-3 bg-gray-50 rounded-lg"
+                    ref={(el) => {
+                      itemRefs.current[navLinks.length + 2] = el
+                    }}
+                  >
                     <p className="font-semibold text-gray-900">
                       {session.user?.name}
                     </p>
@@ -299,6 +304,9 @@ export default function Header() {
                     <Link
                       href="#"
                       className="block font-bold text-gray-800 text-lg py-2"
+                      ref={(el) => {
+                        itemRefs.current[navLinks.length + 3] = el
+                      }}
                       onClick={() => {
                         if (tlRef.current) {
                           tlRef.current.reverse()
@@ -320,6 +328,9 @@ export default function Header() {
                     <Link
                       href="#"
                       className="block font-bold text-gray-800 text-lg py-2"
+                      ref={(el) => {
+                        itemRefs.current[navLinks.length + 4] = el
+                      }}
                       onClick={() => {
                         if (tlRef.current) {
                           tlRef.current.reverse()
@@ -341,6 +352,9 @@ export default function Header() {
                     <Link
                       href="#"
                       className="block font-bold text-gray-800 text-lg py-2"
+                      ref={(el) => {
+                        itemRefs.current[navLinks.length + 5] = el
+                      }}
                       onClick={() => {
                         if (tlRef.current) {
                           tlRef.current.reverse()
@@ -359,6 +373,31 @@ export default function Header() {
                     >
                       Settings
                     </Link>
+                    <button
+                      className="block w-full text-left font-bold text-red-600 text-lg py-2"
+                      ref={(el) => {
+                        itemRefs.current[navLinks.length + 6] = el
+                      }}
+                      onClick={() => {
+                        if (tlRef.current) {
+                          tlRef.current.reverse()
+                          tlRef.current.eventCallback(
+                            'onReverseComplete',
+                            () => {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                              void signOut({ redirect: false })
+                            }
+                          )
+                        } else {
+                          setMobileMenuOpen(false)
+                          document.body.style.overflow = ''
+                          void signOut({ redirect: false })
+                        }
+                      }}
+                    >
+                      Sign out
+                    </button>
                   </div>
                 </div>
               ) : (
