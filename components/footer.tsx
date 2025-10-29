@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -7,9 +9,21 @@ import {
   Pin,
   X as XIcon,
   Youtube,
+  Download,
+  Check,
 } from 'lucide-react'
+import { usePWAInstall } from '@/hooks/use-pwa-install'
 
 export default function Footer() {
+  const { installState, canInstall, isInstalled, isSupported, install } =
+    usePWAInstall()
+
+  const handleInstall = async () => {
+    if (canInstall) {
+      await install()
+    }
+  }
+
   return (
     <footer className="bg-black text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -172,32 +186,41 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* App badges + tagline */}
+        {/* Web App Download + tagline */}
         <div className="py-6 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center md:items-center justify-center md:justify-between gap-4 md:gap-6">
             <div className="text-base sm:text-lg font-semibold text-white">
-              Get the app
+              Get the web app
             </div>
-            <div className="flex flex-col xs:flex-row sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-              <a
-                href="#"
-                className="inline-flex justify-center items-center gap-3 rounded-lg bg-white text-black px-4 py-2 shadow hover:shadow-md transition w-full sm:w-auto"
-                aria-label="Download on the App Store"
-              >
-                <span className="text-sm font-semibold">
-                  Download on the App Store
-                </span>
-              </a>
-              <a
-                href="#"
-                className="inline-flex justify-center items-center gap-3 rounded-lg bg-white text-black px-4 py-2 shadow hover:shadow-md transition w-full sm:w-auto"
-                aria-label="Get it on Google Play"
-              >
-                <span className="text-sm font-semibold">
-                  Get it on Google Play
-                </span>
-              </a>
-            </div>
+            {isSupported && (
+              <div className="flex flex-col xs:flex-row sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                {isInstalled ? (
+                  <div className="inline-flex justify-center items-center gap-3 rounded-lg bg-green-600 text-white px-4 py-2 shadow w-full sm:w-auto">
+                    <Check size={20} />
+                    <span className="text-sm font-semibold">
+                      Web App Installed
+                    </span>
+                  </div>
+                ) : canInstall ? (
+                  <button
+                    onClick={handleInstall}
+                    className="inline-flex justify-center items-center gap-3 rounded-lg bg-white text-black px-4 py-2 shadow hover:shadow-md transition w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    aria-label="Download Web App"
+                  >
+                    <Download size={20} />
+                    <span className="text-sm font-semibold">
+                      Download Web App
+                    </span>
+                  </button>
+                ) : (
+                  <div className="inline-flex justify-center items-center gap-3 rounded-lg bg-gray-600 text-gray-300 px-4 py-2 shadow w-full sm:w-auto">
+                    <span className="text-sm font-semibold">
+                      Installation not available
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

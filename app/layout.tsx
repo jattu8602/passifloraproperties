@@ -22,6 +22,24 @@ export const metadata: Metadata = {
   description:
     'Invest in land and grow with nature. Discover sustainable communities, farm plots, and resort destinations across India.',
   generator: 'v0.app',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Passiflora Properties',
+  },
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#fbbf24',
 }
 
 export default function RootLayout({
