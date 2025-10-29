@@ -43,14 +43,14 @@ export default function Header() {
         overlayRef.current,
         {
           clipPath: 'circle(150% at var(--menu-x) var(--menu-y))',
-          duration: 0.42,
+          duration: 0.25,
           ease: 'cubic-bezier(0.22,1,0.36,1)',
         },
         0
       )
         .to(
           backdropRef.current,
-          { opacity: 1, duration: 0.3, ease: 'power2.out' },
+          { opacity: 1, duration: 0.2, ease: 'power2.out' },
           0.05
         )
         .to(
@@ -58,15 +58,15 @@ export default function Header() {
           {
             opacity: 1,
             y: 0,
-            duration: 0.35,
+            duration: 0.25,
             ease: 'power2.out',
-            stagger: 0.04,
+            stagger: 0.03,
           },
           0.15
         )
         .to(
           signupBtnRef.current,
-          { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' },
+          { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
           0.3
         )
 
@@ -227,10 +227,14 @@ export default function Header() {
             className="absolute inset-0 bg-black/50"
             onClick={() => {
               if (tlRef.current) {
+                // Speed up reverse animation for better UX - almost instant
+                tlRef.current.timeScale(4.0)
                 tlRef.current.reverse()
                 tlRef.current.eventCallback('onReverseComplete', () => {
                   setMobileMenuOpen(false)
                   document.body.style.overflow = ''
+                  // Reset timeScale for next opening
+                  if (tlRef.current) tlRef.current.timeScale(1)
                 })
               } else {
                 setMobileMenuOpen(false)
@@ -250,10 +254,14 @@ export default function Header() {
               aria-label="Close menu"
               onClick={() => {
                 if (tlRef.current) {
+                  // Speed up reverse animation for better UX - almost instant
+                  tlRef.current.timeScale(4.0)
                   tlRef.current.reverse()
                   tlRef.current.eventCallback('onReverseComplete', () => {
                     setMobileMenuOpen(false)
                     document.body.style.overflow = ''
+                    // Reset timeScale for next opening
+                    if (tlRef.current) tlRef.current.timeScale(1)
                   })
                 } else {
                   setMobileMenuOpen(false)
@@ -266,72 +274,202 @@ export default function Header() {
             </button>
 
             {/* Content */}
-            <nav className="flex flex-col gap-2 p-6 pt-20">
+            <nav className="flex flex-col gap-3 p-6 pt-20">
               {(() => {
                 let idx = 0
                 return navLinks.map((link) => {
                   if (link.label === 'Properties') {
+                    const startIdx = idx
+                    idx += 1
                     return (
                       <div key={link.label} className="w-full">
-                        <details className="group">
-                          <summary
-                            className="font-bold text-gray-800 text-lg flex items-center justify-between cursor-pointer list-none"
-                            ref={(el) => {
-                              itemRefs.current[idx] = el
-                              idx += 1
-                            }}
-                          >
-                            Properties
-                            <span className="transition-transform group-open:rotate-180">
-                              ⌄
-                            </span>
-                          </summary>
-                          <div className="mt-3 pl-2">
-                            {require('@/lib/menu.config').projectsByState.map(
-                              (group: any) => (
-                                <div key={group.state} className="mb-3">
-                                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                                    {group.state}
-                                  </p>
-                                  <div className="grid grid-cols-2 gap-2">
-                                    {group.cities.map((city: string) => (
-                                      <Link
-                                        key={`${group.state}-${city}`}
-                                        href={`/projects?state=${encodeURIComponent(
-                                          group.state
-                                        )}&city=${encodeURIComponent(city)}`}
-                                        className="text-sm text-gray-800"
-                                        onClick={() => {
-                                          if (tlRef.current) {
-                                            tlRef.current.reverse()
-                                            tlRef.current.eventCallback(
-                                              'onReverseComplete',
-                                              () => {
-                                                setMobileMenuOpen(false)
-                                                document.body.style.overflow =
-                                                  ''
-                                              }
-                                            )
-                                          } else {
-                                            setMobileMenuOpen(false)
-                                            document.body.style.overflow = ''
-                                          }
-                                        }}
-                                      >
-                                        {city}
-                                      </Link>
-                                    ))}
-                                  </div>
+                        <p
+                          className="font-bold text-gray-800 text-lg mb-3"
+                          ref={(el) => {
+                            itemRefs.current[startIdx] = el
+                          }}
+                        >
+                          Properties
+                        </p>
+                        <div className="grid grid-cols-3 gap-4 mt-2">
+                          {require('@/lib/menu.config').projectsByState.map(
+                            (group: any) => (
+                              <div
+                                key={group.state}
+                                ref={(el) => {
+                                  itemRefs.current[idx] = el
+                                  idx += 1
+                                }}
+                              >
+                                <p className="text-xs font-bold text-gray-900 mb-2">
+                                  {group.state}
+                                </p>
+                                <div className="space-y-1.5">
+                                  {group.cities.map((city: string) => (
+                                    <Link
+                                      key={`${group.state}-${city}`}
+                                      href={`/projects?state=${encodeURIComponent(
+                                        group.state
+                                      )}&city=${encodeURIComponent(city)}`}
+                                      className="text-xs text-gray-700 hover:text-amber-700 block"
+                                      onClick={() => {
+                                        if (tlRef.current) {
+                                          tlRef.current.reverse()
+                                          tlRef.current.eventCallback(
+                                            'onReverseComplete',
+                                            () => {
+                                              setMobileMenuOpen(false)
+                                              document.body.style.overflow = ''
+                                            }
+                                          )
+                                        } else {
+                                          setMobileMenuOpen(false)
+                                          document.body.style.overflow = ''
+                                        }
+                                      }}
+                                    >
+                                      {city}
+                                    </Link>
+                                  ))}
                                 </div>
-                              )
-                            )}
-                          </div>
-                        </details>
+                              </div>
+                            )
+                          )}
+                        </div>
                       </div>
                     )
                   }
                   const currentIndex = idx
                   idx += 1
+
+                  // Group Services/About and Gallery/Contact in pairs
+                  if (link.label === 'Services') {
+                    const aboutLink = navLinks.find((l) => l.label === 'About')
+                    return (
+                      <div
+                        key={`${link.label}-${aboutLink?.label}`}
+                        className="flex items-center justify-between"
+                        ref={(el) => {
+                          itemRefs.current[currentIndex] = el
+                        }}
+                      >
+                        <Link
+                          href={link.href}
+                          className="font-bold text-gray-800 text-base py-2"
+                          onClick={() => {
+                            if (tlRef.current) {
+                              tlRef.current.timeScale(4.0)
+                              tlRef.current.reverse()
+                              tlRef.current.eventCallback(
+                                'onReverseComplete',
+                                () => {
+                                  setMobileMenuOpen(false)
+                                  document.body.style.overflow = ''
+                                  if (tlRef.current) tlRef.current.timeScale(1)
+                                }
+                              )
+                            } else {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          }}
+                        >
+                          {link.label}
+                        </Link>
+                        <Link
+                          href={aboutLink?.href || '#'}
+                          className="font-bold text-gray-800 text-base py-2"
+                          onClick={() => {
+                            if (tlRef.current) {
+                              tlRef.current.timeScale(4.0)
+                              tlRef.current.reverse()
+                              tlRef.current.eventCallback(
+                                'onReverseComplete',
+                                () => {
+                                  setMobileMenuOpen(false)
+                                  document.body.style.overflow = ''
+                                  if (tlRef.current) tlRef.current.timeScale(1)
+                                }
+                              )
+                            } else {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          }}
+                        >
+                          {aboutLink?.label}
+                        </Link>
+                      </div>
+                    )
+                  }
+
+                  if (link.label === 'Gallery') {
+                    const contactLink = navLinks.find(
+                      (l) => l.label === 'Contact'
+                    )
+                    return (
+                      <div
+                        key={`${link.label}-${contactLink?.label}`}
+                        className="flex items-center justify-between"
+                        ref={(el) => {
+                          itemRefs.current[currentIndex] = el
+                        }}
+                      >
+                        <Link
+                          href={link.href}
+                          className="font-bold text-gray-800 text-base py-2"
+                          onClick={() => {
+                            if (tlRef.current) {
+                              tlRef.current.timeScale(4.0)
+                              tlRef.current.reverse()
+                              tlRef.current.eventCallback(
+                                'onReverseComplete',
+                                () => {
+                                  setMobileMenuOpen(false)
+                                  document.body.style.overflow = ''
+                                  if (tlRef.current) tlRef.current.timeScale(1)
+                                }
+                              )
+                            } else {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          }}
+                        >
+                          {link.label}
+                        </Link>
+                        <Link
+                          href={contactLink?.href || '#'}
+                          className="font-bold text-gray-800 text-base py-2"
+                          onClick={() => {
+                            if (tlRef.current) {
+                              tlRef.current.timeScale(4.0)
+                              tlRef.current.reverse()
+                              tlRef.current.eventCallback(
+                                'onReverseComplete',
+                                () => {
+                                  setMobileMenuOpen(false)
+                                  document.body.style.overflow = ''
+                                  if (tlRef.current) tlRef.current.timeScale(1)
+                                }
+                              )
+                            } else {
+                              setMobileMenuOpen(false)
+                              document.body.style.overflow = ''
+                            }
+                          }}
+                        >
+                          {contactLink?.label}
+                        </Link>
+                      </div>
+                    )
+                  }
+
+                  // Skip About and Contact as they're handled in pairs above
+                  if (link.label === 'About' || link.label === 'Contact') {
+                    return null
+                  }
+
                   return (
                     <Link
                       key={link.label}
@@ -362,13 +500,12 @@ export default function Header() {
                 })
               })()}
               <hr className="my-4" />
-              {['Manage rentals', 'Advertise'].map((label, i) => (
+              <div className="flex items-center justify-between">
                 <Link
-                  key={label}
                   href="#"
-                  className="font-bold text-gray-800 text-lg"
+                  className="font-bold text-gray-800 text-base"
                   ref={(el) => {
-                    itemRefs.current[navLinks.length + i] = el
+                    itemRefs.current[navLinks.length + 3] = el
                   }}
                   onClick={() => {
                     if (tlRef.current) {
@@ -383,16 +520,37 @@ export default function Header() {
                     }
                   }}
                 >
-                  {label}
+                  Manage rentals
                 </Link>
-              ))}
+                <Link
+                  href="#"
+                  className="font-bold text-gray-800 text-base"
+                  ref={(el) => {
+                    itemRefs.current[navLinks.length + 4] = el
+                  }}
+                  onClick={() => {
+                    if (tlRef.current) {
+                      tlRef.current.reverse()
+                      tlRef.current.eventCallback('onReverseComplete', () => {
+                        setMobileMenuOpen(false)
+                        document.body.style.overflow = ''
+                      })
+                    } else {
+                      setMobileMenuOpen(false)
+                      document.body.style.overflow = ''
+                    }
+                  }}
+                >
+                  Advertise
+                </Link>
+              </div>
 
               {session ? (
                 <div className="mt-4 space-y-3">
                   <div
                     className="px-4 py-3 bg-gray-50 rounded-lg"
                     ref={(el) => {
-                      itemRefs.current[navLinks.length + 2] = el
+                      itemRefs.current[navLinks.length + 5] = el
                     }}
                   >
                     <p className="font-semibold text-gray-900">
@@ -402,113 +560,117 @@ export default function Header() {
                       {session.user?.email}
                     </p>
                   </div>
-                  <div className="space-y-2">
-                    <Link
-                      href="#"
-                      className="block font-bold text-gray-800 text-lg py-2"
-                      ref={(el) => {
-                        itemRefs.current[navLinks.length + 3] = el
-                      }}
-                      onClick={() => {
-                        if (tlRef.current) {
-                          tlRef.current.reverse()
-                          tlRef.current.eventCallback(
-                            'onReverseComplete',
-                            () => {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          )
-                        } else {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                        }
-                      }}
-                    >
-                      Profile
-                    </Link>
-                    <Link
-                      href="#"
-                      className="block font-bold text-gray-800 text-lg py-2"
-                      ref={(el) => {
-                        itemRefs.current[navLinks.length + 4] = el
-                      }}
-                      onClick={() => {
-                        if (tlRef.current) {
-                          tlRef.current.reverse()
-                          tlRef.current.eventCallback(
-                            'onReverseComplete',
-                            () => {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          )
-                        } else {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                        }
-                      }}
-                    >
-                      Saved Properties
-                    </Link>
-                    <Link
-                      href="#"
-                      className="block font-bold text-gray-800 text-lg py-2"
-                      ref={(el) => {
-                        itemRefs.current[navLinks.length + 5] = el
-                      }}
-                      onClick={() => {
-                        if (tlRef.current) {
-                          tlRef.current.reverse()
-                          tlRef.current.eventCallback(
-                            'onReverseComplete',
-                            () => {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          )
-                        } else {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                        }
-                      }}
-                    >
-                      Settings
-                    </Link>
-                    <button
-                      className="block w-full text-left font-bold text-red-600 text-lg py-2"
-                      ref={(el) => {
-                        itemRefs.current[navLinks.length + 6] = el
-                      }}
-                      onClick={() => {
-                        if (tlRef.current) {
-                          tlRef.current.reverse()
-                          tlRef.current.eventCallback(
-                            'onReverseComplete',
-                            () => {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                              void signOut({ redirect: false })
-                            }
-                          )
-                        } else {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                          void signOut({ redirect: false })
-                        }
-                      }}
-                    >
-                      Sign out
-                    </button>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Link
+                        href="#"
+                        className="font-bold text-gray-800 text-base py-2"
+                        ref={(el) => {
+                          itemRefs.current[navLinks.length + 6] = el
+                        }}
+                        onClick={() => {
+                          if (tlRef.current) {
+                            tlRef.current.reverse()
+                            tlRef.current.eventCallback(
+                              'onReverseComplete',
+                              () => {
+                                setMobileMenuOpen(false)
+                                document.body.style.overflow = ''
+                              }
+                            )
+                          } else {
+                            setMobileMenuOpen(false)
+                            document.body.style.overflow = ''
+                          }
+                        }}
+                      >
+                        Profile
+                      </Link>
+                      <Link
+                        href="#"
+                        className="font-bold text-gray-800 text-base py-2"
+                        ref={(el) => {
+                          itemRefs.current[navLinks.length + 7] = el
+                        }}
+                        onClick={() => {
+                          if (tlRef.current) {
+                            tlRef.current.reverse()
+                            tlRef.current.eventCallback(
+                              'onReverseComplete',
+                              () => {
+                                setMobileMenuOpen(false)
+                                document.body.style.overflow = ''
+                              }
+                            )
+                          } else {
+                            setMobileMenuOpen(false)
+                            document.body.style.overflow = ''
+                          }
+                        }}
+                      >
+                        Saved Properties
+                      </Link>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Link
+                        href="#"
+                        className="font-bold text-gray-800 text-base py-2"
+                        ref={(el) => {
+                          itemRefs.current[navLinks.length + 8] = el
+                        }}
+                        onClick={() => {
+                          if (tlRef.current) {
+                            tlRef.current.reverse()
+                            tlRef.current.eventCallback(
+                              'onReverseComplete',
+                              () => {
+                                setMobileMenuOpen(false)
+                                document.body.style.overflow = ''
+                              }
+                            )
+                          } else {
+                            setMobileMenuOpen(false)
+                            document.body.style.overflow = ''
+                          }
+                        }}
+                      >
+                        Settings
+                      </Link>
+                      <button
+                        className="font-bold text-red-600 text-base py-2"
+                        ref={(el) => {
+                          itemRefs.current[navLinks.length + 9] = el
+                        }}
+                        onClick={() => {
+                          if (tlRef.current) {
+                            tlRef.current.reverse()
+                            tlRef.current.eventCallback(
+                              'onReverseComplete',
+                              () => {
+                                setMobileMenuOpen(false)
+                                document.body.style.overflow = ''
+                                void signOut({ redirect: false })
+                              }
+                            )
+                          } else {
+                            setMobileMenuOpen(false)
+                            document.body.style.overflow = ''
+                            void signOut({ redirect: false })
+                          }
+                        }}
+                      >
+                        Sign out
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : (
                 <>
                   <Link
                     href="#"
-                    className="font-bold text-gray-800 text-lg"
+                    className="font-bold text-gray-800 text-lg mt-2"
                     ref={(el) => {
-                      itemRefs.current[navLinks.length + 2] = el
+                      itemRefs.current[navLinks.length + 5] = el
                     }}
                     onClick={(e) => {
                       e.preventDefault()
@@ -574,14 +736,14 @@ export default function Header() {
         overlayRef.current,
         {
           clipPath: 'circle(150% at var(--menu-x) var(--menu-y))',
-          duration: 0.42,
+          duration: 0.25,
           ease: 'cubic-bezier(0.22,1,0.36,1)',
         },
         0
       )
         .to(
           backdropRef.current,
-          { opacity: 1, duration: 0.3, ease: 'power2.out' },
+          { opacity: 1, duration: 0.2, ease: 'power2.out' },
           0.05
         )
         .to(
@@ -589,15 +751,15 @@ export default function Header() {
           {
             opacity: 1,
             y: 0,
-            duration: 0.35,
+            duration: 0.25,
             ease: 'power2.out',
-            stagger: 0.04,
+            stagger: 0.03,
           },
           0.15
         )
         .to(
           signupBtnRef.current,
-          { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' },
+          { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
           0.3
         )
 
