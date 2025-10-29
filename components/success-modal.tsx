@@ -39,8 +39,8 @@ export default function SuccessModal({
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.4,
-          ease: 'back.out(1.7)',
+          duration: 0.2,
+          ease: 'power2.out',
         },
         0.1
       )
@@ -67,7 +67,7 @@ export default function SuccessModal({
 
     const timer = setTimeout(() => {
       handleClose()
-    }, 3000)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [open])
