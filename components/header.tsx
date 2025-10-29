@@ -156,7 +156,7 @@ export default function Header() {
                   href="#"
                   className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
                 >
-                  Manage rentals
+                  Auction Properties
                 </Link>
                 <Link
                   href="#"
@@ -520,7 +520,7 @@ export default function Header() {
                     }
                   }}
                 >
-                  Manage rentals
+                  Auction Properties
                 </Link>
                 <Link
                   href="#"
