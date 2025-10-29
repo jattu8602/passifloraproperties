@@ -72,7 +72,7 @@ export default function Footer() {
 
           <div className="flex items-center justify-center hidden md:block">
             <Image
-              src="/logo.png"
+              src="/passiflora.svg"
               alt="Passiflora Properties"
               width={260}
               height={90}
@@ -104,7 +104,7 @@ export default function Footer() {
                   href="mailto:passiflorapune@gmail.com"
                   className="text-gray-300 hover:text-white transition"
                 >
-                  passiflorapune@gmail.com
+                  info.passifloraproperties@gmail.com
                 </a>
               </div>
             </div>
