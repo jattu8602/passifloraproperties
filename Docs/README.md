@@ -39,6 +39,10 @@ Planned docs:
   2. Build `/projects` pages (list + detail, filters)
   3. Implement inquiries API + Resend email alerts
 
+## Quick Fix Guides
+
+- Prisma env loading with prisma.config.ts → `Docs/PRISMA_ENV_LOADING.md`
+
 ---
 
 Owner: Passiflora Properties • Year: 2025
