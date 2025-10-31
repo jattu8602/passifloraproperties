@@ -159,11 +159,10 @@ export default function Gallery() {
             <div className="text-3xl sm:text-4xl">🏠</div>
             <div>
               <h3 className="text-lg sm:text-xl md:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
-                Exploring Properties? Discover Your Perfect Land Today
+                Exploring Properties? Let Nature Guide You.
               </h3>
               <p className="text-gray-600 text-sm sm:text-base">
-                Find nature-rich plots and sustainable communities across
-                India.
+                Find nature-rich plots and sustainable communities across India.
               </p>
             </div>
           </div>

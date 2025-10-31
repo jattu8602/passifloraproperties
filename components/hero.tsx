@@ -31,7 +31,7 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6 md:mb-8">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 text-balance leading-tight">
-            The #1 site real estate professionals trust
+            The #1 Choice for Sustainable Land Investments in India
             <span className="text-amber-400">*</span>
           </h1>
         </div>

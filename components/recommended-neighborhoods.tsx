@@ -1,87 +1,103 @@
-'use client'
-
-import Image from 'next/image'
+import trustLegacy from '@/assets/trust-legacy.jpg'
+import luxurySustainability from '@/assets/luxury-sustainability.jpg'
+import relationships from '@/assets/relationships.jpg'
+import propertyCare from '@/assets/property-care.jpg'
 
 export default function RecommendedNeighborhoods() {
-  const neighborhoods = [
+  const contentCards = [
     {
-      name: 'Linden Hills',
-      listings: 45,
-      medianPrice: '$837,400',
-      image: '/map_images/map1.png',
-      mapEmbed:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2822.5!2d-93.3!3d44.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b32d!2m2!1d-93.3!2d44.9!5e0!3m2!1sen!2sus!4v1234567890',
+      title: 'Two Decades of Trust',
+      description:
+        'For over two decades, Passiflora Properties has redefined what it means to invest in land. We believe that every piece of land carries a story — of roots, growth, and legacy.',
+      illustration:
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920732/link-generator/ytiff9c2m628xeikc6dg.jpg',
     },
     {
-      name: 'Fulton',
-      listings: 36,
-      medianPrice: '$780,000',
-      image: '/map_images/map2.png',
-      mapEmbed:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2822.5!2d-93.3!3d44.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b32d!2m2!1d-93.3!2d44.95!5e0!3m2!1sen!2sus!4v1234567890',
+      title: 'Luxury Meets Sustainability',
+      description:
+        "Founded with a vision to combine luxury, transparency, and sustainability, Passiflora Properties has become one of India's most trusted names in farm plots, second homes, villas, and resort developments.",
+      illustration:
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920734/link-generator/wo6ce3ncheeev0eftwju.jpg',
     },
     {
-      name: 'Waite Park',
-      listings: 9,
-      medianPrice: '$342,500',
-      image: '/map_images/map3.png',
-      mapEmbed:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2822.5!2d-93.25!3d44.92!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b32d!2m2!1d-93.25!2d44.92!5e0!3m2!1sen!2sus!4v1234567890',
+      title: 'Beyond Transactions',
+      description:
+        'At Passiflora, we go beyond transactions — we build lifelong relationships. Every investor, every family, every dream matters to us.',
+      illustration:
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920735/link-generator/naaw8qr9yuplv3ihlzbt.jpg',
     },
     {
-      name: 'Whittier',
-      listings: 43,
-      medianPrice: '$144,900',
-      image: '/map_images/map4.png',
-      mapEmbed:
-        'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2822.5!2d-93.28!3d44.88!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b32d!2m2!1d-93.28!2d44.88!5e0!3m2!1sen!2sus!4v1234567890',
+      title: 'Your Land, Our Care',
+      description:
+        'We handle your property as our own — ensuring legal transparency, consistent appreciation, and even managed cultivation through our FPO partnership model, where your land works for you.',
+      illustration:
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920736/link-generator/rgsrcbit9apzzwpivcca.jpg',
     },
   ]
 
   return (
     <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <h2 className="text-2xl md:text-4xl font-bold mb-2">
-        Recommended neighborhoods
+      <h2 className="text-2xl md:text-4xl font-bold mb-2 text-foreground">
+        Why Choose Passiflora Properties
       </h2>
-      <p className="text-gray-600 mb-8 md:mb-12 text-base md:text-lg">
-        Based on your previous search
+      <p className="text-muted-foreground mb-8 md:mb-12 text-base md:text-lg">
+        Where Trust Takes Root, and Your Land Grows Into Legacy
       </p>
 
-      {/* Neighborhoods Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        {neighborhoods.map((neighborhood, index) => (
+      {/* Desktop Grid - 2x2 Grid */}
+      <div className="hidden md:grid md:grid-cols-2 gap-6 lg:gap-8">
+        {contentCards.map((card, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200"
+            className="bg-card rounded-xl overflow-hidden border border-border shadow-md hover:shadow-xl transition-all-300 duration-300 hover:-translate-y-1 group"
           >
-            {/* Map Image */}
-            <div className="w-full h-40 md:h-48 bg-gray-200 relative overflow-hidden">
-              <Image
-                src={neighborhood.image}
-                alt={`${neighborhood.name} map`}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                priority={false}
+            <div className="w-full h-64 lg:h-80 bg-secondary relative overflow-hidden">
+              <img
+                src={card.illustration}
+                alt={card.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
 
-            {/* Info */}
-            <div className="p-4">
-              <h3 className="text-lg md:text-xl font-bold mb-2">
-                {neighborhood.name}
+            <div className="p-6 lg:p-8">
+              <h3 className="text-2xl font-bold mb-4 text-card-foreground">
+                {card.title}
               </h3>
-              <p className="text-gray-600 mb-1">
-                <span className="font-bold">{neighborhood.listings}</span>{' '}
-                Listings for sale
-              </p>
-              <p className="text-gray-600">
-                <span className="font-bold">{neighborhood.medianPrice}</span>{' '}
-                Median Listing Home Price
+              <p className="text-muted-foreground leading-relaxed text-base">
+                {card.description}
               </p>
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Mobile Horizontal Scroll */}
+      <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4">
+        <div className="flex gap-4 min-w-max">
+          {contentCards.map((card, index) => (
+            <div
+              key={index}
+              className="bg-card rounded-lg overflow-hidden border border-border shadow-sm w-[280px] flex-shrink-0"
+            >
+              <div className="w-full h-40 bg-secondary relative overflow-hidden">
+                <img
+                  src={card.illustration}
+                  alt={card.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="p-4">
+                <h3 className="text-lg font-bold mb-2 text-card-foreground">
+                  {card.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">
+                  {card.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

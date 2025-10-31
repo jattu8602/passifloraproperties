@@ -4,42 +4,93 @@ import { useState } from 'react'
 import { DollarSign, Calculator, PiggyBank } from 'lucide-react'
 
 export default function DiscoverHelp() {
-  const [activeTab, setActiveTab] = useState('buying')
+  const [activeTab, setActiveTab] = useState('about')
 
   const tabs = [
-    { id: 'buying', label: 'Buying' },
-    { id: 'renting', label: 'Renting' },
-    { id: 'selling', label: 'Selling' },
+    { id: 'about', label: 'About' },
+    { id: 'vision', label: 'Vision & Mission' },
+    { id: 'values', label: 'Values & Promise' },
   ]
 
-  const cards = [
-    {
-      title: 'Find out how much you can afford',
-      description:
-        "We'll help you estimate your budget range. Save to your buyer profile to help in your search.",
-      link: 'Try our affordability calculator',
-      icon: DollarSign,
-    },
-    {
-      title: 'Understand your monthly costs',
-      description:
-        'Get an in-depth look at what your monthly and closing costs will look like based on your financial situation and goals.',
-      link: 'Try our mortgage calculator',
-      icon: Calculator,
-    },
-    {
-      title: 'Get help with your down payment',
-      description:
-        'You may be able to buy a home with just 3.5% down. Saving for that can be challenging–down payment assistance programs can help.',
-      link: 'Find down payment help',
-      icon: PiggyBank,
-    },
-  ]
+  const cards: Record<
+    string,
+    { title: string; description: string; highlight: string; icon: any }[]
+  > = {
+    about: [
+      {
+        title: 'About Passiflora Properties',
+        description:
+          'For over two decades, we have redefined land investment by blending luxury, transparency, and sustainability across farm plots, villas, and resort developments.',
+        highlight: 'Where trust takes root, and land grows into legacy.',
+        icon: DollarSign,
+      },
+      {
+        title: 'Plant Your Legacy',
+        description:
+          'We help you own a meaningful part of nature that grows in both value and emotion—through legally verified land and long-term stewardship.',
+        highlight: 'Own nature. Grow value. Build legacy.',
+        icon: Calculator,
+      },
+      {
+        title: 'Beyond Transactions',
+        description:
+          'Every investor, every family, every dream matters. We build lifelong relationships with end-to-end support and transparent processes.',
+        highlight: 'People first. Processes clear. Value compounding.',
+        icon: PiggyBank,
+      },
+    ],
+    vision: [
+      {
+        title: 'Our Vision',
+        description:
+          'To be India’s most trusted name in premium land development, creating spaces where nature, wellness, and prosperity come together.',
+        highlight: 'Inspiring wise investment and meaningful living.',
+        icon: DollarSign,
+      },
+      {
+        title: 'Our Mission',
+        description:
+          'Make land investment transparent, sustainable, and rewarding—delivering legally verified, nature-integrated properties that grow in value and purpose.',
+        highlight: 'Verified lands. Sustainable growth. Seamless ownership.',
+        icon: Calculator,
+      },
+      {
+        title: 'Our Belief',
+        description:
+          'Every acre deserves a purpose. Every home deserves peace. Every investor deserves trust. We turn land into long-term pride and prosperity.',
+        highlight: 'Land with purpose. Homes with peace. Trust by design.',
+        icon: PiggyBank,
+      },
+    ],
+    values: [
+      {
+        title: 'Trust & Transparency',
+        description:
+          'We deliver clear titles and open processes—ensuring confidence at every step, from discovery to documentation.',
+        highlight: 'Trust built on clarity and consistency.',
+        icon: DollarSign,
+      },
+      {
+        title: 'Integrity & Sustainability',
+        description:
+          'We promise what we can deliver and respect nature’s balance—planning developments that endure and enrich.',
+        highlight: 'Honest delivery. Nature-respecting design.',
+        icon: Calculator,
+      },
+      {
+        title: 'Growth & Legacy',
+        description:
+          'With FPO partnerships and resale support, we help your land work for you—creating wealth, purpose, and legacy for generations.',
+        highlight: 'Your land, managed for long-term value.',
+        icon: PiggyBank,
+      },
+    ],
+  }
 
   return (
     <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <h2 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">
-        Discover how we can help
+        Craft Your Legacy with Passiflora
       </h2>
 
       {/* Tabs */}
@@ -61,7 +112,7 @@ export default function DiscoverHelp() {
 
       {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-        {cards.map((card, index) => {
+        {cards[activeTab].map((card, index) => {
           const Icon = card.icon
           return (
             <div
@@ -77,12 +128,9 @@ export default function DiscoverHelp() {
               <p className="text-gray-600 mb-5 md:mb-6 leading-relaxed text-sm md:text-base">
                 {card.description}
               </p>
-              <a
-                href="#"
-                className="text-gray-900 font-bold underline hover:text-amber-700 transition-colors duration-200"
-              >
-                {card.link}
-              </a>
+              <div className="text-gray-900 font-semibold text-sm md:text-base">
+                {card.highlight}
+              </div>
             </div>
           )
         })}
