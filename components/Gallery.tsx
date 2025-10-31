@@ -2,55 +2,55 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-export default function BrowseProperties() {
+export default function Gallery() {
   const properties = [
     {
       id: 1,
       title: 'New Listings',
       count: 269,
-      image: '/new-luxury-property.jpg',
+      image: '/gallery/1.jpg',
     },
     {
       id: 2,
       title: 'Price Reduced',
       count: 349,
-      image: '/modern-house-exterior.jpg',
+      image: '/gallery/2.jpg',
     },
     {
       id: 3,
       title: 'Open Houses',
       count: 26,
-      image: '/green-house-garden.jpg',
+      image: '/gallery/3.jpg',
     },
     {
       id: 4,
       title: 'Recently Sold',
       count: 4299,
-      image: '/sold-property-house.jpg',
+      image: '/gallery/4.jpg',
     },
     {
       id: 5,
       title: 'New Construction',
       count: 52,
-      image: '/modern-new-construction-interior-kitchen.jpg',
+      image: '/gallery/5.jpg',
     },
     {
       id: 6,
       title: 'Land',
       count: 59,
-      image: '/land-plot-aerial-view.jpg',
+      image: '/gallery/6.jpg',
     },
     {
       id: 7,
       title: 'Foreclosures',
       count: 1,
-      image: '/foreclosure-property-kitchen.jpg',
+      image: '/gallery/7.jpg',
     },
     {
       id: 8,
       title: 'Condos',
       count: 481,
-      image: '/luxury-condo-interior.jpg',
+      image: '/gallery/8.jpg',
     },
   ]
 
@@ -89,7 +89,7 @@ export default function BrowseProperties() {
     <section className="bg-white py-10 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8">
-          Browse properties in Maharashtra, India
+          Where Nature Paints Every Frame
         </h2>
 
         {/* Property Cards - horizontal scroll on mobile, grid on md+ */}
@@ -115,10 +115,26 @@ export default function BrowseProperties() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-between p-4">
                 <div></div>
                 <div>
-                  <h3 className="text-white font-bold text-lg">
-                    {property.title}
-                  </h3>
                   <div className="flex items-center gap-2 mt-2">
+                    <button
+                      type="button"
+                      aria-label="Like"
+                      className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center shadow-md ring-1 ring-black/20 hover:scale-105 transition"
+                    >
+                      {/* Heart outline icon */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-5 h-5"
+                      >
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                      </svg>
+                    </button>
                     <span className="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
                       {property.count.toLocaleString()}
                     </span>
@@ -143,10 +159,11 @@ export default function BrowseProperties() {
             <div className="text-3xl sm:text-4xl">🏠</div>
             <div>
               <h3 className="text-lg sm:text-xl md:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
-                Selling? Compare local listing agents for free
+                Exploring Properties? Discover Your Perfect Land Today
               </h3>
               <p className="text-gray-600 text-sm sm:text-base">
-                Find a trusted expert, no obligations.
+                Find nature-rich plots and sustainable communities across
+                India.
               </p>
             </div>
           </div>

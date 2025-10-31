@@ -1,7 +1,8 @@
 import Header from "@/components/header"
 import Hero from "@/components/hero"
 import StickySearch from "@/components/sticky-search"
-import BrowseProperties from "@/components/browse-properties"
+import Gallery from "@/components/Gallery"
+// import Gallery from "@/components/Gallery"
 import DiscoverHelp from "@/components/discover-help"
 import RecommendedNeighborhoods from "@/components/recommended-neighborhoods"
 import UniqueHomes from "@/components/unique-homes"
@@ -13,7 +14,8 @@ export default function Home() {
       <Header />
       <StickySearch />
       <Hero />
-      <BrowseProperties />
+      {/* <BrowseProperties /> */}
+      <Gallery />
       <DiscoverHelp />
       <RecommendedNeighborhoods />
       <UniqueHomes />

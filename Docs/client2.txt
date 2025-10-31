@@ -1,0 +1,113 @@
+PASSIFLORA PROPERTIES – WEBSITE CONTENT & STRUCTURE BRIEF
+HOMEPAGE
+Hero Section (Top Banner)
+
+Replace with:
+
+Passiflora Properties
+Building Nature-Connected Living Spaces Across India
+Explore farm plots, luxury farmhouses, and eco-wellness communities designed to reconnect people with nature.
+
+Buttons:
+
+“Explore Projects” → /projects
+
+“Contact Us” → /contact
+
+Background: Drone shot or scenic view of Rajgad / Pawna / Bhor.
+
+“Browse Properties” Section
+
+Replace U.S.-based listings with Indian regions:
+
+Browse properties in Maharashtra, Bihar & Jharkhand
+
+Show Cards or Tabs:
+
+Maharashtra → Pawna (Resort + Plots), Bhor (Rajgad Project), Karjat, Kamshet, Manchar, Mumbai (Chembur)
+
+Bihar → Patna (Gangajal Project), Sonepur, Gaya
+
+Jharkhand → Ranchi
+
+Each card:
+
+Photo of area
+
+“View Projects” button linking to /projects#cityname
+
+ Tagline Section
+
+“Luxury eco-real-estate across India. Invest in land. Grow with nature.”
+From community farm plots to fully furnished luxury farm villas — Passiflora Properties connects investment with impact.
+
+Highlight Sections
+a) Featured Project
+
+Rajgad Farm Project, Bhor
+Farm plots near UNESCO World Heritage Site Rajgad Fort.
+
+4000 sq. ft community plots – ₹11 Lakh onwards
+
+Limited pilot plots available
+
+Earn yearly growth through our eco-friendly model*
+
+Expand later into luxury farm villas
+(Not an assured return scheme – based on eco-development participation.)
+
+Button: “View Details” → /projects/rajgad
+
+b) Coming Soon
+
+Luxury Farm Villas – Phase 2 (Rajgad)
+2 BHK Fully Furnished Villas in 11,000 sq. ft plots
+Starting ₹70 Lakh
+With private pool, gardens, and farm maintained by FarmProduce Organisation.
+
+Button: “Learn More” → /projects/luxuryfarmvillas
+
+ Call to Action
+
+“Be part of our eco-luxury community of Doctors, NRIs, Bureaucrats, Celebrities & Nature Enthusiasts.”
+Start small, grow big — invest in nature today.
+
+Buttons:
+
+“Talk to Us” (WhatsApp link)
+
+“Book a Site Visit”
+
+2. ABOUT US PAGE
+ Overview
+
+Passiflora Properties is a new-age real estate development and investment company focused on sustainable, nature-connected living. We specialize in farm plots, farmhouses, wellness resorts, and eco-tourism communities.
+
+ Mission
+
+To create responsible investment opportunities that connect people back to nature while preserving India’s ecological and cultural heritage.
+
+Vision
+
+To become India’s leading eco-real estate developer by offering transparent, sustainable, and lifestyle-oriented farm projects across the country.
+
+Core Values
+
+🌱 Sustainability
+
+ Transparency
+
+Community Building
+
+ Innovation in Real Estate
+
+ Local Empowerment
+
+Directors / Team
+
+
+🔹 Our Presence
+State	Cities / Projects	Highlights
+Maharashtra	Mumbai (Chembur), Pune (Bhor - Rajgad Project), Pawna (Resort + Plots), Kamshet, Karjat, Manchar	Luxury farm plots, farmhouses, resorts
+Bihar	Patna (Gangajal Project), Sonepur, Gaya	Riverfront plots, residential development
+Jharkhand	Ranchi	Farmland development & wellness communities

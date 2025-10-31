@@ -1,0 +1,152 @@
+About Passiflora Properties
+For over two decades, Passiflora Properties has redefined what it means to invest in land.
+ We believe that every piece of land carries a story — of roots, growth, and legacy. Our purpose is to help people not just buy land, but own a meaningful part of nature that grows in both value and emotion over time.
+Founded with a vision to combine luxury, transparency, and sustainability, Passiflora Properties has become one of India’s most trusted names in farm plots, second homes, villas, and resort developments. From the calm valleys of Rajgad and Pawna to the emerging real estate corridors of Bihar and Jharkhand, our projects are designed to balance peaceful living with profitable growth.
+At Passiflora, we go beyond transactions — we build lifelong relationships. Every investor, every family, every dream matters to us. Whether you’re looking for a serene weekend home, a farmland that earns returns, or a long-term legacy for your next generation — we stand with you at every step.
+We handle your property as our own — ensuring legal transparency, consistent appreciation, and even managed cultivation through our FPO partnership model, where your land works for you.
+Because when you invest with Passiflora, you don’t just buy land — you plant your legacy.
+
+OUR PROMOTERS
+
+
+
+
+
+
+
+Our Vision
+To become India’s most trusted name in premium land development, creating spaces where nature, wellness, and prosperity come together.
+ We envision a future where every Passiflora project stands as a living legacy — inspiring people to invest wisely, live meaningfully, and stay connected to the land they own.
+
+Our Mission
+Our mission is to make land investment transparent, sustainable, and rewarding for every individual.
+ We aim to deliver legally verified, nature-integrated properties that grow in both value and purpose — empowering people to turn their land into an ever-growing source of pride, peace, and prosperity.
+ By offering complete property management and resale support, we ensure that every investor’s journey with Passiflora remains seamless and profitable.
+
+Our Core Values
+At the heart of Passiflora Properties lie the principles that shape our every action:
+Trust – We build relationships that last longer than transactions.
+ Transparency – Every project is legally verified, every process is clear.
+ Integrity – We deliver what we promise, with honesty and consistency.
+ Sustainability – Our developments respect and preserve nature’s balance.
+ Growth – We help our investors and communities prosper, together.
+Our Belief
+Because we believe every acre deserves a purpose, every home deserves peace, and every investor deserves trust.
+ At Passiflora Properties, we don’t just sell land — we create legacies rooted in nature and growth.
+The Passiflora Promise
+We believe land is not just an asset — it’s an emotion, a connection, and a foundation for future generations.
+ Our promise is to make every investor proud of their choice — with lands that are verified, managed, and constantly growing in value.
+Passiflora Properties — Where Trust Takes Root, and Your Land Grows Into Legacy.
+At Passiflora, we don’t just sell plots — we create purpose, value, and belonging for generations to come.
+
+MAHARASHTRA
+title: Rajgad Farm Project — Phase 1
+ status: active
+ type: farm_plot
+ state/city: Maharashtra / Bhor
+ shortSummary: Invest in nature near Rajgad Fort — 4,000 sq. ft community farm plots by Passiflora Properties with limited availability and high growth potential.
+ description:
+ Discover The Rajgad Farm Project by Passiflora Properties — a serene blend of heritage, investment, and green living. Nestled near the UNESCO World Heritage Site Rajgad Fort, this pilot phase offers you a rare chance to own your piece of nature in a location rich with history and breathtaking landscapes.
+Spread across 18.2 acres, these 4,000 sq. ft community farm plots start at just ₹11 Lakh, making it the perfect entry point for families, eco-enthusiasts, and first-time investors. Each plot comes with verified legal titles, complete transparency, and the promise of sustainable annual returns through our FarmProduce Organisation, which manages farming and cultivation on your behalf.
+Join a vibrant community of doctors, NRIs, bureaucrats, entrepreneurs, and celebrities investing in a future rooted in wellness, eco-tourism, and prosperity. With limited plots available, this pilot phase helps you experience the concept firsthand — and later expand into your own luxury farmhouse in our upcoming 50-acre development nearby.
+📍 Location: Near Rajgad Fort, Bhor — surrounded by lush valleys, upcoming wellness projects, and scenic natural beauty.
+ 🌿 Investment you can touch, feel, and grow.
+ Be a neighbour to history — invest in nature, community, and a greener tomorrow.
+priceFromINR: 1100000
+ areaSqFtMin: 4000
+ latitude: 18.227194
+ longitude: 73.659417
+=-------------------------------------------------------------------------------------------------------------------------------------
+
+REDEVELOPMENT PROJECT AT CHEMBUR
+
+title: Chembur Redevelopment Project — Lokhande Marg
+ status: active
+ type: urban
+ state/city: Maharashtra / Mumbai
+ shortSummary: Premium redevelopment project near Chembur West Station — offering 1BHK apartments for sale in a new residential tower by Passiflora Properties.
+ description:
+ Passiflora Properties has been working on the Chembur Redevelopment Project, located near Lokhande Marg, Chembur West, Mumbai — a landmark initiative that redefines urban renewal and responsible development.
+Built on a 6,000 sq. ft land parcel, this residential redevelopment transforms an existing housing society into a modern, multi-storey residential tower designed for comfort, safety, and elevated living.
+In collaboration with landowners, Passiflora is ensuring fair and future-ready growth — all current residents receive new homes double their existing area, while the remaining saleable inventory adheres strictly to Government redevelopment norms.
+As part of this project, 30 premium 1BHK flats (each measuring approximately 375 sq. ft) are available for sale on the 4th to 9th floors, offering modern amenities, efficient layouts, and proximity to Chembur West Railway Station and key city hubs.
+Perfect for families and investors seeking affordable Mumbai living with the assurance of legal transparency, trusted construction, and prime location value.
+📍 Location: Near Lokhande Marg, Chembur West, Mumbai
+ 🏗 Land Area: 6,000 sq. ft
+ 🏢 Floors: Ground + 9 Storeys
+ 🏠 Sale Units: 30 (1BHK) | 375 sq. ft each
+ 🌆 Possession: As per RERA & redevelopment timelines
+Passiflora Properties — Building the new Mumbai skyline, responsibly.
+—---------------------------------------------------------------------------------------------------------------------------
+
+Manchar NA PLOTS
+
+title: Manchar Mountain View Farm Project
+ status: active
+ type: farm_plot
+ state/city: Maharashtra / Manchar
+ shortSummary: Scenic 13-acre farm project surrounded by mountains — just 300 meters from the highway. Ideal for weekend homes and long-term investment.
+ description:
+ Experience the calm of nature and the confidence of a smart investment with the Manchar Mountain View Farm Project by Passiflora Properties.
+Spread across 13 acres of naturally contoured land, this exclusive development is nestled amidst mountain ranges, offering breathtaking panoramic views, fresh air, and a peaceful lifestyle — just 300 meters from the main highway, ensuring smooth connectivity to Pune, Mumbai, and nearby towns.
+Each plot is carefully planned with legal transparency, clear titles, and accessible approach roads, making it ideal for farmhouse construction, organic farming, or land banking. Surrounded by hills and greenery, this project perfectly balances scenic living and practical investment.
+Whether you’re looking to build your weekend retreat, start a sustainable farming venture, or secure appreciating land in a fast-developing region — Manchar is your destination.
+🌿 Highlights:
+13 Acres of gated, survey-approved farmland
+
+
+Scenic mountain views and pleasant climate
+
+
+Just 300 meters from the main highway
+
+
+Easy access to Pune, Nashik, and nearby industrial zones
+
+
+Ideal for farmhouse plots and long-term value appreciation
+
+
+Managed & marketed by Passiflora Properties
+
+
+📍 Location: Manchar, Maharashtra
+ 🛣 Connectivity: 300m from Highway | ~55 km from Pune | Near Otur & Ghodegaon belt
+
+—-----------------------------------------------------------------------------------------------------------------------
+title: Karjat Green Valley Farm Plots
+ status: active
+ type: farm_plot
+ state/city: Maharashtra / Karjat
+ shortSummary: 9-acre NA farmhouse plot project in scenic Karjat — surrounded by hills, rivers, and greenery. Perfect for investment or your private weekend retreat.
+ description:
+ Welcome to Karjat Green Valley, a serene 9-acre NA farmhouse plotting project by Passiflora Properties, designed for those who dream of owning a piece of nature — close enough to the city, yet far from the chaos.
+Nestled amidst lush green hills, serene riverbanks, and scenic valleys, the project offers legally clear, non-agricultural plots ideal for building your private farmhouse, homestay, or nature villa. With breathtaking views and year-round pleasant weather, Karjat Green Valley redefines what it means to “live close to nature.”
+Strategically located near the Karjat–Murbad highway, the site enjoys seamless connectivity to Mumbai, Navi Mumbai, and Pune, while offering the peace and purity of the Sahyadri ranges.
+Each plot is clearly demarcated, road-accessible, and supported by the assurance of Passiflora’s transparent, investor-friendly process.
+🌿 Highlights:
+Total area: 9 Acres NA Land
+
+
+Legal, clear-title, and NA-approved plots
+
+
+Scenic hill and valley views all around
+
+
+Internal roads and easy approach from highway
+
+
+Ideal for farmhouse, wellness retreat, or land investment
+
+
+Just 1.5 hours from Mumbai / 2 hours from Pune
+
+
+Reliable development by Passiflora Properties
+
+
+📍 Location: Karjat, Maharashtra
+ 🛣 Connectivity: Near Karjat–Murbad Road | Close to Bhivpuri & Neral | 80 km from Mumbai
+
+
