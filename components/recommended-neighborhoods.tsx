@@ -10,14 +10,14 @@ export default function RecommendedNeighborhoods() {
       description:
         'For over two decades, Passiflora Properties has redefined what it means to invest in land. We believe that every piece of land carries a story — of roots, growth, and legacy.',
       illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920732/link-generator/ytiff9c2m628xeikc6dg.jpg',
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920736/link-generator/rgsrcbit9apzzwpivcca.jpg',
     },
     {
       title: 'Luxury Meets Sustainability',
       description:
         "Founded with a vision to combine luxury, transparency, and sustainability, Passiflora Properties has become one of India's most trusted names in farm plots, second homes, villas, and resort developments.",
       illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920734/link-generator/wo6ce3ncheeev0eftwju.jpg',
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920732/link-generator/ytiff9c2m628xeikc6dg.jpg',
     },
     {
       title: 'Beyond Transactions',
@@ -31,7 +31,7 @@ export default function RecommendedNeighborhoods() {
       description:
         'We handle your property as our own — ensuring legal transparency, consistent appreciation, and even managed cultivation through our FPO partnership model, where your land works for you.',
       illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920736/link-generator/rgsrcbit9apzzwpivcca.jpg',
+        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920734/link-generator/wo6ce3ncheeev0eftwju.jpg',
     },
   ]
 
