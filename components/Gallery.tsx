@@ -153,23 +153,6 @@ export default function Gallery() {
             }`}
           />
         </div>
-
-        <div className="bg-gray-100 rounded-2xl p-4 sm:p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
-          <div className="flex items-start gap-4">
-            <div className="text-3xl sm:text-4xl">🏠</div>
-            <div>
-              <h3 className="text-lg sm:text-xl md:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
-                Exploring Properties? Let Nature Guide You.
-              </h3>
-              <p className="text-gray-600 text-sm sm:text-base">
-                Find nature-rich plots and sustainable communities across India.
-              </p>
-            </div>
-          </div>
-          <button className="bg-black text-white px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full font-bold hover:bg-gray-800 transition whitespace-nowrap w-full sm:w-auto">
-            Start now
-          </button>
-        </div>
       </div>
     </section>
   )

@@ -91,7 +91,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-5 relative">
+            <nav className="hidden lg:flex items-center gap-7 relative">
               {navLinks.map((link) => {
                 if (link.label === 'Properties') {
                   return (
@@ -112,13 +112,13 @@ export default function Header() {
                     >
                       <Link
                         href={link.href}
-                        className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm flex items-center gap-1"
+                        className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-md flex items-center gap-1"
                       >
                         {link.label}
                         <ChevronDown size={16} />
                       </Link>
                       {projectsOpen && (
-                        <div className="absolute top-full left-0 z-50">
+                        <div className="absolute top-full left-[-200px] z-50">
                           <ProjectsMegaMenu
                             onNavigate={() => setProjectsOpen(false)}
                           />
@@ -131,7 +131,7 @@ export default function Header() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-sm after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                    className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-md after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
                   >
                     {link.label}
                   </Link>
@@ -456,9 +456,20 @@ export default function Header() {
                     )
                   }
 
-                  // Skip About and Contact as they're handled in pairs above
-                  if (link.label === 'About' || link.label === 'Contact') {
-                    return null
+                  // Skip About only if Services exists (they're paired)
+                  if (link.label === 'About') {
+                    const servicesExists = navLinks.some((l) => l.label === 'Services')
+                    if (servicesExists) {
+                      return null
+                    }
+                  }
+
+                  // Skip Contact only if Gallery exists (they're paired)
+                  if (link.label === 'Contact') {
+                    const galleryExists = navLinks.some((l) => l.label === 'Gallery')
+                    if (galleryExists) {
+                      return null
+                    }
                   }
 
                   return (

@@ -1,42 +1,92 @@
-import trustLegacy from '@/assets/trust-legacy.jpg'
-import luxurySustainability from '@/assets/luxury-sustainability.jpg'
-import relationships from '@/assets/relationships.jpg'
-import propertyCare from '@/assets/property-care.jpg'
+'use client'
+
+import { useLayoutEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import FeatureCard from '@/components/FeatureCard'
+import trustIcon from '../public/assets/trust-icon.png'
+import legalIcon from '../public/assets/legal-icon.png'
+import valueIcon from '../public/assets/value-icon.png'
+import supportIcon from '../public/assets/support-icon.png'
+import profitIcon from '../public/assets/profit-icon.png'
+import professionalsIcon from '../public/assets/professionals-icon.png'
+
+// Register ScrollTrigger plugin
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 export default function RecommendedNeighborhoods() {
-  const contentCards = [
+  const sectionRef = useRef<HTMLElement>(null)
+  const cardsRef = useRef<HTMLDivElement[]>([])
+  const features = [
     {
-      title: 'Two Decades of Trust',
-      description:
-        'For over two decades, Passiflora Properties has redefined what it means to invest in land. We believe that every piece of land carries a story — of roots, growth, and legacy.',
-      illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920736/link-generator/rgsrcbit9apzzwpivcca.jpg',
+      illustration: trustIcon,
+      text: '25+ Years of Trust – Backed by decades of real estate experience and expertise.',
     },
     {
-      title: 'Luxury Meets Sustainability',
-      description:
-        "Founded with a vision to combine luxury, transparency, and sustainability, Passiflora Properties has become one of India's most trusted names in farm plots, second homes, villas, and resort developments.",
-      illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920732/link-generator/ytiff9c2m628xeikc6dg.jpg',
+      illustration: legalIcon,
+      text: '100% Legal & Verified Lands – Transparent documentation and clear titles.',
     },
     {
-      title: 'Beyond Transactions',
-      description:
-        'At Passiflora, we go beyond transactions — we build lifelong relationships. Every investor, every family, every dream matters to us.',
-      illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920735/link-generator/naaw8qr9yuplv3ihlzbt.jpg',
+      illustration: valueIcon,
+      text: 'Value-for-Money Locations – Premium plots handpicked for growth and accessibility.',
     },
     {
-      title: 'Your Land, Our Care',
-      description:
-        'We handle your property as our own — ensuring legal transparency, consistent appreciation, and even managed cultivation through our FPO partnership model, where your land works for you.',
-      illustration:
-        'https://res.cloudinary.com/doxmvuss9/image/upload/v1761920734/link-generator/wo6ce3ncheeev0eftwju.jpg',
+      illustration: supportIcon,
+      text: 'Property Management Support – Buy, hold, or resell — we assist you at every step.',
+    },
+    {
+      illustration: profitIcon,
+      text: 'Earn from Your Land – Through FPO partnerships, your farmland generates real profit.',
+    },
+    {
+      illustration: professionalsIcon,
+      text: 'Trusted by Professionals – Preferred by doctors, defense personnel & celebrities.',
     },
   ]
 
+  // Set up scroll animations
+  useLayoutEffect(() => {
+    if (!sectionRef.current) return
+
+    const cards = cardsRef.current.filter(Boolean)
+
+    const ctx = gsap.context(() => {
+      // Set initial state for all cards
+      gsap.set(cards, {
+        opacity: 0,
+        y: 60,
+        scale: 0.9,
+      })
+
+      // Animate each card on scroll
+      cards.forEach((card, index) => {
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            end: 'top 50%',
+            toggleActions: 'play none none reverse',
+          },
+          delay: index * 0.1, // Stagger effect
+        })
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section
+      ref={sectionRef}
+      className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+    >
       <h2 className="text-2xl md:text-4xl font-bold mb-2 text-foreground">
         Why Choose Passiflora Properties
       </h2>
@@ -45,60 +95,51 @@ export default function RecommendedNeighborhoods() {
       </p>
 
       {/* Desktop Grid - 2x2 Grid */}
-      <div className="hidden md:grid md:grid-cols-2 gap-6 lg:gap-8">
-        {contentCards.map((card, index) => (
+      {/* Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {features.map((feature, index) => (
           <div
             key={index}
-            className="bg-card rounded-xl overflow-hidden border border-border shadow-md hover:shadow-xl transition-all-300 duration-300 hover:-translate-y-1 group"
+            ref={(el) => {
+              if (el) cardsRef.current[index] = el
+            }}
           >
-            <div className="w-full h-64 lg:h-80 bg-secondary relative overflow-hidden">
-              <img
-                src={card.illustration}
-                alt={card.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            <div className="p-6 lg:p-8">
-              <h3 className="text-2xl font-bold mb-4 text-card-foreground">
-                {card.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-base">
-                {card.description}
-              </p>
-            </div>
+            <FeatureCard
+              illustration={feature.illustration.src}
+              text={feature.text}
+            />
           </div>
         ))}
       </div>
 
       {/* Mobile Horizontal Scroll */}
-      <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4">
+      {/* <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4">
         <div className="flex gap-4 min-w-max">
-          {contentCards.map((card, index) => (
+          {features.map((feature, index) => (
             <div
               key={index}
               className="bg-card rounded-lg overflow-hidden border border-border shadow-sm w-[280px] flex-shrink-0"
             >
               <div className="w-full h-40 bg-secondary relative overflow-hidden">
                 <img
-                  src={card.illustration}
-                  alt={card.title}
+                  src={feature.illustration.src}
+                  alt={feature.text}
                   className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="p-4">
                 <h3 className="text-lg font-bold mb-2 text-card-foreground">
-                  {card.title}
+                  {feature.text}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed text-sm">
-                  {card.description}
+                  {feature.text}
                 </p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }
