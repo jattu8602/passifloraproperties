@@ -19,18 +19,21 @@ export type QuickLink = {
 
 export const headerNav = [
   { label: 'Home', href: '/' },
-  { label: 'Properties', href: '/projects', hasMegaMenu: true },
-  { label: 'Services', href: '/services' },
   { label: 'About', href: '/about' },
-  { label: 'Gallery', href: '/gallery' },
+  { label: 'Properties', href: '/projects', hasMegaMenu: true },
+  { label: 'Auction Properties', href: '#' },
+  // { label: 'Services', href: '/services' },
+
+  // { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ]
 
 export const projectsByState: StateCity[] = [
   {
     state: 'Maharashtra',
-    cities: ['Pune', 'Bhor', 'Pawna', 'Kamshet', 'Karjat', 'Mumbai', 'Manchar'],
+    cities: ['Pune', 'Pawna', 'Kamshet', 'Karjat', 'Mumbai', 'Manchar'],
   },
+
   {
     state: 'Bihar',
     cities: ['Patna', 'Sonepur', 'Gaya'],

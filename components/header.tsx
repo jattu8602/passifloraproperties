@@ -82,21 +82,12 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-14">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <Link href="/" className="flex items-center justify-center  flex-shrink-0">
               <img
-                src="/passiflora.svg"
+                src="/logop.png"
                 alt="Passiflora Properties Logo"
-                className="h-10 lg:h-8 w-auto"
+                className="h-15 lg:h-15 w-auto"
               />
-              <span
-                className="text-xl text-amber-700 "
-                style={{
-                  fontFamily: '"Dancing Script", cursive',
-                  fontWeight: 400,
-                }}
-              >
-                Passiflora Properties
-              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -152,18 +143,18 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-6">
               {/* Group 1: Manage / Advertise (kept slightly apart) */}
               <div className="flex items-center gap-4">
-                <Link
+                {/* <Link
                   href="#"
                   className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
                 >
                   Auction Properties
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="#"
                   className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
                 >
                   Advertise
-                </Link>
+                </Link> */}
               </div>
               {/* Divider to separate stacks */}
               <div className="hidden lg:block h-6 w-px bg-gray-200" />
@@ -501,7 +492,7 @@ export default function Header() {
               })()}
               <hr className="my-4" />
               <div className="flex items-center justify-between">
-                <Link
+                {/* <Link
                   href="#"
                   className="font-bold text-gray-800 text-base"
                   ref={(el) => {
@@ -521,8 +512,8 @@ export default function Header() {
                   }}
                 >
                   Auction Properties
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="#"
                   className="font-bold text-gray-800 text-base"
                   ref={(el) => {
@@ -542,7 +533,7 @@ export default function Header() {
                   }}
                 >
                   Advertise
-                </Link>
+                </Link> */}
               </div>
 
               {session ? (
