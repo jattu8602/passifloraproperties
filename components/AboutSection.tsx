@@ -37,6 +37,12 @@ export default function AboutSection() {
     // Check if all elements exist
     if (!Object.values(elements).every((el) => el !== null)) return
 
+    // Configure ScrollTrigger for mobile
+    ScrollTrigger.config({
+      autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
+      ignoreMobileResize: true,
+    })
+
     const ctx = gsap.context(() => {
       // Set initial states for all elements
       gsap.set(elements.tagline, {
@@ -60,6 +66,11 @@ export default function AboutSection() {
         }
       )
 
+      // Common ScrollTrigger settings for mobile optimization
+      const mobileStart = 'top 95%'
+      const desktopStart = 'top 90%'
+      const isMobile = window.innerWidth < 768
+
       // Animate tagline first (top heading)
       gsap.to(elements.tagline, {
         opacity: 1,
@@ -68,9 +79,11 @@ export default function AboutSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elements.tagline,
-          start: 'top 90%',
+          start: isMobile ? mobileStart : desktopStart,
           end: 'top 70%',
           toggleActions: 'play none none reverse',
+          markers: false,
+          refreshPriority: 0,
         },
       })
 
@@ -82,9 +95,11 @@ export default function AboutSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elements.image,
-          start: 'top 85%',
+          start: isMobile ? mobileStart : 'top 85%',
           end: 'top 50%',
           toggleActions: 'play none none reverse',
+          markers: false,
+          refreshPriority: 0,
         },
       })
 
@@ -96,9 +111,11 @@ export default function AboutSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elements.heading,
-          start: 'top 90%',
+          start: isMobile ? mobileStart : desktopStart,
           end: 'top 60%',
           toggleActions: 'play none none reverse',
+          markers: false,
+          refreshPriority: 0,
         },
       })
 
@@ -110,9 +127,11 @@ export default function AboutSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elements.paragraph1,
-          start: 'top 90%',
+          start: isMobile ? mobileStart : desktopStart,
           end: 'top 60%',
           toggleActions: 'play none none reverse',
+          markers: false,
+          refreshPriority: 0,
         },
       })
 
@@ -124,9 +143,11 @@ export default function AboutSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elements.paragraph2,
-          start: 'top 90%',
+          start: isMobile ? mobileStart : desktopStart,
           end: 'top 60%',
           toggleActions: 'play none none reverse',
+          markers: false,
+          refreshPriority: 0,
         },
       })
 
@@ -138,10 +159,29 @@ export default function AboutSection() {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elements.link,
-          start: 'top 90%',
+          start: isMobile ? mobileStart : desktopStart,
           end: 'top 60%',
           toggleActions: 'play none none reverse',
+          markers: false,
+          refreshPriority: 0,
         },
+      })
+
+      // Refresh ScrollTrigger on resize for better mobile support
+      const handleResize = () => {
+        ScrollTrigger.refresh()
+      }
+
+      window.addEventListener('resize', handleResize)
+      // Also refresh after a short delay to ensure everything is loaded
+      const refreshTimeout = setTimeout(() => {
+        ScrollTrigger.refresh()
+      }, 100)
+
+      // Store timeout reference for cleanup
+      ctx.add(() => {
+        window.removeEventListener('resize', handleResize)
+        clearTimeout(refreshTimeout)
       })
     }, sectionRef)
 
@@ -151,7 +191,7 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 md:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white"
+      className="py-12 md:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white scroll-smooth"
     >
       <div className="max-w-7xl mx-auto">
         {/* Tagline Heading - Top of Section */}
