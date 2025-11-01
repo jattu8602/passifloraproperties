@@ -178,11 +178,11 @@ export default function AboutSection() {
         ScrollTrigger.refresh()
       }, 100)
 
-      // Store timeout reference for cleanup
-      ctx.add(() => {
+      // Cleanup function
+      return () => {
         window.removeEventListener('resize', handleResize)
         clearTimeout(refreshTimeout)
-      })
+      }
     }, sectionRef)
 
     return () => ctx.revert()

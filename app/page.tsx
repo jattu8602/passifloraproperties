@@ -7,6 +7,7 @@ import RecommendedNeighborhoods from '@/components/recommended-neighborhoods'
 import AboutSection from '@/components/AboutSection'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import UniqueHomes from '@/components/unique-homes'
+import BookSiteVisitCTA from '@/components/BookSiteVisitCTA'
 import Footer from '@/components/footer'
 import BrowseProperties from '@/components/BrowseProperties'
 
@@ -25,6 +26,7 @@ export default function Home() {
       <TestimonialsSection />
 
       <UniqueHomes />
+      <BookSiteVisitCTA />
       <Footer />
     </main>
   )

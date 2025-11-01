@@ -382,7 +382,7 @@ export default function TestimonialsSection() {
     <section className="py-12 md:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-4xl font-bold mb-2 text-foreground text-center mb-8 md:mb-12">
-          What Our Clients Say
+          What Our Client Say's
         </h2>
 
         {/* Carousel Container */}

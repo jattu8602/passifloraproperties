@@ -1,6 +1,12 @@
 import type React from 'react'
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Poppins, Dancing_Script } from 'next/font/google'
+import {
+  Geist,
+  Geist_Mono,
+  Poppins,
+  Dancing_Script,
+  Pacifico,
+} from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SessionProvider } from 'next-auth/react'
 import AuthHandler from '@/components/auth-handler'
@@ -15,6 +21,11 @@ const _poppins = Poppins({
 const dancingScript = Dancing_Script({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
+})
+const pacifico = Pacifico({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-pacifico',
 })
 
 export const metadata: Metadata = {
@@ -49,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased`}>
+      <body className={`font-sans antialiased ${pacifico.variable}`}>
         <SessionProvider>
           {children}
           <AuthHandler />

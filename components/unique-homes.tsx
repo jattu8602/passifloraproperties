@@ -16,13 +16,13 @@ export default function UniqueHomes() {
 
       {/* Content */}
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
-        <p className="text-white text-lg mb-4 font-semibold">
-          About Passiflora Properties
+        <p className="text-white text-3xl md:text-5xl mb-4 font-[family-name:var(--font-pacifico)] font-normal">
+          In The Media
         </p>
-        <h2 className="text-2xl md:text-5xl font-bold text-white mb-3 md:mb-4 max-w-3xl leading-tight text-balance">
-          Where Trust Takes Root, and Your Land Grows Into Legacy.
+        <h2 className="text-1.5xl md:text-3xl font-bold text-white mb-3 md:mb-4 max-w-3xl leading-tight text-balance">
+          "Who cares what we think, see what others are saying about us."
         </h2>
-        <p className="text-white/90 max-w-3xl mb-6 md:mb-8 text-sm md:text-base leading-relaxed">
+        <p className="text-white/90 max-w-3xl mb-6 md:mb-8 text-sm md:text-base leading-relaxed italic">
           We don’t just sell plots — we create purpose, value, and belonging for
           generations to come.
         </p>
@@ -30,7 +30,7 @@ export default function UniqueHomes() {
           href="/about"
           className="px-6 md:px-8 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-black transition-all duration-200"
         >
-          Explore About Passiflora
+          Catch the coverage
         </a>
       </div>
     </section>
