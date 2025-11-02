@@ -10,6 +10,7 @@ import {
 import { Analytics } from '@vercel/analytics/next'
 import { SessionProvider } from 'next-auth/react'
 import AuthHandler from '@/components/auth-handler'
+import RajgadPopup from '@/components/rajgad-popup'
 import './globals.css'
 
 const _geist = Geist({ subsets: ['latin'] })
@@ -64,6 +65,7 @@ export default function RootLayout({
         <SessionProvider>
           {children}
           <AuthHandler />
+          <RajgadPopup />
         </SessionProvider>
         <Analytics />
       </body>
