@@ -8,6 +8,8 @@ import {
   IndianRupee,
   Maximize2,
   Check,
+  Hand,
+  MousePointerClick,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -23,6 +25,7 @@ import { useToast } from '@/hooks/use-toast'
 
 const Rajgad = () => {
   const [liked, setLiked] = useState(false)
+  const [mapInteractive, setMapInteractive] = useState(false)
   const { toast } = useToast()
 
   const projectData = {
@@ -206,25 +209,33 @@ Join a vibrant community of investors and families investing in a future rooted 
         <iframe
           src="https://www.google.com/maps/embed?pb=!4v1762067067471!6m8!1m7!1sCd_pTV7edB6d1CSLZiRWKg!2m2!1d18.22726755784996!2d73.65935979764579!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002"
           className="w-full h-full"
-          style={{ border: 0 }}
+          style={{
+            border: 0,
+            pointerEvents: mapInteractive ? 'auto' : 'none',
+          }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           title="Project Location 3D View"
         />
-      </section>
-
-      {/* Google Earth Image Placeholder */}
-      <section className="container mx-auto px-4 py-8">
-        <div className="relative w-full h-96 bg-muted rounded-lg overflow-hidden shadow-card">
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-accent/50 to-muted">
-            <div className="text-center">
-              <MapPin className="h-16 w-16 mx-auto mb-4 text-primary" />
-              <p className="text-muted-foreground">
-                Google Earth Satellite View
-              </p>
-            </div>
-          </div>
+        <div className="absolute bottom-4 left-4 z-10">
+          <Button
+            onClick={() => setMapInteractive(!mapInteractive)}
+            variant={mapInteractive ? 'default' : 'secondary'}
+            className="gap-2 shadow-lg"
+          >
+            {mapInteractive ? (
+              <>
+                <MousePointerClick className="h-4 w-4" />
+                <span className="hidden sm:inline">Map Active</span>
+              </>
+            ) : (
+              <>
+                <Hand className="h-4 w-4" />
+                <span className="hidden sm:inline">Click to Interact</span>
+              </>
+            )}
+          </Button>
         </div>
       </section>
 
@@ -242,6 +253,20 @@ Join a vibrant community of investors and families investing in a future rooted 
               </div>
             </CardContent>
           </Card>
+        </section>
+        {/* Google Maps Satellite View */}
+        <section className="container mx-auto px-4 py-8">
+          <div className="relative w-full h-96 rounded-lg overflow-hidden shadow-card">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d799.6402267074013!2d73.65903863466374!3d18.22707902009323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTjCsDEzJzM3LjkiTiA3M8KwMzknMzMuOSJF!5e1!3m2!1sen!2sin!4v1762070091433!5m2!1sen!2sin"
+              className="w-full h-full"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Satellite View"
+            />
+          </div>
         </section>
 
         {/* Collapsible Details */}
