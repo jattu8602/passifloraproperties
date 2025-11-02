@@ -13,10 +13,10 @@ export default function NotFound() {
           id="not-found-heading"
           className="mt-2 text-3xl sm:text-4xl md:text-5xl font-bold"
         >
-          Page not found
+          Under Maintenance
         </h1>
         <p className="mt-3 sm:mt-4 text-gray-300 max-w-2xl mx-auto">
-          We couldn't find the page you're looking for. Explore our projects, or
+          We are currently under maintenance for this page. Explore our projects, or
           head back home to continue discovering nature-connected living.
         </p>
 
