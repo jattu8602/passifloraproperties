@@ -27,7 +27,7 @@ export default function Home() {
 
       <UniqueHomes />
       <BookSiteVisitCTA />
-      <Footer />
+
     </main>
   )
 }

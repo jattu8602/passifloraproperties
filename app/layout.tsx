@@ -12,6 +12,7 @@ import { SessionProvider } from 'next-auth/react'
 import AuthHandler from '@/components/auth-handler'
 import RajgadPopup from '@/components/rajgad-popup'
 import './globals.css'
+import Footer from '@/components/footer'
 
 const _geist = Geist({ subsets: ['latin'] })
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
@@ -64,6 +65,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased ${pacifico.variable}`}>
         <SessionProvider>
           {children}
+          <Footer />
           <AuthHandler />
           <RajgadPopup />
         </SessionProvider>

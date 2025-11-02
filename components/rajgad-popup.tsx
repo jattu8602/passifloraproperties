@@ -44,7 +44,7 @@ export default function RajgadPopup() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="max-w-2xl p-0 overflow-hidden"
+        className="max-w-xs sm:max-w-md md:max-w-lg p-0 overflow-hidden"
         showCloseButton={false}
         onInteractOutside={(e) => e.preventDefault()}
       >
@@ -52,9 +52,9 @@ export default function RajgadPopup() {
           {/* Custom Close Button */}
           <DialogClose
             onClick={handleOpenChange.bind(null, false)}
-            className="absolute top-0 right-0 z-10 bg-white rounded-full p-1 shadow-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 hover:cursor-pointer"
+            className="absolute top-1 right-1 sm:top-0 sm:right-0 z-10 bg-white rounded-full p-0.5 sm:p-1 shadow-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 hover:cursor-pointer"
           >
-            <X className="w-4 h-4 font-bold stroke-[4]" />
+            <X className="w-3 h-3 sm:w-4 sm:h-4 font-bold stroke-[4]" />
             <span className="sr-only">Close</span>
           </DialogClose>
 
@@ -71,16 +71,16 @@ export default function RajgadPopup() {
           </div>
 
           {/* Buttons Container */}
-          <div className="flex flex-row gap-2 sm:gap-3 p-3 sm:p-6 bg-white">
+          <div className="flex flex-row gap-1.5 sm:gap-2 md:gap-3 p-2 sm:p-3 md:p-4 bg-white">
             <Button
               onClick={handleGoToPage}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 sm:py-6 text-sm sm:text-lg"
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base"
             >
               Go to Page
             </Button>
             <Button
               onClick={handleWhatsApp}
-              className="flex-1 bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-3 sm:py-6 text-sm sm:text-lg"
+              className="flex-1 bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base"
             >
               WhatsApp Us
             </Button>
