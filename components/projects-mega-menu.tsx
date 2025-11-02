@@ -73,7 +73,7 @@ export default function ProjectsMegaMenu({ onNavigate }: Props) {
             {featuredProjects.slice(0, 6).map((p) => (
               <Link
                 key={p.slug}
-                href={`/projects/${p.slug}`}
+                href={p.link || `/projects/${p.slug}`}
                 onClick={onNavigate}
                 className="flex items-start gap-3 group hover:bg-gray-50 p-2 -m-2 rounded-md transition-colors duration-200"
               >

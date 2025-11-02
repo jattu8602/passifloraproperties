@@ -10,6 +10,7 @@ export type FeaturedProject = {
   city: string
   imageUrl: string
   priceFrom?: string
+  link?: string
 }
 
 export type QuickLink = {
@@ -46,12 +47,14 @@ export const projectsByState: StateCity[] = [
 
 export const featuredProjects: FeaturedProject[] = [
   {
-    title: 'Rajgad Valley Farm Plots — Bhor',
+    title: 'Rajgad Farm Project — Phase 1',
     slug: 'rajgad-valley-farm-plots',
     state: 'Maharashtra',
     city: 'Bhor',
-    imageUrl: '/modern-house-exterior.jpg',
+    imageUrl: '/bhor/rajgad.png',
     priceFrom: '₹11 Lakh+',
+    link: '/rajgad',
+
   },
   {
     title: 'Luxury Farm Villas — Phase 2',
@@ -60,6 +63,7 @@ export const featuredProjects: FeaturedProject[] = [
     city: 'Bhor',
     imageUrl: '/modern-new-construction-interior-kitchen.jpg',
     priceFrom: '₹70 Lakh+',
+    link: '/',
   },
   {
     title: 'Passiflora Resorts — Pawna',
@@ -67,6 +71,7 @@ export const featuredProjects: FeaturedProject[] = [
     state: 'Maharashtra',
     city: 'Pawna',
     imageUrl: '/new-luxury-property.jpg',
+    link: '/',
   },
   {
     title: 'Gangajal Riverfront Plots — Patna',
@@ -75,6 +80,7 @@ export const featuredProjects: FeaturedProject[] = [
     city: 'Patna',
     imageUrl: '/land-plot-aerial-view.jpg',
     priceFrom: '₹6 Lakh+',
+    link: '/',
   },
   {
     title: 'Sonepur Green Estate',
@@ -83,6 +89,7 @@ export const featuredProjects: FeaturedProject[] = [
     city: 'Sonepur',
     imageUrl: '/green-house-garden.jpg',
     priceFrom: '₹8 Lakh+',
+    link: '/',
   },
   {
     title: 'Ranchi Weekend Farm Plots',
