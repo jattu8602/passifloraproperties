@@ -76,7 +76,7 @@ export default function Footer() {
               alt="Passiflora Properties"
               width={260}
               height={90}
-              className="h-16 w-auto sm:h-20 rounded-2xl shadow-xl"
+              className="h-22 w-auto sm:h-22 rounded-2xl shadow-xl"
             />
           </div>
         </div>

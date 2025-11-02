@@ -25,6 +25,18 @@ export default function Header() {
 
   const navLinks = headerNav
 
+  // Helper function to close menu immediately (for navigation links)
+  const closeMenuImmediately = () => {
+    // Kill any ongoing animations
+    if (tlRef.current) {
+      tlRef.current.kill()
+      tlRef.current = null
+    }
+    // Reset state immediately
+    setMobileMenuOpen(false)
+    document.body.style.overflow = ''
+  }
+
   // Build GSAP timeline when menu opens
   useLayoutEffect(() => {
     if (!mobileMenuOpen) return
@@ -82,7 +94,10 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-14">
             {/* Logo */}
-            <Link href="/" className="flex items-center justify-center  flex-shrink-0">
+            <Link
+              href="/"
+              className="flex items-center justify-center  flex-shrink-0"
+            >
               <img
                 src="/logop.png"
                 alt="Passiflora Properties Logo"
@@ -303,21 +318,7 @@ export default function Header() {
                                         group.state
                                       )}&city=${encodeURIComponent(city)}`}
                                       className="text-xs text-gray-700 hover:text-amber-700 block"
-                                      onClick={() => {
-                                        if (tlRef.current) {
-                                          tlRef.current.reverse()
-                                          tlRef.current.eventCallback(
-                                            'onReverseComplete',
-                                            () => {
-                                              setMobileMenuOpen(false)
-                                              document.body.style.overflow = ''
-                                            }
-                                          )
-                                        } else {
-                                          setMobileMenuOpen(false)
-                                          document.body.style.overflow = ''
-                                        }
-                                      }}
+                                      onClick={closeMenuImmediately}
                                     >
                                       {city}
                                     </Link>
@@ -347,46 +348,14 @@ export default function Header() {
                         <Link
                           href={link.href}
                           className="font-bold text-gray-800 text-base py-2"
-                          onClick={() => {
-                            if (tlRef.current) {
-                              tlRef.current.timeScale(4.0)
-                              tlRef.current.reverse()
-                              tlRef.current.eventCallback(
-                                'onReverseComplete',
-                                () => {
-                                  setMobileMenuOpen(false)
-                                  document.body.style.overflow = ''
-                                  if (tlRef.current) tlRef.current.timeScale(1)
-                                }
-                              )
-                            } else {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          }}
+                          onClick={closeMenuImmediately}
                         >
                           {link.label}
                         </Link>
                         <Link
                           href={aboutLink?.href || '#'}
                           className="font-bold text-gray-800 text-base py-2"
-                          onClick={() => {
-                            if (tlRef.current) {
-                              tlRef.current.timeScale(4.0)
-                              tlRef.current.reverse()
-                              tlRef.current.eventCallback(
-                                'onReverseComplete',
-                                () => {
-                                  setMobileMenuOpen(false)
-                                  document.body.style.overflow = ''
-                                  if (tlRef.current) tlRef.current.timeScale(1)
-                                }
-                              )
-                            } else {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          }}
+                          onClick={closeMenuImmediately}
                         >
                           {aboutLink?.label}
                         </Link>
@@ -409,46 +378,14 @@ export default function Header() {
                         <Link
                           href={link.href}
                           className="font-bold text-gray-800 text-base py-2"
-                          onClick={() => {
-                            if (tlRef.current) {
-                              tlRef.current.timeScale(4.0)
-                              tlRef.current.reverse()
-                              tlRef.current.eventCallback(
-                                'onReverseComplete',
-                                () => {
-                                  setMobileMenuOpen(false)
-                                  document.body.style.overflow = ''
-                                  if (tlRef.current) tlRef.current.timeScale(1)
-                                }
-                              )
-                            } else {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          }}
+                          onClick={closeMenuImmediately}
                         >
                           {link.label}
                         </Link>
                         <Link
                           href={contactLink?.href || '#'}
                           className="font-bold text-gray-800 text-base py-2"
-                          onClick={() => {
-                            if (tlRef.current) {
-                              tlRef.current.timeScale(4.0)
-                              tlRef.current.reverse()
-                              tlRef.current.eventCallback(
-                                'onReverseComplete',
-                                () => {
-                                  setMobileMenuOpen(false)
-                                  document.body.style.overflow = ''
-                                  if (tlRef.current) tlRef.current.timeScale(1)
-                                }
-                              )
-                            } else {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          }}
+                          onClick={closeMenuImmediately}
                         >
                           {contactLink?.label}
                         </Link>
@@ -458,7 +395,9 @@ export default function Header() {
 
                   // Skip About only if Services exists (they're paired)
                   if (link.label === 'About') {
-                    const servicesExists = navLinks.some((l) => l.label === 'Services')
+                    const servicesExists = navLinks.some(
+                      (l) => l.label === 'Services'
+                    )
                     if (servicesExists) {
                       return null
                     }
@@ -466,7 +405,9 @@ export default function Header() {
 
                   // Skip Contact only if Gallery exists (they're paired)
                   if (link.label === 'Contact') {
-                    const galleryExists = navLinks.some((l) => l.label === 'Gallery')
+                    const galleryExists = navLinks.some(
+                      (l) => l.label === 'Gallery'
+                    )
                     if (galleryExists) {
                       return null
                     }
@@ -480,21 +421,7 @@ export default function Header() {
                       ref={(el) => {
                         itemRefs.current[currentIndex] = el
                       }}
-                      onClick={() => {
-                        if (tlRef.current) {
-                          tlRef.current.reverse()
-                          tlRef.current.eventCallback(
-                            'onReverseComplete',
-                            () => {
-                              setMobileMenuOpen(false)
-                              document.body.style.overflow = ''
-                            }
-                          )
-                        } else {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                        }
-                      }}
+                      onClick={closeMenuImmediately}
                     >
                       {link.label}
                     </Link>
@@ -594,21 +521,7 @@ export default function Header() {
                         ref={(el) => {
                           itemRefs.current[navLinks.length + 7] = el
                         }}
-                        onClick={() => {
-                          if (tlRef.current) {
-                            tlRef.current.reverse()
-                            tlRef.current.eventCallback(
-                              'onReverseComplete',
-                              () => {
-                                setMobileMenuOpen(false)
-                                document.body.style.overflow = ''
-                              }
-                            )
-                          } else {
-                            setMobileMenuOpen(false)
-                            document.body.style.overflow = ''
-                          }
-                        }}
+                        onClick={closeMenuImmediately}
                       >
                         Saved Properties
                       </Link>
@@ -620,21 +533,7 @@ export default function Header() {
                         ref={(el) => {
                           itemRefs.current[navLinks.length + 8] = el
                         }}
-                        onClick={() => {
-                          if (tlRef.current) {
-                            tlRef.current.reverse()
-                            tlRef.current.eventCallback(
-                              'onReverseComplete',
-                              () => {
-                                setMobileMenuOpen(false)
-                                document.body.style.overflow = ''
-                              }
-                            )
-                          } else {
-                            setMobileMenuOpen(false)
-                            document.body.style.overflow = ''
-                          }
-                        }}
+                        onClick={closeMenuImmediately}
                       >
                         Settings
                       </Link>
