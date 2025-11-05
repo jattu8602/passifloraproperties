@@ -49,7 +49,7 @@ export default function AuthHandler() {
     <SuccessModal
       open={showSuccess}
       onClose={handleCloseSuccess}
-      userName={session?.user?.name}
+      userName={session?.user?.name || undefined}
     />
   )
 }

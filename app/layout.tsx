@@ -9,8 +9,8 @@ import {
 } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SessionProvider } from 'next-auth/react'
-import AuthHandler from '@/components/auth-handler'
-import RajgadPopup from '@/components/rajgad-popup'
+import AuthHandler from '@/components/popups/auth-handler'
+import RajgadPopup from '@/components/popups/rajgad-popup'
 import './globals.css'
 import ConditionalFooter from '@/components/conditional-footer'
 
