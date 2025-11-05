@@ -17,15 +17,20 @@ export default function Hero() {
   ]
 
   return (
-    <section
-      className="relative h-120 md:h-[500px] bg-cover bg-center flex items-center justify-center"
-      style={{
-        backgroundImage:
-          'url("https://static.rdc.moveaws.com/images/hero/default/2021-11/jpg/hp-hero-desktop.jpg")',
-      }}
-    >
+    <section className="relative h-120 md:h-[500px] flex items-center justify-center overflow-hidden">
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/videos/hero_Video.mp4" type="video/mp4" />
+      </video>
+
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0 bg-black/40 z-[1]"></div>
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
