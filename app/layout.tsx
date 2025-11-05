@@ -1,5 +1,6 @@
 import type React from 'react'
 import type { Metadata } from 'next'
+import ScrollIndicator from '@/components/popups/scroll-indicator'
 import {
   Geist,
   Geist_Mono,
@@ -61,11 +62,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en " className="prevent-scroll-x">
       <body className={`font-sans antialiased ${pacifico.variable}`}>
         <SessionProvider>
           {children}
           <ConditionalFooter />
+          <ScrollIndicator />
           <AuthHandler />
           <RajgadPopup />
         </SessionProvider>

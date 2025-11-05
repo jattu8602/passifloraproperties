@@ -80,8 +80,42 @@ export default function UniqueHomes() {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
+      {/* Oval Black Background */}
+      {/* Oval Black Background */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] md:w-[60%] lg:w-[50%] h-[70%] md:h-[60%] rounded-[50%] z-0"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.72) 55%, rgba(0,0,0,0.30) 76%, rgba(0,0,0,0) 100%), repeating-conic-gradient(from 0deg at 50% 50%, rgba(0,0,0,0.05) 0deg 2deg, rgba(0,0,0,0) 2deg 8deg), repeating-conic-gradient(from 1.5deg at 50% 50%, rgba(0,0,0,0.04) 0deg 1.5deg, rgba(0,0,0,0) 1.5deg 7deg)',
+          backgroundBlendMode: 'normal, soft-light, soft-light',
+          filter: 'blur(140px)',
+          mixBlendMode: 'multiply',
+          maskImage:
+            'radial-gradient(ellipse at center, rgba(0,0,0,1) 48%, rgba(0,0,0,0.88) 60%, rgba(0,0,0,0.65) 73%, rgba(0,0,0,0.35) 84%, rgba(0,0,0,0.16) 92%, rgba(0,0,0,0.06) 96%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage:
+            'radial-gradient(ellipse at center, rgba(0,0,0,1) 48%, rgba(0,0,0,0.88) 60%, rgba(0,0,0,0.65) 73%, rgba(0,0,0,0.35) 84%, rgba(0,0,0,0.16) 92%, rgba(0,0,0,0.06) 96%, rgba(0,0,0,0) 100%)',
+        }}
+      ></div>
+
+      {/* Outer scattered halo to blend beyond the edge */}
+      <div
+        className="hidden md:block pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[70%] lg:w-[60%] h-[80%] md:h-[70%] rounded-[50%] z-0"
+        style={{
+          background:
+            'repeating-conic-gradient(from 0deg at 50% 50%, rgba(0,0,0,0.06) 0deg 1deg, rgba(0,0,0,0) 1deg 6deg), repeating-conic-gradient(from .75deg at 50% 50%, rgba(0,0,0,0.04) 0deg 0.8deg, rgba(0,0,0,0) 0.8deg 5deg)',
+          backgroundBlendMode: 'multiply, multiply',
+          mixBlendMode: 'multiply',
+          filter: 'blur(240px)',
+          maskImage:
+            'radial-gradient(ellipse at center, rgba(0,0,0,0) 0 58%, rgba(0,0,0,1) 68% 100%), radial-gradient(ellipse at center, rgba(0,0,0,1) 0 90%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage:
+            'radial-gradient(ellipse at center, rgba(0,0,0,0) 0 58%, rgba(0,0,0,1) 68% 100%), radial-gradient(ellipse at center, rgba(0,0,0,1) 0 90%, rgba(0,0,0,0) 100%)',
+        }}
+      ></div>
+
       {/* Content */}
-      <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
+
+      <div className="relative h-full flex flex-col items-center justify-center text-center px-4 z-10">
         <p className="text-white text-3xl md:text-5xl mb-4 font-[family-name:var(--font-pacifico)] font-normal">
           In The Media
         </p>
