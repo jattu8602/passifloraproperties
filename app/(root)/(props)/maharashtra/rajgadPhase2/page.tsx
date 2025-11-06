@@ -299,7 +299,7 @@ const RajgadPhase2Page = () => {
       </header>
 
       {/* Hero Video Section */}
-      <section className="relative w-full h-[30vh] md:h-[70vh] overflow-hidden">
+      <section className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden">
         <video
           ref={heroVideoRef}
           src="/bhor/phase2/videos/hero.mp4"
