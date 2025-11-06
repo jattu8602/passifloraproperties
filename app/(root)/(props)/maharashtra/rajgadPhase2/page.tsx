@@ -778,7 +778,7 @@ const RajgadPhase2Page = () => {
         </section>
 
         {/* Google Maps Satellite View */}
-        <section className="container mx-auto px-4 py-8">
+        {/* <section className="container mx-auto px-4 py-8">
           <div className="relative w-full h-96 rounded-lg overflow-hidden shadow-card">
             <MapFrame
               src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d799.6402267074013!2d73.65903863466374!3d18.22707902009323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTjCsDEzJzM3LjkiTiA3M8KwMzknMzMuOSJF!5e1!3m2!1sen!2sin!4v1762070091433!5m2!1sen!2sin"
@@ -790,10 +790,10 @@ const RajgadPhase2Page = () => {
               title="Satellite View"
             />
           </div>
-        </section>
+        </section> */}
 
       {/* 3D Map */}
-      <section className="w-full h-[70vh] md:h-[70vh] relative">
+      {/* <section className="w-full h-[70vh] md:h-[70vh] relative">
         <MapFrame
           src="https://www.google.com/maps/embed?pb=!4v1762067067471!6m8!1m7!1sCd_pTV7edB6d1CSLZiRWKg!2m2!1d18.22726755784996!2d73.65935979764579!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002"
           className="w-full h-full"
@@ -825,7 +825,7 @@ const RajgadPhase2Page = () => {
             )}
           </Button>
           </div>
-        </section>
+        </section> */}
 
         {/* Collapsible Details */}
         <section className="animate-fade-in">
@@ -951,7 +951,7 @@ const RajgadPhase2Page = () => {
         </section>
 
         {/* Contact Form */}
-        <section className="animate-fade-in">
+        {/* <section className="animate-fade-in">
           <Card className="shadow-soft border-border bg-card">
             <CardContent className="pt-8">
               <h2 className="text-3xl font-bold mb-4 text-foreground">
@@ -1052,7 +1052,7 @@ const RajgadPhase2Page = () => {
               </form>
             </CardContent>
           </Card>
-        </section>
+        </section> */}
       </main>
     </div>
   )

@@ -391,7 +391,7 @@ Join a vibrant community of investors and families investing in a future rooted 
         </section>
 
         {/* Contact Form */}
-        <section className="animate-fade-in">
+        {/* <section className="animate-fade-in">
           <Card className="shadow-soft border-border bg-card">
             <CardContent className="pt-8">
               <h2 className="text-3xl font-bold mb-4 text-foreground">
@@ -492,7 +492,7 @@ Join a vibrant community of investors and families investing in a future rooted 
               </form>
             </CardContent>
           </Card>
-        </section>
+        </section> */}
       </main>
     </div>
   )
