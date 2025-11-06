@@ -66,7 +66,7 @@ export const maharashtraProjects: MaharashtraProjectCard[] = [
       'Well-planned plots with clear titles',
       'Growing destination with strong appreciation potential',
     ],
-    imageUrl: '/sold-property-house.jpg',
+    imageUrl: '/clientsentimages/KARJAT%20NA%20PLOTS.jpeg',
     link: '/maharashtra/kamshet',
   },
 ]
