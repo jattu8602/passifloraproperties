@@ -40,27 +40,34 @@ export default function ProjectsMegaMenu({ onNavigate }: Props) {
             Explore by Location
           </h3>
           <div className="space-y-4">
-            {projectsByState.map((group) => (
-              <div key={group.state}>
-                <h4 className="text-xs font-bold text-gray-900 mb-2">
-                  {group.state}
-                </h4>
-                <div className="flex flex-wrap gap-x-4 gap-y-1">
-                  {group.cities.map((city) => (
-                    <Link
-                      key={city}
-                      href={`/projects?state=${encodeURIComponent(
-                        group.state
-                      )}&city=${encodeURIComponent(city)}`}
-                      onClick={onNavigate}
-                      className="text-xs text-gray-700 hover:text-amber-700 transition-colors duration-200"
-                    >
-                      {city}
-                    </Link>
-                  ))}
+            {projectsByState.map((group) => {
+              const stateSlug = group.state.toLowerCase()
+              return (
+                <div key={group.state}>
+                  <Link
+                    href={`/${stateSlug}`}
+                    onClick={onNavigate}
+                    className="text-xs font-bold text-gray-900 mb-2 block hover:text-amber-700 transition-colors duration-200"
+                  >
+                    {group.state}
+                  </Link>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                    {group.cities.map((city) => (
+                      <Link
+                        key={city}
+                        href={`/projects?state=${encodeURIComponent(
+                          group.state
+                        )}&city=${encodeURIComponent(city)}`}
+                        onClick={onNavigate}
+                        className="text-xs text-gray-700 hover:text-amber-700 transition-colors duration-200"
+                      >
+                        {city}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 

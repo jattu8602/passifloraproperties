@@ -67,7 +67,7 @@ export default function RootLayout({
         <SessionProvider>
           {children}
           <ConditionalFooter />
-          <ScrollIndicator />
+          {/* <ScrollIndicator /> */}
           <AuthHandler />
           <RajgadPopup />
         </SessionProvider>
