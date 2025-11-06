@@ -312,26 +312,26 @@ const RajgadPhase2Page = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60 flex items-center justify-center">
           <div className="text-center px-4 text-white">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-lg">
-              {projectData.title}
-            </h1>
+            {projectData.title}
+          </h1>
             <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>
-                  {projectData.city}, {projectData.state}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Maximize2 className="h-4 w-4" />
-                <span>
-                  From {projectData.areaSqFtMin.toLocaleString()} sq. ft
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <IndianRupee className="h-4 w-4" />
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              <span>
+                {projectData.city}, {projectData.state}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Maximize2 className="h-4 w-4" />
+              <span>
+                From {projectData.areaSqFtMin.toLocaleString()} sq. ft
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <IndianRupee className="h-4 w-4" />
                 <span className="font-semibold">
-                  {(projectData.priceFromINR / 100000).toFixed(1)} Lakh+
-                </span>
+                {(projectData.priceFromINR / 100000).toFixed(1)} Lakh+
+              </span>
               </div>
             </div>
           </div>
@@ -417,7 +417,7 @@ const RajgadPhase2Page = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Explore Our Views
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+          <p className="text-lg text-muted-foreground leading-relaxed">
               Discover the breathtaking valley views and serene landscapes that
               make Rajgad Phase 2 a truly special place to call home. Each villa
               is positioned to maximize natural beauty and privacy.
@@ -707,21 +707,54 @@ const RajgadPhase2Page = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 Project Booklet
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 Download our comprehensive project booklet to learn more about
                 Rajgad Phase 2, including detailed specifications, floor plans,
                 and amenities.
               </p>
-              <Button onClick={handleDownloadPDF} size="lg" className="gap-2">
-                <Download className="h-5 w-5" />
-                Download PDF Booklet
-              </Button>
-              <div className="pt-4">
-                <iframe
-                  src="/bhor/phase2/pdf.pdf"
-                  className="w-full h-[600px] md:h-[800px] rounded-lg border"
-                  title="Project Booklet PDF"
-                />
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
+                <Button onClick={handleDownloadPDF} size="lg" className="gap-2 w-full sm:w-auto">
+                  <Download className="h-5 w-5" />
+                  Download PDF Booklet
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="gap-2 w-full sm:w-auto"
+                  onClick={() => {
+                    window.open('/bhor/phase2/pdf.pdf', '_blank')
+                  }}
+                >
+                  <Maximize2 className="h-5 w-5" />
+                  Open in New Tab
+                </Button>
+              </div>
+              <div className="pt-4 px-4">
+                {/* Desktop PDF Viewer */}
+                <div className="hidden md:block">
+                  <div className="relative w-full h-[70vh] min-h-[600px] max-h-[900px] rounded-lg border overflow-hidden bg-muted/20">
+                    <iframe
+                      src="/bhor/phase2/pdf.pdf#toolbar=1&navpanes=1&scrollbar=1"
+                      className="w-full h-full"
+                      title="Project Booklet PDF"
+                      allow="fullscreen"
+                    />
+                  </div>
+                </div>
+                {/* Mobile PDF Viewer - More compact and touch-friendly */}
+                <div className="md:hidden">
+                  <div className="relative w-full h-[60vh] min-h-[400px] rounded-lg border overflow-hidden bg-muted/20">
+                    <iframe
+                      src="/bhor/phase2/pdf.pdf#toolbar=1&navpanes=0&scrollbar=1&zoom=page-width"
+                      className="w-full h-full"
+                      title="Project Booklet PDF"
+                      allow="fullscreen"
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-3">
+                    Tip: Pinch to zoom or download for better viewing experience
+                  </p>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -759,38 +792,38 @@ const RajgadPhase2Page = () => {
           </div>
         </section>
 
-        {/* 3D Map */}
-        <section className="w-full h-[70vh] md:h-[70vh] relative">
-          <MapFrame
-            src="https://www.google.com/maps/embed?pb=!4v1762067067471!6m8!1m7!1sCd_pTV7edB6d1CSLZiRWKg!2m2!1d18.22726755784996!2d73.65935979764579!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002"
-            className="w-full h-full"
+      {/* 3D Map */}
+      <section className="w-full h-[70vh] md:h-[70vh] relative">
+        <MapFrame
+          src="https://www.google.com/maps/embed?pb=!4v1762067067471!6m8!1m7!1sCd_pTV7edB6d1CSLZiRWKg!2m2!1d18.22726755784996!2d73.65935979764579!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002"
+          className="w-full h-full"
             style={{
               border: 0,
               pointerEvents: mapInteractive ? 'auto' : 'none',
             }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Project Location 3D View"
-          />
-          <div className="absolute bottom-4 left-4 z-10">
-            <Button
-              onClick={() => setMapInteractive(!mapInteractive)}
-              variant={mapInteractive ? 'default' : 'secondary'}
-              className="gap-2 shadow-lg"
-            >
-              {mapInteractive ? (
-                <>
-                  <MousePointerClick className="h-4 w-4" />
-                  <span className="hidden sm:inline">Map Active</span>
-                </>
-              ) : (
-                <>
-                  <Hand className="h-4 w-4" />
-                  <span className="hidden sm:inline">Click to Interact</span>
-                </>
-              )}
-            </Button>
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Project Location 3D View"
+        />
+        <div className="absolute bottom-4 left-4 z-10">
+          <Button
+            onClick={() => setMapInteractive(!mapInteractive)}
+            variant={mapInteractive ? 'default' : 'secondary'}
+            className="gap-2 shadow-lg"
+          >
+            {mapInteractive ? (
+              <>
+                <MousePointerClick className="h-4 w-4" />
+                <span className="hidden sm:inline">Map Active</span>
+              </>
+            ) : (
+              <>
+                <Hand className="h-4 w-4" />
+                <span className="hidden sm:inline">Click to Interact</span>
+              </>
+            )}
+          </Button>
           </div>
         </section>
 

@@ -51,11 +51,11 @@ export default function Hero() {
                 if (tab.id === 'home') {
                   router.push('/')
                 } else if (tab.id === 'maharashtra') {
-                  router.push('/projects?state=Maharashtra')
+                  router.push('/maharashtra')
                 } else if (tab.id === 'bihar') {
-                  router.push('/projects?state=Bihar')
+                  router.push('/bihar')
                 } else if (tab.id === 'jharkhand') {
-                  router.push('/projects?state=Jharkhand')
+                  router.push('/jharkhand')
                 }
               }}
               className={`font-bold text-xs md:text-sm transition whitespace-nowrap ${
