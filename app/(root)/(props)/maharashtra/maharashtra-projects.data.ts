@@ -69,4 +69,22 @@ export const maharashtraProjects: MaharashtraProjectCard[] = [
     imageUrl: '/clientsentimages/KARJAT%20NA%20PLOTS.jpeg',
     link: '/maharashtra/kamshet',
   },
+  {
+    id: 5,
+    title: 'Manchar Mountain View Farm Project',
+    shortSummary:
+      'Scenic 13-acre farm project surrounded by mountains — just 300 meters from the highway. Ideal for weekend homes and long-term investment.',
+    highlights: [
+      '13 acres of gated, survey-approved farmland',
+      'Scenic mountain views and pleasant year-round climate',
+      'Ideal for farmhouse plots and long-term value appreciation',
+      'Managed and marketed by Passiflora Properties',
+      'Contour-based planning enabling natural water percolation',
+      'Suitable for vineyards, herbal gardens, and native forestry',
+      'Wide internal access planned for SUV and tractor movement',
+      'Low light pollution; excellent stargazing and sky views',
+    ],
+    imageUrl: '/clientsentimages/Rajgad%20Farm%20Plots.jpeg',
+    link: '/maharashtra/manchar',
+  },
 ]
