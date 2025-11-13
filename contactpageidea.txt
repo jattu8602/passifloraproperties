@@ -1,0 +1,304 @@
+CONTACT PAGE DATA & FORM FIELDS DOCUMENTATION
+==============================================
+
+This document outlines all data and form fields used in the Contact Page of Passiflora Properties website.
+
+================================================================================
+1. CONTACT PAGE STRUCTURE
+================================================================================
+
+Location: /app/(root)/contact/page.tsx
+
+Page Content:
+- Page Title: "Contact Us"
+- Subtitle/Description: "We'd love to help you explore your next land or farmhouse investment."
+- Contact Form Component (wrapped in a bordered container)
+- Optional: Can receive projectSlug via URL search params (?project=slug-name)
+
+================================================================================
+2. CONTACT FORM FIELDS (ContactForm Component)
+================================================================================
+
+Location: /components/ContactForm.tsx
+API Endpoint: /api/enquiries (POST method)
+
+REQUIRED FIELDS:
+----------------
+1. Name (name="name")
+   - Type: Text input
+   - Required: Yes
+   - Validation: Minimum 2 characters
+   - Placeholder: "Name"
+   - Grid Position: First column (on desktop, 2-column grid)
+
+2. Email (name="email")
+   - Type: Email input
+   - Required: Yes
+   - Validation: Must be valid email format
+   - Placeholder: "Email"
+   - Grid Position: Second column (on desktop, 2-column grid)
+
+3. Phone (name="phone")
+   - Type: Tel input
+   - Required: Yes
+   - Validation: Minimum 7 characters
+   - Placeholder: "Phone"
+   - Grid Position: First column, second row (on desktop, 2-column grid)
+
+4. Message (name="message")
+   - Type: Textarea
+   - Required: Yes
+   - Validation: Minimum 5 characters
+   - Placeholder: "Message"
+   - Rows: 5
+   - Full width field (spans both columns)
+
+OPTIONAL FIELDS:
+----------------
+5. City (name="city")
+   - Type: Text input
+   - Required: No
+   - Placeholder: "City"
+   - Grid Position: Second column, second row (on desktop, 2-column grid)
+
+HIDDEN/SPAM PROTECTION FIELDS:
+-------------------------------
+6. Company (name="company")
+   - Type: Hidden input (honeypot field for spam protection)
+   - Auto-complete: Off
+   - Tab Index: -1 (not accessible via keyboard)
+   - Purpose: If this field is filled, the submission is treated as spam
+   - CSS Class: "hidden"
+
+AUTOMATIC FIELDS (Not visible in form):
+-----------------------------------------
+7. projectSlug
+   - Type: String (optional)
+   - Source: Can be passed as prop to ContactForm component or via URL query parameter
+   - Purpose: Links the enquiry to a specific project if user came from a project page
+   - Example: If user clicks "Book Site Visit" from a project page, the project slug is included
+
+================================================================================
+3. FORM VALIDATION & SUBMISSION
+================================================================================
+
+Validation Schema (Zod - in /app/api/enquiries/route.ts):
+- name: z.string().min(2)
+- email: z.string().email()
+- phone: z.string().min(7)
+- city: z.string().optional()
+- message: z.string().min(5)
+- projectSlug: z.string().optional()
+- company: z.string().optional() (honeypot - must be empty)
+
+Form States:
+- idle: Initial state
+- submitting: While form is being submitted
+- success: After successful submission
+- error: If submission fails
+
+Success Message:
+"Thank you! We have received your enquiry."
+(Displayed in green border box with green background)
+
+Error Handling:
+- Error messages displayed in red text below form
+- Error message: "Failed to submit" or custom error from API
+
+Submit Button:
+- Text: "Send Enquiry" (idle state) / "Submitting..." (submitting state)
+- Style: Black background, white text, rounded-full, disabled when submitting
+- Disabled state: opacity-60
+
+================================================================================
+4. DATA STORAGE
+================================================================================
+
+Database Model: Enquiry (stored in MongoDB via Prisma)
+Note: The Enquiry model is referenced in the API but not currently defined in schema.prisma
+
+Stored Fields:
+- name: String
+- email: String
+- phone: String
+- city: String (optional)
+- message: String
+- projectSlug: String (optional, links to specific project)
+- createdAt: DateTime (automatically set)
+- Additional fields may exist but are not visible in current implementation
+
+================================================================================
+5. CONTACT INFORMATION DISPLAYED ON SITE
+================================================================================
+
+Footer Contact Information (/components/footer.tsx):
+- Phone: +91 9607210333
+- Email: info.passifloraproperties@gmail.com
+- Address: 202, Nawu Imperio, Adjacent to Lodha Belmondo, Gahunje, Pimpri-Chinchwad, Pune, Maharashtra, 412101
+
+Regional Contacts (from Docs/admin_sheet/Contacts.csv):
+- Maharashtra, Bhor: Sales Team + Pune, +919607210333, passiflorapune@gmail.com
+- Maharashtra, Pawna: Resort Bookings, +919999999999, bookings@passifloraproperties.com
+- Maharashtra, Mumbai: City Office, +912212345678, chembur@passifloraproperties.com
+- Bihar, Patna: State Lead, +919888888888, patna@passifloraproperties.com
+
+WhatsApp Integration:
+- Primary WhatsApp: https://wa.me/919607210333
+- Used in BookSiteVisitCTA component and other CTAs throughout the site
+
+================================================================================
+6. RELATED FORMS & COMPONENTS
+================================================================================
+
+A. BookSiteVisitCTA Component:
+   - Links to: /contact?intent=visit
+   - Also provides WhatsApp link: https://wa.me/919607210333
+   - Purpose: Direct users to contact page with visit intent
+
+B. PropertyCTA Component:
+   - Links to: /contact?project={projectSlug}
+   - Purpose: Links contact form to specific project
+   - Also includes "Call Now" button
+
+C. PropertyForm Component (different from ContactForm):
+   - Fields: Full name, Email, Phone, "Are you buying or selling?" dropdown, Message textarea
+   - Additional: Military service checkbox
+   - Purpose: Property-specific enquiry form (appears to be a template/example)
+
+D. ScheduleTourSidebar Component:
+   - Fields: Email, Phone, "Are you buying or selling?" dropdown, Date selection, Military checkbox
+   - Purpose: Schedule property tours (different use case)
+
+================================================================================
+7. FORM LAYOUT & STYLING
+================================================================================
+
+Desktop Layout:
+- Form container: max-w-3xl, centered, with border and rounded corners
+- Input grid: 2 columns (sm:grid-cols-2)
+- First row: Name (col 1), Email (col 2)
+- Second row: Phone (col 1), City (col 2)
+- Message: Full width, below grid
+- Submit button: Below message field
+
+Mobile Layout:
+- Single column layout
+- All fields stack vertically
+- Same order: Name, Email, Phone, City, Message, Submit
+
+Styling:
+- Inputs: px-3 py-2, border border-gray-300, rounded-lg
+- Textarea: w-full, px-3 py-2, border border-gray-300, rounded-lg
+- Submit button: px-5 py-2.5, bg-black text-white, rounded-full, font-semibold
+- Error text: text-sm text-red-600
+- Success message: rounded-xl border border-green-200 bg-green-50 p-4 text-green-900
+
+================================================================================
+8. API INTEGRATION
+================================================================================
+
+Endpoint: POST /api/enquiries
+Content-Type: application/json
+
+Request Body:
+{
+  "name": "string (min 2 chars)",
+  "email": "string (valid email)",
+  "phone": "string (min 7 chars)",
+  "city": "string (optional)",
+  "message": "string (min 5 chars)",
+  "projectSlug": "string (optional)",
+  "company": "string (optional, honeypot - should be empty)"
+}
+
+Response (Success):
+{
+  "ok": true
+}
+
+Response (Error):
+{
+  "ok": false,
+  "error": "error message string"
+}
+
+Spam Protection:
+- If "company" field has a value, the API silently returns success (to fool bots)
+- No actual enquiry is created if honeypot is triggered
+
+================================================================================
+9. USE CASES & SCENARIOS
+================================================================================
+
+1. General Contact:
+   - User visits /contact directly
+   - Fills all required fields
+   - Submits general enquiry
+   - projectSlug is undefined/null
+
+2. Project-Specific Enquiry:
+   - User clicks "Book Site Visit" from project page
+   - Redirected to /contact?project=rajgad-phase-1
+   - Form includes projectSlug automatically
+   - Enquiry is linked to specific project
+
+3. Site Visit Intent:
+   - User clicks "Book a Site Visit" CTA
+   - Redirected to /contact?intent=visit
+   - Form can be customized based on intent (currently not implemented but URL param exists)
+
+4. WhatsApp Alternative:
+   - Users can click WhatsApp button instead of form
+   - Direct link: https://wa.me/919607210333
+   - Bypasses form submission
+
+================================================================================
+10. FUTURE ENHANCEMENTS (Potential)
+================================================================================
+
+Based on code analysis, potential enhancements could include:
+
+1. Intent-based form customization:
+   - Different fields/placeholders based on ?intent=visit parameter
+   - Pre-filled message templates
+
+2. Additional fields (seen in other forms but not in ContactForm):
+   - "Are you buying or selling?" dropdown
+   - Preferred contact method
+   - Budget range
+   - Property type interest
+   - Preferred date/time for site visit
+
+3. Email notifications:
+   - Currently API creates database record
+   - Could add email alerts to sales team via Resend (mentioned in project_idea.md)
+
+4. Enquiry status tracking:
+   - Status field: new | contacted | qualified | closed
+   - Source field: web | whatsapp
+   - Admin dashboard to manage enquiries
+
+5. Regional contact routing:
+   - Based on city/state selection, route to appropriate regional contact
+   - Use Contacts.csv data for intelligent routing
+
+6. Form analytics:
+   - Track which projects generate most enquiries
+   - Conversion tracking from project pages to contact form
+
+================================================================================
+11. TECHNICAL NOTES
+================================================================================
+
+- Form uses React Server Actions (form action={onSubmit})
+- Client-side state management with useState
+- FormData API for form submission
+- Zod schema validation on server side
+- Prisma ORM for database operations
+- MongoDB as database backend
+- Next.js App Router architecture
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================
+

@@ -41,25 +41,32 @@ export default function RajgadPopup() {
     window.open('https://wa.me/919823147882', '_blank')
   }
 
+  const handleClose = () => {
+    setOpen(false)
+    sessionStorage.setItem('rajgad-popup-dismissed', 'true')
+  }
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="max-w-xs sm:max-w-md md:max-w-lg p-0 overflow-hidden"
+        className="max-w-xs sm:max-w-sm md:max-w-sm lg:max-w-md p-0 overflow-hidden"
         showCloseButton={false}
-        onInteractOutside={(e) => e.preventDefault()}
       >
         <div className="relative">
           {/* Custom Close Button */}
           <DialogClose
-            onClick={handleOpenChange.bind(null, false)}
+            onClick={handleClose}
             className="absolute top-1 right-1 sm:top-0 sm:right-0 z-10 bg-white rounded-full p-0.5 sm:p-1 shadow-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 hover:cursor-pointer"
           >
             <X className="w-3 h-3 sm:w-4 sm:h-4 font-bold stroke-[4]" />
             <span className="sr-only">Close</span>
           </DialogClose>
 
-          {/* Banner Image */}
-          <div className="relative w-full h-auto">
+          {/* Banner Image - Clickable to close */}
+          <div
+            className="relative w-full h-auto cursor-pointer"
+            onClick={handleClose}
+          >
             <Image
               src="/bhor/popup.jpeg"
               alt="Rajgad Farm Plots - 4000 SQ.FT at the Foothills of Rajgad Fort"
