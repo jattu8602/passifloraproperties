@@ -36,7 +36,21 @@ const GangajalRiverfrontPage = () => {
   const [mapInteractive, setMapInteractive] = useState(false)
   const { toast } = useToast()
 
-  const projectData = {
+  const projectData: {
+    title: string
+    status: string
+    type: string
+    state: string
+    city: string
+    shortSummary: string
+    description: string
+    projectHighlights: string[]
+    connectivity: string[]
+    latitude: number
+    longitude: number
+    priceFromINR?: number
+    areaSqFtMin?: number
+  } = {
     title: 'Gangajal Riverfront Plots – Patna',
     status: 'active',
     type: 'Residential Plot',
@@ -135,7 +149,11 @@ const GangajalRiverfrontPage = () => {
     }
   }
 
-  const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3771.5!2d${projectData.longitude}!3d${projectData.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDM4JzExLjQiTiA4NcKwMDMnNTkuNCJF!5e1!3m2!1sen!2sin!4v${Date.now()}!5m2!1sen!2sin`
+  const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3771.5!2d${
+    projectData.longitude
+  }!3d${
+    projectData.latitude
+  }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDM4JzExLjQiTiA4NcKwMDMnNTkuNCJF!5e1!3m2!1sen!2sin!4v${Date.now()}!5m2!1sen!2sin`
 
   return (
     <div className="min-h-screen bg-background">
@@ -199,7 +217,9 @@ const GangajalRiverfrontPage = () => {
             {projectData.areaSqFtMin && (
               <div className="flex items-center gap-2">
                 <Maximize2 className="h-4 w-4" />
-                <span>From {projectData.areaSqFtMin.toLocaleString()} sq. ft</span>
+                <span>
+                  From {projectData.areaSqFtMin.toLocaleString()} sq. ft
+                </span>
               </div>
             )}
             {projectData.priceFromINR && (
@@ -261,9 +281,16 @@ const GangajalRiverfrontPage = () => {
       {projectData.latitude && projectData.longitude && (
         <section className="w-full h-[70vh] md:h-[70vh] relative">
           <MapFrame
-            src={`https://www.google.com/maps/embed?pb=!4v${Date.now()}!6m8!1m7!1s${projectData.latitude},${projectData.longitude}!2m2!1d${projectData.latitude}!2d${projectData.longitude}!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002`}
+            src={`https://www.google.com/maps/embed?pb=!4v${Date.now()}!6m8!1m7!1s${
+              projectData.latitude
+            },${projectData.longitude}!2m2!1d${projectData.latitude}!2d${
+              projectData.longitude
+            }!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002`}
             className="w-full h-full"
-            style={{ border: 0, pointerEvents: mapInteractive ? 'auto' : 'none' }}
+            style={{
+              border: 0,
+              pointerEvents: mapInteractive ? 'auto' : 'none',
+            }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -446,4 +473,3 @@ const GangajalRiverfrontPage = () => {
 }
 
 export default GangajalRiverfrontPage
-

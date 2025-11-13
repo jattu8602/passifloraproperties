@@ -7,6 +7,8 @@ export type BiharProjectCard = {
   link: string
 }
 
+
+
 export const biharProjects: BiharProjectCard[] = [
   {
     id: 6,
