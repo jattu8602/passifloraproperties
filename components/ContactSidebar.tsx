@@ -158,34 +158,8 @@ export const ContactSidebar = () => {
         </CardContent>
       </Card>
 
-      {/* Decorative Image Card */}
-      <Card className="overflow-hidden border-primary/30 shadow-medium hover:border-primary/50 transition-all duration-300">
-        <div className="relative h-64 overflow-hidden">
-          <Image
-            src="/assets/landscape-sidebar.jpg"
-            alt="Property Landscape"
-            fill
-            className="object-cover transition-transform duration-500 hover:scale-105"
-          />
-        </div>
-      </Card>
 
-      {/* Passiflora Brand Image */}
-      <Card className="overflow-hidden border-primary/30 shadow-medium hover:border-primary/50 transition-all duration-300">
-        <div className="relative h-48 overflow-hidden">
-          <Image
-            src="/assets/passiflora-decoration.jpg"
-            alt="Passiflora Flower"
-            fill
-            className="object-cover transition-transform duration-500 hover:scale-105"
-          />
-        </div>
-        <CardContent className="p-4 bg-gradient-to-br from-card to-accent/5">
-          <p className="text-sm text-primary text-center italic font-medium">
-            "Rooted in nature, growing with you"
-          </p>
-        </CardContent>
-      </Card>
+     
     </aside>
   )
 }
