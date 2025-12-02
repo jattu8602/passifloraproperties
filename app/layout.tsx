@@ -9,8 +9,6 @@ import {
   Pacifico,
 } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { SessionProvider } from 'next-auth/react'
-import AuthHandler from '@/components/popups/auth-handler'
 import RajgadPopup from '@/components/popups/rajgad-popup'
 import './globals.css'
 import ConditionalFooter from '@/components/conditional-footer'
@@ -64,13 +62,10 @@ export default function RootLayout({
   return (
     <html lang="en " className="prevent-scroll-x">
       <body className={`font-sans antialiased ${pacifico.variable}`}>
-        <SessionProvider>
-          {children}
-          <ConditionalFooter />
-          {/* <ScrollIndicator /> */}
-          <AuthHandler />
-          <RajgadPopup />
-        </SessionProvider>
+        {children}
+        <ConditionalFooter />
+        {/* <ScrollIndicator /> */}
+        <RajgadPopup />
         <Analytics />
       </body>
     </html>

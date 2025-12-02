@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { Search, X } from 'lucide-react'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { getAllProjects } from '@/lib/projects'
+import SearchResults from '@/components/search-results'
 
 export default function StickySearch() {
   // Start hidden; we'll decide visibility once the hero bar is found/observed
   const [isVisible, setIsVisible] = useState(false)
   const [canShow, setCanShow] = useState(false)
-  const [location, setLocation] = useState('Maharashtra, India')
+  const [location, setLocation] = useState('')
   const isMobile = useIsMobile()
   const debounceRef = useRef<number | null>(null)
   const lastRatioRef = useRef(1)
@@ -223,21 +225,38 @@ export default function StickySearch() {
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 md:py-3">
         <div className="flex items-center justify-center">
-          <div className="bg-white rounded-full p-1.5 md:p-2 flex items-center gap-2 shadow-lg max-w-full sm:max-w-2xl w-full border border-gray-300">
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="City, address, or ZIP"
-              className="flex-1 px-3 md:px-4 py-2 outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base"
-            />
-            <button className="text-gray-400 hover:text-gray-600 transition p-2 hidden md:inline-flex">
-              <X size={18} />
-            </button>
-            <button className="bg-black text-white p-2 md:p-2.5 rounded-full hover:bg-gray-800 transition shrink-0">
-              <Search size={18} />
-            </button>
-          </div>
+            <div className="bg-white rounded-full p-1.5 md:p-2 flex items-center gap-2 shadow-lg max-w-full sm:max-w-2xl w-full border border-gray-300 relative">
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Maharashtra, India"
+                className="flex-1 px-3 md:px-4 py-2 outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base"
+              />
+              {location.length > 0 && (
+                <button
+                  onClick={() => setLocation('')}
+                  className="text-gray-400 hover:text-gray-600 transition p-2 hidden md:inline-flex"
+                >
+                  <X size={18} />
+                </button>
+              )}
+              <button className="bg-black text-white p-2 md:p-2.5 rounded-full hover:bg-gray-800 transition shrink-0">
+                <Search size={18} />
+              </button>
+
+              {/* Search Results Dropdown */}
+              {location.length > 0 && (
+                <SearchResults
+                  results={getAllProjects().filter(p =>
+                    p.title.toLowerCase().includes(location.toLowerCase()) ||
+                    p.city.toLowerCase().includes(location.toLowerCase()) ||
+                    p.state.toLowerCase().includes(location.toLowerCase())
+                  )}
+                  onSelect={() => setLocation('')}
+                />
+              )}
+            </div>
         </div>
       </div>
     </div>

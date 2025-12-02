@@ -3,10 +3,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { useSession, signOut } from 'next-auth/react'
 import gsap from 'gsap'
-import AuthModal from '@/components/auth-modal'
-import UserDropdown from '@/components/user-dropdown'
 import { headerNav } from '@/lib/menu.config'
 import ProjectsMegaMenu from '@/components/projects-mega-menu'
 
@@ -16,10 +13,7 @@ export default function Header() {
   const overlayRef = useRef<HTMLDivElement | null>(null)
   const backdropRef = useRef<HTMLDivElement | null>(null)
   const itemRefs = useRef<Array<HTMLElement | null>>([])
-  const signupBtnRef = useRef<HTMLButtonElement | null>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
-  const [authOpen, setAuthOpen] = useState(false)
-  const { data: session } = useSession()
   const [projectsOpen, setProjectsOpen] = useState(false)
   const projectsTimerRef = useRef<number | null>(null)
 
@@ -48,7 +42,6 @@ export default function Header() {
         clipPath: 'circle(0px at var(--menu-x) var(--menu-y))',
       })
       gsap.set(items, { opacity: 0, y: -8 })
-      gsap.set(signupBtnRef.current, { opacity: 0, y: -8 })
 
       const tl = gsap.timeline({ paused: true })
       tl.to(
@@ -76,11 +69,6 @@ export default function Header() {
           },
           0.15
         )
-        .to(
-          signupBtnRef.current,
-          { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
-          0.3
-        )
 
       tl.play(0)
       tlRef.current = tl
@@ -90,9 +78,9 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 relative z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 lg:h-14">
+          <div className="flex justify-between items-center h-16 lg:h-14 relative">
             {/* Logo */}
             <Link
               href="/"
@@ -101,12 +89,12 @@ export default function Header() {
               <img
                 src="/logop.png"
                 alt="Passiflora Properties Logo"
-                className="h-15 lg:h-15 w-auto"
+                className="h-12 lg:h-12 w-auto"
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-7 relative">
+            <nav className="hidden lg:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
               {navLinks.map((link) => {
                 if (link.label === 'Properties') {
                   return (
@@ -130,7 +118,7 @@ export default function Header() {
                         className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-md flex items-center gap-1"
                       >
                         {link.label}
-                        <ChevronDown size={16} />
+                        <ChevronDown size={16} strokeWidth={3} />
                       </Link>
                       {projectsOpen && (
                         <div className="absolute top-full left-[-200px] z-50">
@@ -170,33 +158,6 @@ export default function Header() {
                 >
                   Advertise
                 </Link> */}
-              </div>
-              {/* Divider to separate stacks */}
-              <div className="hidden lg:block h-6 w-px bg-gray-200" />
-              {/* Group 2: Auth section */}
-              <div className="flex items-center gap-2">
-                {session ? (
-                  <UserDropdown />
-                ) : (
-                  <>
-                    <Link
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setAuthOpen(true)
-                      }}
-                      className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-                    >
-                      Log in
-                    </Link>
-                    <button
-                      onClick={() => setAuthOpen(true)}
-                      className="px-5 py-2 bg-black text-white rounded-full font-bold text-sm transition-all duration-200 hover:bg-gray-900 hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
-                    >
-                      Sign up
-                    </button>
-                  </>
-                )}
               </div>
             </div>
 
@@ -310,20 +271,18 @@ export default function Header() {
                                 <p className="text-xs font-bold text-gray-900 mb-2">
                                   {group.state}
                                 </p>
-                                <div className="space-y-1.5">
-                                  {group.cities.map((city: string) => (
-                                    <Link
-                                      key={`${group.state}-${city}`}
-                                      href={`/projects?state=${encodeURIComponent(
-                                        group.state
-                                      )}&city=${encodeURIComponent(city)}`}
-                                      className="text-xs text-gray-700 hover:text-amber-700 block"
-                                      onClick={closeMenuImmediately}
-                                    >
-                                      {city}
-                                    </Link>
-                                  ))}
-                                </div>
+                                  <div className="space-y-1.5">
+                                    {group.projects.map((project: any) => (
+                                      <Link
+                                        key={`${group.state}-${project.name}`}
+                                        href={project.href}
+                                        className="text-xs text-gray-700 hover:text-amber-700 block"
+                                        onClick={closeMenuImmediately}
+                                      >
+                                        {project.name}
+                                      </Link>
+                                    ))}
+                                  </div>
                               </div>
                             )
                           )}
@@ -473,202 +432,10 @@ export default function Header() {
                   Advertise
                 </Link> */}
               </div>
-
-              {session ? (
-                <div className="mt-4 space-y-3">
-                  <div
-                    className="px-4 py-3 bg-gray-50 rounded-lg"
-                    ref={(el) => {
-                      itemRefs.current[navLinks.length + 5] = el
-                    }}
-                  >
-                    <p className="font-semibold text-gray-900">
-                      {session.user?.name}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      {session.user?.email}
-                    </p>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href="#"
-                        className="font-bold text-gray-800 text-base py-2"
-                        ref={(el) => {
-                          itemRefs.current[navLinks.length + 6] = el
-                        }}
-                        onClick={() => {
-                          if (tlRef.current) {
-                            tlRef.current.reverse()
-                            tlRef.current.eventCallback(
-                              'onReverseComplete',
-                              () => {
-                                setMobileMenuOpen(false)
-                                document.body.style.overflow = ''
-                              }
-                            )
-                          } else {
-                            setMobileMenuOpen(false)
-                            document.body.style.overflow = ''
-                          }
-                        }}
-                      >
-                        Profile
-                      </Link>
-                      <Link
-                        href="#"
-                        className="font-bold text-gray-800 text-base py-2"
-                        ref={(el) => {
-                          itemRefs.current[navLinks.length + 7] = el
-                        }}
-                        onClick={closeMenuImmediately}
-                      >
-                        Saved Properties
-                      </Link>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href="#"
-                        className="font-bold text-gray-800 text-base py-2"
-                        ref={(el) => {
-                          itemRefs.current[navLinks.length + 8] = el
-                        }}
-                        onClick={closeMenuImmediately}
-                      >
-                        Settings
-                      </Link>
-                      <button
-                        className="font-bold text-red-600 text-base py-2"
-                        ref={(el) => {
-                          itemRefs.current[navLinks.length + 9] = el
-                        }}
-                        onClick={() => {
-                          if (tlRef.current) {
-                            tlRef.current.reverse()
-                            tlRef.current.eventCallback(
-                              'onReverseComplete',
-                              () => {
-                                setMobileMenuOpen(false)
-                                document.body.style.overflow = ''
-                                void signOut({ redirect: false })
-                              }
-                            )
-                          } else {
-                            setMobileMenuOpen(false)
-                            document.body.style.overflow = ''
-                            void signOut({ redirect: false })
-                          }
-                        }}
-                      >
-                        Sign out
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <Link
-                    href="#"
-                    className="font-bold text-gray-800 text-lg mt-2"
-                    ref={(el) => {
-                      itemRefs.current[navLinks.length + 5] = el
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setAuthOpen(true)
-                      if (tlRef.current) {
-                        tlRef.current.reverse()
-                        tlRef.current.eventCallback('onReverseComplete', () => {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                        })
-                      } else {
-                        setMobileMenuOpen(false)
-                        document.body.style.overflow = ''
-                      }
-                    }}
-                  >
-                    Log in
-                  </Link>
-                  <button
-                    ref={signupBtnRef}
-                    className="mt-4 w-full px-6 py-3 bg-black text-white rounded-lg font-bold text-base hover:bg-gray-800 transition-colors duration-200"
-                    onClick={() => {
-                      setAuthOpen(true)
-                      if (tlRef.current) {
-                        tlRef.current.reverse()
-                        tlRef.current.eventCallback('onReverseComplete', () => {
-                          setMobileMenuOpen(false)
-                          document.body.style.overflow = ''
-                        })
-                      } else {
-                        setMobileMenuOpen(false)
-                        document.body.style.overflow = ''
-                      }
-                    }}
-                  >
-                    Sign up
-                  </button>
-                </>
-              )}
             </nav>
           </div>
         </div>
       )}
-      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   )
-
-  // Build GSAP timeline when menu opens
-  useLayoutEffect(() => {
-    if (!mobileMenuOpen) return
-    if (!overlayRef.current || !backdropRef.current) return
-    const items = itemRefs.current.filter(Boolean)
-    const ctx = gsap.context(() => {
-      gsap.set(backdropRef.current, { opacity: 0 })
-      gsap.set(overlayRef.current, {
-        clipPath: 'circle(0px at var(--menu-x) var(--menu-y))',
-      })
-      gsap.set(items, { opacity: 0, y: -8 })
-      gsap.set(signupBtnRef.current, { opacity: 0, y: -8 })
-
-      const tl = gsap.timeline({ paused: true })
-      tl.to(
-        overlayRef.current,
-        {
-          clipPath: 'circle(150% at var(--menu-x) var(--menu-y))',
-          duration: 0.25,
-          ease: 'cubic-bezier(0.22,1,0.36,1)',
-        },
-        0
-      )
-        .to(
-          backdropRef.current,
-          { opacity: 1, duration: 0.2, ease: 'power2.out' },
-          0.05
-        )
-        .to(
-          items,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.25,
-            ease: 'power2.out',
-            stagger: 0.03,
-          },
-          0.15
-        )
-        .to(
-          signupBtnRef.current,
-          { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
-          0.3
-        )
-
-      tl.play(0)
-      tlRef.current = tl
-    })
-    return () => ctx.revert()
-  }, [mobileMenuOpen])
-
-  // GSAP timeline will be set up below, then we render after
 }

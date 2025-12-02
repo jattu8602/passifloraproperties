@@ -52,16 +52,14 @@ export default function ProjectsMegaMenu({ onNavigate }: Props) {
                     {group.state}
                   </Link>
                   <div className="flex flex-wrap gap-x-4 gap-y-1">
-                    {group.cities.map((city) => (
+                    {group.projects.map((project) => (
                       <Link
-                        key={city}
-                        href={`/projects?state=${encodeURIComponent(
-                          group.state
-                        )}&city=${encodeURIComponent(city)}`}
+                        key={project.name}
+                        href={project.href}
                         onClick={onNavigate}
                         className="text-xs text-gray-700 hover:text-amber-700 transition-colors duration-200"
                       >
-                        {city}
+                        {project.name}
                       </Link>
                     ))}
                   </div>

@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search } from 'lucide-react'
+import { Search, X } from 'lucide-react'
+import { getAllProjects } from '@/lib/projects'
+import SearchResults from '@/components/search-results'
 
 export default function Hero() {
   const router = useRouter()
@@ -17,7 +19,7 @@ export default function Hero() {
   ]
 
   return (
-    <section className="relative h-120 md:h-[500px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-120 md:h-[500px] flex items-center justify-center">
       {/* Video Background */}
       <video
         autoPlay
@@ -37,7 +39,7 @@ export default function Hero() {
         <div className="text-center mb-6 md:mb-8">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 text-balance leading-tight">
             The #1 Choice for Sustainable Land Investments in India
-            <span className="text-amber-400">*</span>
+            {/* <span className="text-amber-400">*</span> */}
           </h1>
         </div>
 
@@ -72,7 +74,7 @@ export default function Hero() {
         {/* Search Bar */}
         <div
           id="hero-search-bar"
-          className="bg-white rounded-full p-2 flex items-center gap-2 shadow-lg max-w-2xl mx-auto"
+          className="bg-white rounded-full p-2 flex items-center gap-2 shadow-lg max-w-2xl mx-auto relative"
         >
           <input
             type="text"
@@ -81,9 +83,29 @@ export default function Hero() {
             placeholder="Search projects or cities..."
             className="flex-1 px-3 md:px-4 py-2 md:py-3 outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base"
           />
+          {location.length > 0 && (
+            <button
+              onClick={() => setLocation('')}
+              className="text-gray-400 hover:text-gray-600 transition p-2"
+            >
+              <X size={18} />
+            </button>
+          )}
           <button className="bg-black text-white p-2 md:p-3 rounded-full hover:bg-gray-800 transition">
             <Search size={20} />
           </button>
+
+          {/* Search Results Dropdown */}
+          {location.length > 0 && (
+            <SearchResults
+              results={getAllProjects().filter(p =>
+                p.title.toLowerCase().includes(location.toLowerCase()) ||
+                p.city.toLowerCase().includes(location.toLowerCase()) ||
+                p.state.toLowerCase().includes(location.toLowerCase())
+              )}
+              onSelect={() => setLocation('')}
+            />
+          )}
         </div>
 
         {/* Helper text */}

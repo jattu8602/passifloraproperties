@@ -51,7 +51,7 @@ export const PropertyCard = ({
             New - {newHours} hours ago
           </span>
         </div> */}
-        <button
+        {/* <button
           onClick={() => setIsFavorited(!isFavorited)}
           className="absolute top-4 right-4 bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
           aria-label="Add to favorites"
@@ -61,7 +61,7 @@ export const PropertyCard = ({
             color={isFavorited ? '#ef4444' : '#4b5563'}
             fill={isFavorited ? '#ef4444' : 'none'}
           />
-        </button>
+        </button> */}
         {/* Address overlay */}
         <div className="absolute inset-0 flex items-end pointer-events-none">
           <div className="w-full p-3 bg-gradient-to-t from-black/60 to-transparent">

@@ -1,6 +1,11 @@
-export type StateCity = {
+export type ProjectLink = {
+  name: string
+  href: string
+}
+
+export type StateProjects = {
   state: 'Maharashtra' | 'Bihar' | 'Jharkhand'
-  cities: string[]
+  projects: ProjectLink[]
 }
 
 export type FeaturedProject = {
@@ -29,91 +34,88 @@ export const headerNav = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export const projectsByState: StateCity[] = [
+export const projectsByState: StateProjects[] = [
   {
     state: 'Maharashtra',
-    cities: ['Pune', 'Pawna', 'Kamshet', 'Karjat', 'Mumbai', 'Manchar'],
+    projects: [
+      { name: 'Chembur', href: '/maharashtra/chembur' },
+      { name: 'Karjat', href: '/maharashtra/karjat' },
+      { name: 'Manchar', href: '/maharashtra/manchar' },
+      { name: 'Rajgad Phase 1', href: '/maharashtra/rajgadPhase1' },
+      { name: 'Rajgad Phase 2', href: '/maharashtra/rajgadPhase2' },
+    ],
   },
 
   {
     state: 'Bihar',
-    cities: ['Patna', 'Sonepur', 'Gaya'],
+    projects: [
+      { name: 'Gangajal Riverfront Plots', href: '/bihar/gangajal-riverfront-plots' },
+      { name: 'Sonepur Green Estate', href: '/bihar/sonepur-green-estate' },
+    ],
   },
   {
     state: 'Jharkhand',
-    cities: ['Ranchi'],
+    projects: [
+      { name: 'Ranchi Green Living', href: '/jharkhand/ranchi-green-living' },
+      { name: 'Ranchi Pithoria Residential Plots', href: '/jharkhand/ranchi-pithoria-residential-plots' },
+    ],
   },
 ]
 
 export const featuredProjects: FeaturedProject[] = [
   {
     title: 'Rajgad Farm Project — Phase 1',
-    slug: 'rajgad-valley-farm-plots',
+    slug: 'rajgad-phase-1',
     state: 'Maharashtra',
     city: 'Bhor',
-    imageUrl: '/bhor/rajgad.png',
+    imageUrl: '/clientsentimages/Rajgad%20Farm%20Plots.jpeg',
     priceFrom: '₹11 Lakh+',
-    link: '/rajgad',
-
+    link: '/maharashtra/rajgadPhase1',
   },
   {
-    title: 'Luxury Farm Villas — Phase 2',
-    slug: 'luxury-farm-villas-phase-2',
+    title: 'Luxury Farm Villas – Phase 2',
+    slug: 'rajgad-phase-2',
     state: 'Maharashtra',
     city: 'Bhor',
-    imageUrl: '/modern-new-construction-interior-kitchen.jpg',
+    imageUrl: '/clientsentimages/Rajgad%20farm%20houses.jpeg',
     priceFrom: '₹70 Lakh+',
-    link: '/',
-  },
-  {
-    title: 'Passiflora Resorts — Pawna',
-    slug: 'passiflora-resorts-pawna',
-    state: 'Maharashtra',
-    city: 'Pawna',
-    imageUrl: '/new-luxury-property.jpg',
-    link: '/',
-  },
-  {
-    title: 'Gangajal Riverfront Plots — Patna',
-    slug: 'gangajal-riverfront-plots',
-    state: 'Bihar',
-    city: 'Patna',
-    imageUrl: '/land-plot-aerial-view.jpg',
-    priceFrom: '₹6 Lakh+',
-    link: '/',
-  },
-  {
-    title: 'Sonepur Green Estate',
-    slug: 'sonepur-green-estate',
-    state: 'Bihar',
-    city: 'Sonepur',
-    imageUrl: '/green-house-garden.jpg',
-    priceFrom: '₹8 Lakh+',
-    link: '/',
-  },
-  {
-    title: 'Ranchi Weekend Farm Plots',
-    slug: 'ranchi-weekend-farm-plots',
-    state: 'Jharkhand',
-    city: 'Ranchi',
-    imageUrl: '/foreclosure-property-kitchen.jpg',
-    priceFrom: '₹5 Lakh+',
+    link: '/maharashtra/rajgadPhase2',
   },
   {
     title: 'Chembur Urban Project — Mumbai',
     slug: 'chembur-urban-project',
     state: 'Maharashtra',
     city: 'Mumbai',
-    imageUrl: '/luxury-condo-interior.jpg',
+    imageUrl: '/clientsentimages/REDEVELOPMENT%20PROJECT,%20CHEMBUR,%20MUMBAI.jpeg',
     priceFrom: '₹1.2 Cr+',
+    link: '/maharashtra/chembur',
   },
   {
-    title: 'Kamshet Lake View Plots',
-    slug: 'kamshet-lake-view-plots',
-    state: 'Maharashtra',
-    city: 'Kamshet',
-    imageUrl: '/sold-property-house.jpg',
-    priceFrom: '₹15 Lakh+',
+    title: 'Gangajal Riverfront Plots — Patna',
+    slug: 'gangajal-riverfront-plots',
+    state: 'Bihar',
+    city: 'Patna',
+    imageUrl: '/clientsentimages/GANGAJAL%20RIVERFRONT%20PLOTS.jpeg',
+    priceFrom: '₹6 Lakh+',
+    link: '/bihar/gangajal-riverfront-plots',
+  },
+  {
+    title: 'Sonepur Green Estate',
+    slug: 'sonepur-green-estate',
+    state: 'Bihar',
+    city: 'Sonepur',
+    imageUrl: '/clientsentimages/SONEPUR%20GREEN%20ESTATE%201.jpeg',
+    priceFrom: '₹8 Lakh+',
+    link: '/bihar/sonepur-green-estate',
+  },
+  {
+    title: 'Ranchi Residential Plots',
+    slug: 'ranchi-residential-plots',
+    state: 'Jharkhand',
+    city: 'Ranchi',
+    imageUrl: '/clientsentimages/Ranchi%20Residential%20plots%20,%20ITBP.jpeg',
+    priceFrom: '₹5 Lakh+',
+    link: '/jharkhand/ranchi-green-living',
   },
 ]
 
