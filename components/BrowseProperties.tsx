@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { projects } from '../data/projects'
 import { PropertyCard } from './PropertyCard'
 
@@ -124,9 +125,9 @@ export default function BrowseProperties() {
               </p>
             </div>
           </div>
-          <button className="bg-black text-white px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full font-bold hover:bg-gray-800 transition whitespace-nowrap w-full sm:w-auto">
+          <Link href="/projects" className="bg-black text-white px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full font-bold hover:bg-gray-800 transition whitespace-nowrap w-full sm:w-auto text-center cursor-pointer">
             Start now
-          </button>
+          </Link>
         </div>
       </div>
     </section>
