@@ -15,7 +15,7 @@ export default function BiharPage() {
             variant="ghost"
             size="icon"
             onClick={() => window.history.back()}
-            className="hover:bg-accent"
+            className="hover:bg-accent cursor-pointer"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>

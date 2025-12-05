@@ -236,12 +236,12 @@ export default function StickySearch() {
               {location.length > 0 && (
                 <button
                   onClick={() => setLocation('')}
-                  className="text-gray-400 hover:text-gray-600 transition p-2 hidden md:inline-flex"
+                  className="text-gray-400 hover:text-gray-600 transition p-2 hidden md:inline-flex cursor-pointer"
                 >
                   <X size={18} />
                 </button>
               )}
-              <button className="bg-black text-white p-2 md:p-2.5 rounded-full hover:bg-gray-800 transition shrink-0">
+              <button className="bg-black text-white p-2 md:p-2.5 rounded-full hover:bg-gray-800 transition shrink-0 cursor-pointer">
                 <Search size={18} />
               </button>
 

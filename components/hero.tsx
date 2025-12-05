@@ -63,7 +63,7 @@ export default function Hero() {
               className={`font-bold text-xs md:text-sm transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'text-white border-b-2 border-white pb-2'
-                  : 'text-white/70 hover:text-white'
+                  : 'text-white/70 hover:text-white cursor-pointer'
               }`}
             >
               {tab.label}
@@ -91,7 +91,7 @@ export default function Hero() {
               <X size={18} />
             </button>
           )}
-          <button className="bg-black text-white p-2 md:p-3 rounded-full hover:bg-gray-800 transition">
+          <button className="bg-black text-white p-2 md:p-3 rounded-full hover:bg-gray-800 transition cursor-pointer">
             <Search size={20} />
           </button>
 

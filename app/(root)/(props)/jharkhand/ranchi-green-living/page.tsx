@@ -63,8 +63,8 @@ const RanchiGreenLivingPage = () => {
     ],
     latitude: 23.42,
     longitude: 85.305,
-    priceFromINR: undefined,
-    areaSqFtMin: undefined,
+    priceFromINR: undefined as number | undefined,
+    areaSqFtMin: 2000,
   }
 
   const images = [
@@ -142,7 +142,7 @@ const RanchiGreenLivingPage = () => {
             variant="ghost"
             size="icon"
             onClick={() => window.history.back()}
-            className="hover:bg-accent"
+            className="hover:bg-accent cursor-pointer"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
