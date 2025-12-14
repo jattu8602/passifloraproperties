@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       )
     }
+    
 
     const timestamp = Math.floor(Date.now() / 1000)
     const paramsToSign = { timestamp, folder } as Record<string, any>
