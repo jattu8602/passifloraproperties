@@ -26,9 +26,9 @@ export default function Hero() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-bottom"
       >
-        <source src="/videos/hero_Video.mp4" type="video/mp4" />
+        <source src="/final/videos/3d_walkthroughs/hero_sequenced.mp4" type="video/mp4" />
       </video>
 
       {/* Dark overlay */}

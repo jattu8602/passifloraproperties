@@ -27,3 +27,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /lib/generated/prisma
+
+# Large video files
+public/final/videos/site_features/field_with_metal_structure.mp4
+public/final/videos/landscapes/distant_bridge_view_2.mp4
+public/final/videos/landscapes/sand_mound_and_trees.mp4
+public/final/videos/site_activity/blue_tractor_main_road.mp4
+public/final/videos/3d_walkthroughs/WhatsApp Video 2025-12-25 at 8.30.30 PM.mp4
