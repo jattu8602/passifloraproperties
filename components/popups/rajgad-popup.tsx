@@ -33,7 +33,7 @@ export default function RajgadPopup() {
   const handleGoToPage = () => {
     setOpen(false)
     sessionStorage.setItem('rajgad-popup-dismissed', 'true')
-    router.push('/rajgad')
+    router.push('/bihar')
   }
 
   const handleWhatsApp = () => {
@@ -68,7 +68,7 @@ export default function RajgadPopup() {
             onClick={handleClose}
           >
             <Image
-              src="/bhor/popup.jpeg"
+              src="https://res.cloudinary.com/doxmvuss9/image/upload/v1766930351/link-generator/ufnyc5a2z5pwkgjl4hfb.jpg"
               alt="Rajgad Farm Plots - 4000 SQ.FT at the Foothills of Rajgad Fort"
               width={800}
               height={600}
