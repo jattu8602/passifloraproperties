@@ -1,15 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Search, X } from 'lucide-react'
 import { getAllProjects } from '@/lib/projects'
 import SearchResults from '@/components/search-results'
+import { VIDEO_URLS } from '@/data/video-urls'
+import gsap from 'gsap'
 
 export default function Hero() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('home')
   const [location, setLocation] = useState('')
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 2.0
+
+      gsap.fromTo(videoRef.current,
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.5 }
+      )
+    }
+  }, [])
 
   const tabs = [
     { id: 'home', label: 'Home' },
@@ -21,15 +35,18 @@ export default function Hero() {
   return (
     <section className="relative h-120 md:h-[500px] flex items-center justify-center">
       {/* Video Background */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
+      <div className="absolute inset-0 flex items-end justify-center overflow-hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
         className="absolute inset-0 w-full h-full object-cover object-bottom"
-      >
-        <source src="/final/videos/3d_walkthroughs/hero_sequenced.mp4" type="video/mp4" />
-      </video>
+        >
+          <source src={VIDEO_URLS["3d_walkthroughs/hero_compressed_1.5x"]} type="video/mp4" />
+        </video>
+      </div>
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/40 z-[1]"></div>
