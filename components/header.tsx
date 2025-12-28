@@ -15,6 +15,7 @@ export default function Header() {
   const itemRefs = useRef<Array<HTMLElement | null>>([])
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const [projectsOpen, setProjectsOpen] = useState(false)
+  const [comingSoonOpen, setComingSoonOpen] = useState(false)
   const projectsTimerRef = useRef<number | null>(null)
 
   const navLinks = headerNav
@@ -130,6 +131,17 @@ export default function Header() {
                     </div>
                   )
                 }
+                if (link.label === 'Auction Properties') {
+                  return (
+                    <button
+                      key={link.label}
+                      onClick={() => setComingSoonOpen(true)}
+                      className="relative font-bold text-gray-700 hover:text-amber-700 transition-colors duration-200 text-md after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
+                    >
+                      {link.label}
+                    </button>
+                  )
+                }
                 return (
                   <Link
                     key={link.label}
@@ -144,20 +156,8 @@ export default function Header() {
 
             {/* Right side links - Desktop */}
             <div className="hidden lg:flex items-center gap-6">
-              {/* Group 1: Manage / Advertise (kept slightly apart) */}
               <div className="flex items-center gap-4">
-                {/* <Link
-                  href="#"
-                  className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-                >
-                  Auction Properties
-                </Link> */}
-                {/* <Link
-                  href="#"
-                  className="relative font-bold text-gray-700 transition-colors duration-200 text-sm px-2 py-1 rounded-md hover:bg-gray-100 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full focus:after:w-full"
-                >
-                  Advertise
-                </Link> */}
+                {/* Right side Auction link removed per request to avoid duplication */}
               </div>
             </div>
 
@@ -372,6 +372,11 @@ export default function Header() {
                     }
                   }
 
+                  if (link.label === 'Auction Properties') {
+                    // Hide from top navigation list in mobile as requested
+                    return null
+                  }
+
                   return (
                     <Link
                       key={link.label}
@@ -388,51 +393,66 @@ export default function Header() {
                 })
               })()}
               <hr className="my-4" />
-              <div className="flex items-center justify-between">
-                {/* <Link
-                  href="#"
-                  className="font-bold text-gray-800 text-base"
+              <div className="flex flex-col gap-4">
+                <button
+                  className="font-bold text-gray-800 text-lg text-left"
                   ref={(el) => {
                     itemRefs.current[navLinks.length + 3] = el
                   }}
                   onClick={() => {
-                    if (tlRef.current) {
-                      tlRef.current.reverse()
-                      tlRef.current.eventCallback('onReverseComplete', () => {
-                        setMobileMenuOpen(false)
-                        document.body.style.overflow = ''
-                      })
-                    } else {
-                      setMobileMenuOpen(false)
-                      document.body.style.overflow = ''
-                    }
+                    setComingSoonOpen(true)
                   }}
                 >
                   Auction Properties
-                </Link> */}
-                {/* <Link
-                  href="#"
-                  className="font-bold text-gray-800 text-base"
-                  ref={(el) => {
-                    itemRefs.current[navLinks.length + 4] = el
-                  }}
-                  onClick={() => {
-                    if (tlRef.current) {
-                      tlRef.current.reverse()
-                      tlRef.current.eventCallback('onReverseComplete', () => {
-                        setMobileMenuOpen(false)
-                        document.body.style.overflow = ''
-                      })
-                    } else {
-                      setMobileMenuOpen(false)
-                      document.body.style.overflow = ''
-                    }
-                  }}
-                >
-                  Advertise
-                </Link> */}
+                </button>
               </div>
             </nav>
+          </div>
+        </div>
+      )}
+      {/* Coming Soon Modal */}
+      {comingSoonOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setComingSoonOpen(false)}
+          />
+          <div className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full transform transition-all animate-in fade-in zoom-in duration-300">
+            <button
+              onClick={() => setComingSoonOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X size={20} />
+            </button>
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-50 text-amber-600 mb-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">Coming Soon</h3>
+              <p className="text-gray-600 leading-relaxed">
+                We're currently perfecting our auction platform. Stay tuned for
+                exclusive property bidding opportunities!
+              </p>
+              <button
+                onClick={() => setComingSoonOpen(false)}
+                className="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition-colors duration-200"
+              >
+                Got it!
+              </button>
+            </div>
           </div>
         </div>
       )}

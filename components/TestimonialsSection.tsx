@@ -14,7 +14,7 @@ const testimonials = [
     title: 'Exceptional Service and Transparency',
     description:
       'Passiflora Properties made our land investment journey seamless. The team was transparent, professional, and helped us find the perfect plot for our future home. Highly recommended!',
-    likedBy: ['/testimonials/priya.png', '/testimonials/amit.png', '/testimonials/extra1.png'],
+    likedBy: ['/testimonials/priya.png', '/testimonials/amit.png', '/testimonials/extra3.png'],
     likeCount: 23,
   },
   {
@@ -36,7 +36,7 @@ const testimonials = [
     title: 'Trustworthy and Professional',
     description:
       'The 25+ years of experience shows in their service. They guided us through every step and ensured all documentation was clear and verified.',
-    likedBy: ['/testimonials/vikram.png', '/testimonials/extra1.png', '/testimonials/extra2.png'],
+    likedBy: ['/testimonials/vikram.png', '/testimonials/extra1.png', '/testimonials/extra3.png'],
     likeCount: 31,
   },
   {
@@ -58,7 +58,7 @@ const testimonials = [
     title: 'Premium Locations at Great Value',
     description:
       'We got a premium plot in a scenic destination at an amazing price. The value for money is exceptional, and the location is perfect for our weekend retreat.',
-    likedBy: ['/testimonials/sunita.png', '/testimonials/extra1.png', '/testimonials/rajesh.png'],
+    likedBy: ['/testimonials/sunita.png', '/testimonials/extra3.png', '/testimonials/rajesh.png'],
     likeCount: 19,
   },
   {
@@ -113,7 +113,7 @@ const testimonials = [
     title: 'Exceptional Customer Relationship',
     description:
       'The way they treat their clients is commendable. They don\'t just sell land; they build relationships. Their guidance on property maintenance is a huge plus.',
-    likedBy: ['/testimonials/anjali.png', '/testimonials/priya.png', '/testimonials/extra2.png'],
+    likedBy: ['/testimonials/anjali.png', '/testimonials/priya.png', '/testimonials/extra3.png'],
     likeCount: 39,
   },
 ]
