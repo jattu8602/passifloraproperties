@@ -8,58 +8,113 @@ import gsap from 'gsap'
 const testimonials = [
   {
     id: 1,
-    userPhoto: '/user.png',
+    userPhoto: '/testimonials/rajesh.png',
     userName: 'Rajesh Kumar',
     rating: 5,
     title: 'Exceptional Service and Transparency',
     description:
       'Passiflora Properties made our land investment journey seamless. The team was transparent, professional, and helped us find the perfect plot for our future home. Highly recommended!',
-    likedBy: ['/user.png', '/user.png', '/user.png'],
+    likedBy: ['/testimonials/priya.png', '/testimonials/amit.png', '/testimonials/extra1.png'],
     likeCount: 23,
   },
   {
     id: 2,
-    userPhoto: '/user.png',
+    userPhoto: '/testimonials/priya.png',
     userName: 'Priya Sharma',
     rating: 5,
     title: 'Dream Land Investment Realized',
     description:
       'After years of searching, we found our ideal farm plot through Passiflora. Their expertise in legally verified lands gave us confidence in our investment.',
-    likedBy: ['/user.png', '/user.png', '/user.png'],
+    likedBy: ['/testimonials/rajesh.png', '/testimonials/sunita.png', '/testimonials/extra2.png'],
     likeCount: 18,
   },
   {
     id: 3,
-    userPhoto: '/user.png',
+    userPhoto: '/testimonials/amit.png',
     userName: 'Amit Patel',
     rating: 5,
     title: 'Trustworthy and Professional',
     description:
       'The 25+ years of experience shows in their service. They guided us through every step and ensured all documentation was clear and verified.',
-    likedBy: ['/user.png', '/user.png', '/user.png'],
+    likedBy: ['/testimonials/vikram.png', '/testimonials/extra1.png', '/testimonials/extra2.png'],
     likeCount: 31,
   },
   {
     id: 4,
-    userPhoto: '/user.png',
+    userPhoto: '/testimonials/sunita.png',
     userName: 'Sunita Reddy',
     rating: 5,
     title: 'Excellent Property Management Support',
     description:
       'What impressed us most was their ongoing support. They help with property management and even FPO partnerships for generating returns.',
-    likedBy: ['/user.png', '/user.png', '/user.png'],
+    likedBy: ['/testimonials/priya.png', '/testimonials/rajesh.png', '/testimonials/amit.png'],
     likeCount: 27,
   },
   {
     id: 5,
-    userPhoto: '/user.png',
+    userPhoto: '/testimonials/vikram.png',
     userName: 'Vikram Singh',
     rating: 5,
     title: 'Premium Locations at Great Value',
     description:
       'We got a premium plot in a scenic destination at an amazing price. The value for money is exceptional, and the location is perfect for our weekend retreat.',
-    likedBy: ['/user.png', '/user.png', '/user.png'],
+    likedBy: ['/testimonials/sunita.png', '/testimonials/extra1.png', '/testimonials/rajesh.png'],
     likeCount: 19,
+  },
+  {
+    id: 6,
+    userPhoto: '/testimonials/anjali.png',
+    userName: 'Anjali Desai',
+    rating: 5,
+    title: 'Seamless Documentation Process',
+    description:
+      'I was worried about the legalities, but Passiflora handled everything. Their team is extremely knowledgeable about land regulations and made the process stress-free.',
+    likedBy: ['/testimonials/rahul.png', '/testimonials/kavita.png', '/testimonials/extra1.png'],
+    likeCount: 42,
+  },
+  {
+    id: 7,
+    userPhoto: '/testimonials/rahul.png',
+    userName: 'Rahul Verma',
+    rating: 5,
+    title: 'Perfect Weekend Getaway Investment',
+    description:
+      'Buying a plot for my weekend villa was the best decision. The location is breathtaking and the appreciation value in this area is already showing great promise.',
+    likedBy: ['/testimonials/anjali.png', '/testimonials/suresh.png', '/testimonials/extra2.png'],
+    likeCount: 35,
+  },
+  {
+    id: 8,
+    userPhoto: '/testimonials/meera.png',
+    userName: 'Meera Iyer',
+    rating: 5,
+    title: 'Secure Future for My Family',
+    description:
+      'As a retired professional, I wanted a safe investment. Passiflora provided exactly that with their verified plots and professional conduct. Truly a trusted brand.',
+    likedBy: ['/testimonials/sunita.png', '/testimonials/vikram.png', '/testimonials/suresh.png'],
+    likeCount: 51,
+  },
+  {
+    id: 9,
+    userPhoto: '/testimonials/suresh.png',
+    userName: 'Suresh Menon',
+    rating: 5,
+    title: 'Great ROI and Professionalism',
+    description:
+      'The returns on my first plot were so good that I bought another one. The team is professional and they keep you updated on all site developments regularly.',
+    likedBy: ['/testimonials/rahul.png', '/testimonials/meera.png', '/testimonials/extra1.png'],
+    likeCount: 28,
+  },
+  {
+    id: 10,
+    userPhoto: '/testimonials/kavita.png',
+    userName: 'Kavita Malhotra',
+    rating: 5,
+    title: 'Exceptional Customer Relationship',
+    description:
+      'The way they treat their clients is commendable. They don\'t just sell land; they build relationships. Their guidance on property maintenance is a huge plus.',
+    likedBy: ['/testimonials/anjali.png', '/testimonials/priya.png', '/testimonials/extra2.png'],
+    likeCount: 39,
   },
 ]
 
