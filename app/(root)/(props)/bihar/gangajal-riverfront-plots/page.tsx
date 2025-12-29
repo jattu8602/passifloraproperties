@@ -194,44 +194,59 @@ const GangajalRiverfrontPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
       {/* Dynamic Header */}
-      <header className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300">
-        <div className="absolute inset-0 bg-background/50 backdrop-blur-xl border-b border-white/10" />
-        <div className="container relative mx-auto px-4 h-20 flex items-center justify-between">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => window.history.back()}
-            className="hover:bg-white/10 text-foreground"
+      <header className="fixed top-4 md:top-8 left-0 right-0 z-[100] transition-all duration-300 pointer-events-none">
+        <div className="container mx-auto px-4 flex items-center justify-between pointer-events-auto">
+          {/* Floating Back Button */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-background/60 backdrop-blur-xl border border-white/10 rounded-full p-1 shadow-2xl cursor-pointer hover:bg-background/80 transition-colors"
           >
-            <ArrowLeft className="h-6 w-6" />
-          </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => window.history.back()}
+              className="hover:bg-white/10 text-foreground rounded-full h-11 w-11 md:h-12 md:w-12 cursor-pointer"
+            >
+              <ArrowLeft className="h-5 w-5 md:h-6 md:w-6" />
+            </Button>
+          </motion.div>
 
-          <div className="hidden lg:flex items-center gap-6">
-            <Link href="#overview" className="text-sm font-medium hover:text-primary transition-colors">Overview</Link>
-            <Link href="#experience" className="text-sm font-medium hover:text-primary transition-colors">Experience</Link>
-            <Link href="#amenities" className="text-sm font-medium hover:text-primary transition-colors">Highlights</Link>
-            <Link href="#location" className="text-sm font-medium hover:text-primary transition-colors">Location</Link>
+          {/* Floating Navigation Pill */}
+          <div className="hidden lg:flex items-center gap-2 bg-background/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-2 shadow-2xl">
+            <Link href="#overview" className="text-[10px] uppercase tracking-widest font-bold hover:text-primary transition-colors px-3 py-1 cursor-pointer">Overview</Link>
+            <div className="w-[1px] h-4 bg-white/10" />
+            <Link href="#highlights" className="text-[10px] uppercase tracking-widest font-bold hover:text-primary transition-colors px-3 py-1 cursor-pointer">Highlights</Link>
+            <div className="w-[1px] h-4 bg-white/10" />
+            <Link href="#location" className="text-[10px] uppercase tracking-widest font-bold hover:text-primary transition-colors px-3 py-1 cursor-pointer">Location</Link>
           </div>
 
-          <div className="flex gap-2 sm:gap-3">
+          {/* Floating Action Pill */}
+          <div className="flex items-center gap-1 md:gap-2 bg-background/60 backdrop-blur-xl border border-white/10 rounded-full p-1 shadow-2xl">
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setLiked(!liked)}
+                className={`hover:bg-white/10 rounded-full h-10 w-10 md:h-11 md:w-11 cursor-pointer ${liked ? 'text-primary' : 'text-foreground'}`}
+              >
+                <Heart className={`h-4 w-4 md:h-5 md:w-5 ${liked ? 'fill-current' : ''}`} />
+              </Button>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleShare}
+                className="hover:bg-white/10 text-foreground rounded-full h-10 w-10 md:h-11 md:w-11 cursor-pointer"
+              >
+                <Share2 className="h-4 w-4 md:h-5 md:w-5" />
+              </Button>
+            </motion.div>
+
             <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setLiked(!liked)}
-              className={`hover:bg-white/10 ${liked ? 'text-primary' : 'text-foreground'}`}
-            >
-              <Heart className={`h-5 w-5 ${liked ? 'fill-current' : ''}`} />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleShare}
-              className="hover:bg-white/10 text-foreground"
-            >
-              <Share2 className="h-5 w-5" />
-            </Button>
-            <Button
-                className="hidden sm:flex rounded-full px-4 md:px-6 font-semibold shadow-lg shadow-primary/25"
+                className="rounded-full px-4 md:px-6 h-10 md:h-11 text-[10px] md:text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/25 cursor-pointer hover:scale-105 transition-transform"
                 asChild
             >
                 <a
@@ -239,7 +254,7 @@ const GangajalRiverfrontPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Enquire Now
+                    Enquire
                 </a>
             </Button>
           </div>
@@ -247,17 +262,18 @@ const GangajalRiverfrontPage = () => {
       </header>
 
       {/* Cinematic Hero Slider */}
-      <section className="relative h-[90vh] md:h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 select-none overflow-hidden" ref={emblaRef}>
-          <div className="flex h-full">
+      <section className="relative h-[90vh] md:h-screen w-full flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0 select-none overflow-hidden w-full" ref={emblaRef}>
+          <div className="flex h-full w-full">
             {heroImages.map((img, index) => (
-              <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
+              <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full w-full">
                 <Image
                   src={img.url}
                   alt={img.title}
                   fill
                   priority={index === 0}
-                  className="object-cover scale-[1.02]"
+                  className="object-cover"
+                  sizes="100vw"
                 />
               </div>
             ))}
@@ -408,7 +424,7 @@ const GangajalRiverfrontPage = () => {
       </section>
 
       {/* Highlights & Details */}
-      <section id="amenities" className="py-16 md:py-24 bg-accent/5">
+      <section id="highlights" className="py-16 md:py-24 bg-accent/5">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
             <motion.div
