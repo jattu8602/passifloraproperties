@@ -78,6 +78,7 @@ export default function BrowseProperties() {
                   city={p.city}
                   state={p.state}
                   zip={''}
+                  href={p.link}
                 />
               </div>
             )

@@ -22,6 +22,7 @@ export type Project = {
   longitude?: number
   featured?: boolean
   images: { src: string; alt: string }[]
+  link?: string
 }
 
 export const projects: Project[] = [
@@ -64,6 +65,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     latitude: 18.227194,
     longitude: 73.659417,
     featured: true,
+    link: '/maharashtra/rajgadPhase1',
     images: [
       {
         src: '/clientsentimages/Rajgad%20Farm%20Plots.jpeg',
@@ -110,6 +112,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/maharashtra/chembur',
     images: [
       {
         src: '/clientsentimages/REDEVELOPMENT%20PROJECT,%20CHEMBUR,%20MUMBAI.jpeg',
@@ -150,6 +153,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/maharashtra/manchar',
     images: [
       {
         src: '/clientsentimages/Rajgad%20Farm%20Plots.jpeg',
@@ -191,6 +195,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/maharashtra/karjat',
     images: [
       {
         src: '/clientsentimages/KARJAT%20NA%20PLOTS.jpeg',
@@ -231,6 +236,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/maharashtra/rajgadPhase2',
     images: [
       {
         src: '/clientsentimages/Rajgad%20farm%20houses.jpeg',
@@ -273,6 +279,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/bihar/gangajal-riverfront-plots',
     images: [
       {
         src: '/final/3d_renders/project_overview/full_layout_aerial_1.jpg',
@@ -314,6 +321,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/bihar/sonepur-green-estate',
     images: [
       {
         src: '/clientsentimages/SONEPUR%20GREEN%20ESTATE%201.jpeg',
@@ -357,6 +365,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/jharkhand/ranchi-green-living',
     images: [
       {
         src: '/clientsentimages/Ranchi%20Residential%20plots%20,%20ITBP.jpeg',
@@ -397,6 +406,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     priceFromINR: undefined,
     areaSqFtMin: undefined,
     featured: false,
+    link: '/jharkhand/ranchi-pithoria-residential-plots',
     images: [
       {
         src: '/clientsentimages/Ranchi%20Residential%20plots%20,%20ITBP.jpeg',
