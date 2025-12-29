@@ -1,5 +1,6 @@
 'use client'
-import { useState, useMemo } from 'react'
+
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import {
   ArrowLeft,
   Heart,
@@ -10,50 +11,120 @@ import {
   Check,
   Hand,
   MousePointerClick,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  ShieldCheck,
+  TrendingUp,
+  Waves,
+  X,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  AccordionContent,
 } from '@/components/ui/accordion'
 import { useToast } from '@/hooks/use-toast'
 import { MapFrame } from '@/components/MapFrame'
 import Image from 'next/image'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel'
+import { motion, AnimatePresence } from 'framer-motion'
+import { GangajalMediaGallery } from './GangajalMediaGallery'
+import Link from 'next/link'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
+import { GANGAJAL_IMAGES } from './gangajal-media.data'
 
 const GangajalRiverfrontPage = () => {
   const [liked, setLiked] = useState(false)
   const [mapInteractive, setMapInteractive] = useState(false)
   const { toast } = useToast()
+  const footerRef = useRef<HTMLDivElement>(null)
 
-  const projectData: {
-    title: string
-    status: string
-    type: string
-    state: string
-    city: string
-    shortSummary: string
-    description: string
-    projectHighlights: string[]
-    connectivity: string[]
-    latitude: number
-    longitude: number
-    priceFromINR?: number
-    areaSqFtMin?: number
-  } = {
-    title: 'Gangajal Riverfront Plots – Patna',
+  // Carousel setup
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000, stopOnInteraction: false })])
+
+  // All 3D Renders (13 assets)
+  const allHighlights = useMemo(() =>
+    GANGAJAL_IMAGES.filter(img => img.category === '3D Render'),
+  [])
+
+  // Filtered Hero Slider Renders (Excluding 2, 6, 8, 9, 12 as per user request)
+  const heroImages = useMemo(() => {
+    const excludedIndices = [1, 5, 7, 8, 11] // 0-based indices to remove
+    return allHighlights.filter((_, idx) => !excludedIndices.includes(idx))
+  }, [allHighlights])
+
+  // Site Landscapes - Real Views (10 assets)
+  const propertyViews = useMemo(() =>
+    GANGAJAL_IMAGES.filter(img => img.category === 'Scenic'),
+  [])
+
+  const [selectedHeroImage, setSelectedHeroImage] = useState<typeof allHighlights[0] | null>(null)
+  const [activeCollection, setActiveCollection] = useState<typeof allHighlights | null>(null)
+
+  const navigateModal = useCallback((direction: 'prev' | 'next') => {
+    if (!selectedHeroImage || !activeCollection) return
+    const currentIndex = activeCollection.findIndex(img => img.url === selectedHeroImage.url)
+    if (currentIndex === -1) return
+
+    let nextIndex
+    if (direction === 'next') {
+      nextIndex = (currentIndex + 1) % activeCollection.length
+    } else {
+      nextIndex = (currentIndex - 1 + activeCollection.length) % activeCollection.length
+    }
+    setSelectedHeroImage(activeCollection[nextIndex])
+  }, [selectedHeroImage, activeCollection])
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedHeroImage) return
+      if (e.key === 'ArrowRight') navigateModal('next')
+      if (e.key === 'ArrowLeft') navigateModal('prev')
+      if (e.key === 'Escape') {
+        setSelectedHeroImage(null)
+        setActiveCollection(null)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [selectedHeroImage, navigateModal])
+
+  // Register GSAP ScrollTrigger
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    // GSAP Scroll to Hide Footer logic
+    const showAnim = gsap.from(footerRef.current, {
+      yPercent: 100,
+      paused: true,
+      duration: 0.3,
+      ease: "power2.out"
+    }).progress(1)
+
+    ScrollTrigger.create({
+      start: "top top-100",
+      onUpdate: (self) => {
+        self.direction === -1 ? showAnim.play() : showAnim.reverse()
+      }
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill())
+    }
+  }, [])
+
+  const projectData = {
+    title: 'Gangajal Riverfront Plots',
+    subtitle: 'Patna’s Most Coveted River-Touch Investment',
     status: 'active',
-    type: 'Residential Plot',
+    type: 'Luxury Residential Plot',
     state: 'Bihar',
     city: 'Patna',
     shortSummary:
@@ -71,25 +142,15 @@ const GangajalRiverfrontPage = () => {
       'Robust long-term appreciation outlook in growth corridor',
     ],
     connectivity: [
-      '5 mins from Digha–Patna Main Road',
-      '10 mins from Patliputra Station',
-      '20 mins from Gandhi Maidan',
-      'Close to AIIMS–Patna Road and upcoming smart city zones',
-      'Direct approach to JP Setu and Digha Bridge',
-      'Good access to schools, hospitals, and retail in 15–20 mins',
+      { location: 'Digha–Patna Main Road', time: '5 mins' },
+      { location: 'Patliputra Junction', time: '10 mins' },
+      { location: 'Gandhi Maidan', time: '20 mins' },
+      { location: 'AIIMS–Patna Road', time: 'Upcoming' },
+      { location: 'JP Setu Access', time: 'Direct' },
     ],
     latitude: 25.6365,
     longitude: 85.0665,
-    priceFromINR: undefined,
-    areaSqFtMin: undefined,
   }
-
-  const images = [
-    {
-      src: '/clientsentimages/GANGAJAL%20RIVERFRONT%20PLOTS.jpeg',
-      alt: 'Gangajal Riverfront Plots',
-    },
-  ]
 
   const faqs = [
     {
@@ -100,7 +161,7 @@ const GangajalRiverfrontPage = () => {
     {
       question: 'What is the location advantage?',
       answer:
-        'The project is located near JP Setu and Digha Bridge, just 5 mins from Digha–Patna Main Road and 10 mins from Patliputra Station.',
+        'The project is located near JP Setu and Digha Bridge, just 5 mins from Digha–Patna Main Road and 10 mins from Patliputra Junction.',
     },
     {
       question: 'Are the titles verified?',
@@ -112,26 +173,7 @@ const GangajalRiverfrontPage = () => {
       answer:
         'The project has electricity, road access, and water connection ready, with wide internal roads planned.',
     },
-    {
-      question: 'What can be developed on these plots?',
-      answer:
-        'The plots are ideal for premium residences, boutique resorts, or club-houses, with scope for riverfront promenade and landscape features.',
-    },
-    {
-      question: 'Is there flood risk?',
-      answer:
-        'Low flood-risk zones have been identified with well-elevated pockets, ensuring safety and security.',
-    },
   ]
-
-  const autoplay = useMemo(
-    () =>
-      Autoplay({
-        delay: 4000,
-        stopOnInteraction: false,
-      }) as any,
-    []
-  )
 
   const handleShare = () => {
     if (navigator.share) {
@@ -149,325 +191,497 @@ const GangajalRiverfrontPage = () => {
     }
   }
 
-  const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3771.5!2d${
-    projectData.longitude
-  }!3d${
-    projectData.latitude
-  }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDM4JzExLjQiTiA4NcKwMDMnNTkuNCJF!5e1!3m2!1sen!2sin!4v${Date.now()}!5m2!1sen!2sin`
-
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+      {/* Dynamic Header */}
+      <header className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300">
+        <div className="absolute inset-0 bg-background/50 backdrop-blur-xl border-b border-white/10" />
+        <div className="container relative mx-auto px-4 h-20 flex items-center justify-between">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => window.history.back()}
-            className="hover:bg-accent cursor-pointer"
+            className="hover:bg-white/10 text-foreground"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-6 w-6" />
           </Button>
-          <div className="flex gap-2">
+
+          <div className="hidden lg:flex items-center gap-6">
+            <Link href="#overview" className="text-sm font-medium hover:text-primary transition-colors">Overview</Link>
+            <Link href="#experience" className="text-sm font-medium hover:text-primary transition-colors">Experience</Link>
+            <Link href="#amenities" className="text-sm font-medium hover:text-primary transition-colors">Highlights</Link>
+            <Link href="#location" className="text-sm font-medium hover:text-primary transition-colors">Location</Link>
+          </div>
+
+          <div className="flex gap-2 sm:gap-3">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setLiked(!liked)}
-              className="hover:bg-accent"
+              className={`hover:bg-white/10 ${liked ? 'text-primary' : 'text-foreground'}`}
             >
-              <Heart
-                className={`h-5 w-5 ${
-                  liked ? 'fill-primary text-primary' : ''
-                }`}
-              />
+              <Heart className={`h-5 w-5 ${liked ? 'fill-current' : ''}`} />
             </Button>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleShare}
-              className="hover:bg-accent"
+              className="hover:bg-white/10 text-foreground"
             >
               <Share2 className="h-5 w-5" />
+            </Button>
+            <Button
+                className="hidden sm:flex rounded-full px-4 md:px-6 font-semibold shadow-lg shadow-primary/25"
+                asChild
+            >
+                <a
+                    href="https://wa.me/919607210333?text=Hello!%20I%20want%20to%20enquire%20about%20the%20Gangajal%20Riverfront%20Plots%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Enquire Now
+                </a>
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-12 space-y-16">
-        <section className="animate-fade-in">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary text-primary-foreground">
-              {projectData.status === 'active'
-                ? 'Available Now'
-                : 'Coming Soon'}
-            </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-              {projectData.type}
-            </span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {projectData.title}
-          </h1>
-          <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-6">
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              <span>
-                {projectData.city}, {projectData.state}
-              </span>
-            </div>
-            {projectData.areaSqFtMin && (
-              <div className="flex items-center gap-2">
-                <Maximize2 className="h-4 w-4" />
-                <span>
-                  From {projectData.areaSqFtMin.toLocaleString()} sq. ft
-                </span>
+      {/* Cinematic Hero Slider */}
+      <section className="relative h-[90vh] md:h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0 select-none overflow-hidden" ref={emblaRef}>
+          <div className="flex h-full">
+            {heroImages.map((img, index) => (
+              <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
+                <Image
+                  src={img.url}
+                  alt={img.title}
+                  fill
+                  priority={index === 0}
+                  className="object-cover scale-[1.02]"
+                />
               </div>
-            )}
-            {projectData.priceFromINR && (
-              <div className="flex items-center gap-2">
-                <IndianRupee className="h-4 w-4" />
-                <span className="text-xl font-semibold text-foreground">
-                  {(projectData.priceFromINR / 100000).toFixed(1)} Lakh+
-                </span>
-              </div>
-            )}
-          </div>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {projectData.shortSummary}
-          </p>
-        </section>
-      </main>
-
-      <section className="w-full py-8">
-        {images.length > 1 ? (
-          <Carousel
-            plugins={[autoplay]}
-            className="w-full"
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-          >
-            <CarouselContent>
-              {images.map((image, index) => (
-                <CarouselItem key={index} className="basis-full">
-                  <div className="relative w-full h-[50vh] md:h-[70vh]">
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      className="object-cover"
-                      priority={index === 0}
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
-          </Carousel>
-        ) : (
-          <div className="relative w-full h-[50vh] md:h-[70vh]">
-            <Image
-              src={images[0].src}
-              alt={images[0].alt}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        )}
-      </section>
-
-      {projectData.latitude && projectData.longitude && (
-        <section className="w-full h-[70vh] md:h-[70vh] relative">
-          <MapFrame
-            src={`https://www.google.com/maps/embed?pb=!4v${Date.now()}!6m8!1m7!1s${
-              projectData.latitude
-            },${projectData.longitude}!2m2!1d${projectData.latitude}!2d${
-              projectData.longitude
-            }!3f186.6961810325677!4f-9.342022235530507!5f0.4000000000000002`}
-            className="w-full h-full"
-            style={{
-              border: 0,
-              pointerEvents: mapInteractive ? 'auto' : 'none',
-            }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Project Location 3D View"
-          />
-          <div className="absolute bottom-4 left-4 z-10">
-            <Button
-              onClick={() => setMapInteractive(!mapInteractive)}
-              variant={mapInteractive ? 'default' : 'secondary'}
-              className="gap-2 shadow-lg"
-            >
-              {mapInteractive ? (
-                <>
-                  <MousePointerClick className="h-4 w-4" />
-                  <span className="hidden sm:inline">Map Active</span>
-                </>
-              ) : (
-                <>
-                  <Hand className="h-4 w-4" />
-                  <span className="hidden sm:inline">Click to Interact</span>
-                </>
-              )}
-            </Button>
-          </div>
-        </section>
-      )}
-
-      <main className="container mx-auto px-4 py-12 space-y-16">
-        <section className="animate-fade-in">
-          <Card className="shadow-card border-border">
-            <CardContent className="pt-6">
-              <h2 className="text-2xl font-semibold mb-4 text-foreground">
-                About This Project
-              </h2>
-              <div className="prose prose-lg max-w-none text-muted-foreground whitespace-pre-line">
-                {projectData.description}
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        {projectData.latitude && projectData.longitude && (
-          <section className="container mx-auto px-4 py-8">
-            <div className="relative w-full h-96 rounded-lg overflow-hidden shadow-card">
-              <MapFrame
-                src={mapEmbedUrl}
-                className="w-full h-full"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Satellite View"
-              />
-            </div>
-          </section>
-        )}
-
-        <section className="animate-fade-in">
-          <h2 className="text-3xl font-bold mb-6 text-foreground">
-            Project Details
-          </h2>
-          <Accordion type="single" collapsible className="space-y-4">
-            <AccordionItem
-              value="highlights"
-              className="border border-border rounded-lg px-6 shadow-card bg-card"
-            >
-              <AccordionTrigger className="text-lg font-semibold hover:text-primary">
-                Project Highlights
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className="space-y-3 mt-4">
-                  {projectData.projectHighlights.map((highlight, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem
-              value="connectivity"
-              className="border border-border rounded-lg px-6 shadow-card bg-card"
-            >
-              <AccordionTrigger className="text-lg font-semibold hover:text-primary">
-                Connectivity & Location
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className="space-y-3 mt-4">
-                  {projectData.connectivity.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <MapPin className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </section>
-
-        <section className="animate-fade-in">
-          <h2 className="text-3xl font-bold mb-6 text-foreground">
-            Investment Highlights
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Riverfront Location',
-                desc: 'Panoramic Ganga riverfront views',
-                icon: MapPin,
-              },
-              {
-                title: 'Prime Location',
-                desc: 'Near JP Setu and Digha Bridge',
-                icon: MapPin,
-              },
-              {
-                title: 'Freehold Property',
-                desc: 'Verified titles with legal clarity',
-                icon: Check,
-              },
-              {
-                title: 'Ready Infrastructure',
-                desc: 'Electricity, roads, and water ready',
-                icon: Check,
-              },
-              {
-                title: 'Low Flood Risk',
-                desc: 'Well-elevated pockets identified',
-                icon: Check,
-              },
-              {
-                title: 'High Appreciation',
-                desc: 'Strong long-term growth potential',
-                icon: Check,
-              },
-            ].map((feature, index) => (
-              <Card
-                key={index}
-                className="shadow-card border-border hover:shadow-soft transition-all duration-300 hover:scale-105 bg-card"
-              >
-                <CardContent className="pt-6">
-                  <feature.icon className="h-10 w-10 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2 text-foreground">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground">{feature.desc}</p>
-                </CardContent>
-              </Card>
             ))}
           </div>
-        </section>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/30 pointer-events-none" />
+        </div>
 
-        <section className="animate-fade-in">
-          <h2 className="text-3xl font-bold mb-6 text-foreground">
-            Frequently Asked Questions
-          </h2>
-          <Accordion type="single" collapsible className="space-y-4">
+        <div className="container relative z-10 mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="max-w-2xl pt-20 md:pt-0"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-md mb-6 md:mb-8">
+              <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-white uppercase text-nowrap">Ultra-Premium Investment</span>
+            </div>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-[1.1] tracking-tighter">
+              {projectData.title}
+            </h1>
+            <p className="text-base md:text-xl text-white/80 max-w-xl font-light leading-relaxed">
+              {projectData.subtitle}
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Hero Decorative Elements */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+            <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">Scroll to Explore</span>
+            <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent" />
+        </div>
+      </section>
+
+      {/* Project Highlights - Selection Grid */}
+      <section className="py-24 bg-accent/5 border-b border-border relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Project Highlights</h2>
+            <p className="text-muted-foreground text-lg">A curated selection of the finest views from Gangajal Riverfront.</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {allHighlights.map((img, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 border border-border"
+                onClick={() => {
+                  setSelectedHeroImage(img)
+                  setActiveCollection(allHighlights)
+                }}
+              >
+                <Image
+                  src={img.url}
+                  alt={img.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Maximize2 className="h-8 w-8 text-white" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <p className="text-white text-[10px] font-bold uppercase tracking-wider truncate">{img.title}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Real view of property - Landscape Grid */}
+      <section className="py-24 bg-background border-b border-border relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Real view of property</h2>
+            <p className="text-muted-foreground text-lg">Actual site photographs showcasing the current status and surroundings.</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {propertyViews.map((img, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 border border-border"
+                onClick={() => {
+                  setSelectedHeroImage(img)
+                  setActiveCollection(propertyViews)
+                }}
+              >
+                <Image
+                  src={img.url}
+                  alt={img.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Maximize2 className="h-8 w-8 text-white" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <p className="text-white text-[10px] font-bold uppercase tracking-wider truncate">{img.title}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Overview Cards */}
+      <section id="overview" className="relative z-10 pb-12 md:pb-20 pt-24">
+        <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                {[
+                    { icon: Waves, label: 'Asset Type', value: 'River-Touch Plots', desc: 'Direct access to Ganga' },
+                    { icon: ShieldCheck, label: 'Legal Status', value: 'Verified Freehold', desc: '100% Secure Titles' },
+                    { icon: TrendingUp, label: 'Growth Potential', value: 'High Appreciation', desc: 'Premium Corridor' }
+                ].map((item, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        viewport={{ once: true }}
+                    >
+                        <Card className="bg-card/80 backdrop-blur-2xl border-white/10 shadow-2xl overflow-hidden group">
+                           <CardContent className="p-6 md:p-8 text-center md:text-left">
+                                <item.icon className="h-8 w-8 md:h-10 md:w-10 text-primary mb-4 md:mb-6 mx-auto md:mx-0 group-hover:scale-110 transition-transform" />
+                                <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1 md:mb-2">{item.label}</p>
+                                <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2 tracking-tight">{item.value}</h3>
+                                <p className="text-sm md:text-base text-muted-foreground">{item.desc}</p>
+                           </CardContent>
+                        </Card>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+      </section>
+
+      {/* Experience Gallery */}
+      <section id="experience">
+        <GangajalMediaGallery />
+      </section>
+
+      {/* Highlights & Details */}
+      <section id="amenities" className="py-16 md:py-24 bg-accent/5">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
+            <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+            >
+              <h2 className="text-2xl md:text-5xl font-bold mb-6 md:mb-8 tracking-tight">
+                Crafted for <br /> <span className="text-primary italic">Distinction</span>
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 md:mb-12 leading-relaxed">
+                {projectData.description}
+              </p>
+
+              <div className="space-y-3 md:space-y-4">
+                {projectData.projectHighlights.slice(0, 5).map((h, i) => (
+                    <div key={i} className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-xl md:rounded-2xl bg-background shadow-sm border border-border">
+                        <div className="h-8 w-8 md:h-10 md:w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                            <Check className="h-4 w-4 md:h-5 md:w-5" />
+                        </div>
+                        <span className="font-medium text-sm md:text-lg">{h}</span>
+                    </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="relative aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border-4 md:border-8 border-background"
+            >
+              <Image
+                src="/final/3d_renders/project_overview/front_amenities_aerial_1.jpg"
+                alt="Project Overview"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Connectivity & Location */}
+      <section id="location" className="py-16 md:py-24 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-5xl font-bold mb-4 md:mb-6 italic md:not-italic">Strategic Connectivity</h2>
+            <p className="text-muted-foreground text-base md:text-lg italic">Perfectly positioned between nature and the urban pulse.</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
+            <div className="lg:col-span-2 space-y-8">
+               {/* 3D Map View */}
+               <div className="relative h-[400px] md:h-[600px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-border">
+                  <MapFrame
+                    src={`https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3597.5517!2d${projectData.longitude}!3d${projectData.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjXCsDM4JzExLjQiTiA4NcKwMDMnNTkuNCJF!5e1!3m2!1sen!2sin!4v${Date.now()}!5m2!1sen!2sin&maptype=satellite`}
+                    className="w-full h-full"
+                    style={{
+                        border: 0,
+                        pointerEvents: mapInteractive ? 'auto' : 'none',
+                    }}
+                    allowFullScreen
+                    loading="lazy"
+                    title="Project Satellite View"
+                  />
+                  <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10 flex flex-col gap-2">
+                    <div className="px-3 md:px-4 py-1.5 md:py-2 bg-background/90 backdrop-blur-md rounded-full shadow-lg border border-border flex items-center gap-2">
+                        <MapPin className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider">High-Res Satellite View</span>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-10">
+                    <Button
+                    onClick={() => setMapInteractive(!mapInteractive)}
+                    variant={mapInteractive ? 'default' : 'secondary'}
+                    className="rounded-full h-10 md:h-12 px-4 md:px-6 shadow-xl gap-2 font-bold text-xs md:text-sm"
+                    >
+                    {mapInteractive ? <MousePointerClick className="h-4 w-4 md:h-5 md:w-5" /> : <Hand className="h-4 w-4 md:h-5 md:w-5" />}
+                    {mapInteractive ? 'Active View' : 'Interact with Map'}
+                    </Button>
+                  </div>
+               </div>
+            </div>
+
+            <div className="space-y-6">
+                <Card className="h-full border-border bg-accent/5 backdrop-blur-sm shadow-none p-6 md:p-8">
+                    <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8">Access Points</h3>
+                    <div className="space-y-6 md:space-y-8">
+                        {projectData.connectivity.map((item, i) => (
+                            <div key={i} className="flex justify-between items-center group">
+                                <div className="flex items-center gap-3 md:gap-4">
+                                    <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-primary group-hover:scale-[2] transition-transform" />
+                                    <span className="text-sm md:text-base text-muted-foreground font-medium">{item.location}</span>
+                                </div>
+                                <span className="text-sm md:text-base font-bold text-primary">{item.time}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-border">
+                        <Button variant="outline" className="w-full h-12 md:h-14 rounded-xl font-bold gap-2 text-sm md:text-base" asChild>
+                            <a
+                                href={`https://www.google.com/maps/dir/?api=1&destination=${projectData.latitude},${projectData.longitude}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Share2 className="h-4 w-4" /> Get Directions
+                            </a>
+                        </Button>
+                    </div>
+                </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* Hero Image Modal */}
+      <AnimatePresence>
+        {selectedHeroImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-12"
+            onClick={() => setSelectedHeroImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-6xl w-full flex flex-col items-center justify-center gap-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full h-[70vh] md:h-[80vh] rounded-2xl overflow-hidden border border-white/10 transition-all">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedHeroImage.url}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={selectedHeroImage.url}
+                      alt={selectedHeroImage.title}
+                      fill
+                      className="object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <div className="text-center">
+                <h3 className="text-white text-2xl md:text-3xl font-bold tracking-tight">{selectedHeroImage.title}</h3>
+                {activeCollection && (
+                  <p className="text-white/40 text-sm mt-2 font-mono">
+                    {activeCollection.findIndex(img => img.url === selectedHeroImage.url) + 1} / {activeCollection.length}
+                  </p>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Navigation Buttons */}
+            {activeCollection && activeCollection.length > 1 && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 rounded-full h-14 w-14 z-[210] bg-black/20 backdrop-blur-md"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigateModal('prev')
+                  }}
+                >
+                  <ChevronLeft className="h-8 w-8 md:h-10 md:w-10" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 rounded-full h-14 w-14 z-[210] bg-black/20 backdrop-blur-md"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigateModal('next')
+                  }}
+                >
+                  <ChevronRight className="h-8 w-8 md:h-10 md:w-10" />
+                </Button>
+              </>
+            )}
+
+            {/* Close Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="fixed top-4 right-4 md:top-8 md:right-8 text-white hover:bg-white/10 rounded-full h-14 w-14 z-[210] bg-black/20 backdrop-blur-md"
+              onClick={() => {
+                setSelectedHeroImage(null)
+                setActiveCollection(null)
+              }}
+            >
+              <X className="h-8 w-8 md:h-10 md:w-10" />
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* FAQ Section */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="text-center mb-10 md:mb-16">
+             <h2 className="text-2xl md:text-5xl font-bold mb-3 md:mb-4 italic">Common Queries</h2>
+             <p className="text-sm md:text-base text-muted-foreground">Everything you need to know about your investment.</p>
+          </div>
+          <Accordion type="single" collapsible className="space-y-3 md:space-y-4">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`faq-${index}`}
-                className="border border-border rounded-lg px-6 shadow-card bg-card"
+                className="border border-border rounded-xl md:rounded-2xl px-6 md:px-8 py-1 md:py-2 shadow-sm bg-card transition-all data-[state=open]:shadow-md data-[state=open]:border-primary/20"
               >
-                <AccordionTrigger className="text-lg font-medium hover:text-primary">
+                <AccordionTrigger className="text-base md:text-lg font-bold hover:no-underline hover:text-primary py-3 md:py-4 text-left">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="text-muted-foreground mt-2">{faq.answer}</p>
+                <AccordionContent className="text-sm md:text-base text-muted-foreground leading-relaxed pt-1 md:pt-2 pb-4 md:pb-6">
+                  {faq.answer}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Fixed Sticky Footer CTA */}
+      <div
+        ref={footerRef}
+        className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6"
+      >
+        <div className="container mx-auto px-0 md:px-4">
+            <div className="bg-primary rounded-[2rem] md:rounded-3xl p-6 md:p-8 shadow-[0_20px_60px_-15px_rgba(var(--primary-rgb),0.5)] flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
+                <div className="text-center lg:text-left">
+                    <h2 className="text-xl md:text-3xl font-black text-white leading-tight mb-2">Secure Your Riverfront Plot Selection</h2>
+                    <p className="text-sm md:text-base text-white/80 font-medium">Limited parcels available in Phase 1 starting from 90 Kattha.</p>
+                </div>
+                <div className="flex flex-row gap-3 md:gap-4 w-full md:w-auto">
+                    <Button variant="secondary" className="flex-1 md:flex-none h-14 md:h-16 px-4 md:px-10 rounded-xl md:rounded-2xl text-base md:text-lg font-black shadow-xl shrink-0" asChild>
+                        <a
+                            href="https://wa.me/919607210333?text=Hello!%20I%20am%20interested%20in%20scheduling%20a%20site%20visit%20for%20Gangajal%20Riverfront%20Plots.%20Please%20let%20me%20know%20the%20available%20slots."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span className="hidden sm:inline">Schedule Site Visit</span>
+                            <span className="sm:hidden">Site Visit</span>
+                        </a>
+                    </Button>
+                    <Button variant="outline" className="flex-1 md:flex-none h-14 md:h-16 px-4 md:px-6 rounded-xl md:rounded-2xl border-white/20 text-white bg-white/10 backdrop-blur-md hover:bg-white/20 shrink-0" asChild>
+                        <a
+                            href="https://wa.me/919607210333?text=Hello!%20I%20would%20like%20to%20receive%20the%20brochure%20for%20Gangajal%20Riverfront%20Plots.%20Please%20share%20it%20with%20me."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Brochure
+                        </a>
+                    </Button>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      {/* Footer Spacer */}
+      <div className="h-32 md:h-40" />
     </div>
   )
 }
