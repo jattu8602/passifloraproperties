@@ -95,7 +95,7 @@ export const featuredProjects: FeaturedProject[] = [
     slug: 'gangajal-riverfront-plots',
     state: 'Bihar',
     city: 'Patna',
-    imageUrl: '/clientsentimages/GANGAJAL%20RIVERFRONT%20PLOTS.jpeg',
+    imageUrl: '/final/3d_renders/project_overview/full_layout_aerial_1.jpg',
     priceFrom: '₹6 Lakh+',
     link: '/bihar/gangajal-riverfront-plots',
   },

@@ -275,7 +275,7 @@ Join a vibrant community of investors and families investing in a future rooted 
     featured: false,
     images: [
       {
-        src: '/clientsentimages/GANGAJAL%20RIVERFRONT%20PLOTS.jpeg',
+        src: '/final/3d_renders/project_overview/full_layout_aerial_1.jpg',
         alt: 'Gangajal Riverfront Plots',
       },
     ],

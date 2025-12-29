@@ -26,7 +26,7 @@ export const biharProjects: BiharProjectCard[] = [
       'Ideal for premium residences, boutique resort, or club-house',
       'Robust long-term appreciation outlook in growth corridor',
     ],
-    imageUrl: '/clientsentimages/GANGAJAL%20RIVERFRONT%20PLOTS.jpeg',
+    imageUrl: '/final/3d_renders/project_overview/full_layout_aerial_1.jpg',
     link: '/bihar/gangajal-riverfront-plots',
   },
   {
