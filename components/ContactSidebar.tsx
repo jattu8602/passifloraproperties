@@ -14,7 +14,7 @@ const regionalContacts: ContactInfo[] = [
   {
     region: 'Maharashtra, Bhor',
     role: 'Sales Team + Pune',
-    phone: '+91 9607210333',
+    phone: '+91 9135556106',
     email: 'passiflorapune@gmail.com',
   },
   {
@@ -39,7 +39,7 @@ const regionalContacts: ContactInfo[] = [
 
 export const ContactSidebar = () => {
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919607210333', '_blank')
+    window.open('https://wa.me/9135559596', '_blank')
   }
 
   return (
@@ -64,10 +64,10 @@ export const ContactSidebar = () => {
             <div>
               <p className="text-sm font-medium text-foreground">Call Us</p>
               <a
-                href="tel:+919607210333"
+                href="tel:+919135556106"
                 className="text-sm text-primary hover:text-accent-foreground transition-colors font-medium"
               >
-                +91 9607210333
+                +91 9135556106
               </a>
             </div>
           </div>
@@ -159,7 +159,7 @@ export const ContactSidebar = () => {
       </Card>
 
 
-     
+
     </aside>
   )
 }

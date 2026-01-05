@@ -112,7 +112,7 @@ export const ContactForm = ({ projectSlug }: ContactFormProps) => {
             id="phone"
             name="phone"
             type="tel"
-            placeholder="+91 9607210333"
+            placeholder="+91 9135556106"
             required
             disabled={formState === 'submitting'}
             className="transition-all duration-300 focus:shadow-soft focus:border-primary focus:ring-2 focus:ring-primary/20"

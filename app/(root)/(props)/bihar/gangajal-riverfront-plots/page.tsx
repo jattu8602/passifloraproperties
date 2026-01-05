@@ -250,7 +250,7 @@ const GangajalRiverfrontPage = () => {
                 asChild
             >
                 <a
-                    href="https://wa.me/919607210333?text=Hello!%20I%20want%20to%20enquire%20about%20the%20Gangajal%20Riverfront%20Plots%20project."
+                    href="https://wa.me/9135559596?text=Hello!%20I%20want%20to%20enquire%20about%20the%20Gangajal%20Riverfront%20Plots%20project."
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -674,7 +674,7 @@ const GangajalRiverfrontPage = () => {
                 <div className="flex flex-row gap-3 md:gap-4 w-full md:w-auto">
                     <Button variant="secondary" className="flex-1 md:flex-none h-14 md:h-16 px-4 md:px-10 rounded-xl md:rounded-2xl text-base md:text-lg font-black shadow-xl shrink-0" asChild>
                         <a
-                            href="https://wa.me/919607210333?text=Hello!%20I%20am%20interested%20in%20scheduling%20a%20site%20visit%20for%20Gangajal%20Riverfront%20Plots.%20Please%20let%20me%20know%20the%20available%20slots."
+                            href="https://wa.me/9135559596?text=Hello!%20I%20am%20interested%20in%20scheduling%20a%20site%20visit%20for%20Gangajal%20Riverfront%20Plots.%20Please%20let%20me%20know%20the%20available%20slots."
                             target="_blank"
                             rel="noopener noreferrer"
                         >
@@ -684,7 +684,7 @@ const GangajalRiverfrontPage = () => {
                     </Button>
                     <Button variant="outline" className="flex-1 md:flex-none h-14 md:h-16 px-4 md:px-6 rounded-xl md:rounded-2xl border-white/20 text-white bg-white/10 backdrop-blur-md hover:bg-white/20 shrink-0" asChild>
                         <a
-                            href="https://wa.me/919607210333?text=Hello!%20I%20would%20like%20to%20receive%20the%20brochure%20for%20Gangajal%20Riverfront%20Plots.%20Please%20share%20it%20with%20me."
+                            href="https://wa.me/9135559596?text=Hello!%20I%20would%20like%20to%20receive%20the%20brochure%20for%20Gangajal%20Riverfront%20Plots.%20Please%20share%20it%20with%20me."
                             target="_blank"
                             rel="noopener noreferrer"
                         >

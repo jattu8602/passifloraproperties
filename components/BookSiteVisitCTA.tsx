@@ -25,7 +25,7 @@ export default function BookSiteVisitCTA() {
               Book a Site Visit
             </Link>
             <a
-              href="https://wa.me/919607210333"
+              href="https://wa.me/9135559596"
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 md:px-10 py-2.5 md:py-4 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20BA5A] transition-all duration-200 hover:shadow-lg hover:scale-[1.02] text-sm md:text-lg whitespace-nowrap"

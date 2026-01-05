@@ -123,5 +123,5 @@ export const quickLinks: QuickLink[] = [
   { label: 'View All Projects', href: '/projects' },
   { label: 'Contact Sales', href: '/contact' },
   { label: 'Book Site Visit', href: '/contact?intent=visit' },
-  { label: 'WhatsApp Us', href: 'https://wa.me/' },
+  { label: 'WhatsApp Us', href: 'https://wa.me/9135559596' },
 ]

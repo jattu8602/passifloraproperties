@@ -38,7 +38,7 @@ export default function RajgadPopup() {
 
   const handleWhatsApp = () => {
     // Using the phone number from the image: +91 9823147882
-    window.open('https://wa.me/919823147882', '_blank')
+    window.open('https://wa.me/9135559596', '_blank')
   }
 
   const handleClose = () => {
